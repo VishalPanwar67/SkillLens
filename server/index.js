@@ -1,8 +1,13 @@
 import { app } from "./server.js";
 import dotenv from "dotenv";
 import connectMongoDB from "./db/connectMongoDB.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
-dotenv.config({ path: "./config/.env" });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.join(__dirname, "config", ".env") });
 
 const PORT = process.env.PORT || 5000;
 
@@ -14,12 +19,13 @@ connectMongoDB()
   .then(() => {
     app.on("error", (error) => {
       console.log(`app is not able to connect :: ${error} 😭📉`);
-      throw error;
+      // Let Express/Middleware handle the error; crashing here is rarely desired.
     });
-    app.listen(PORT || 3000, () => {
+    app.listen(PORT, () => {
       console.log(`app is listening on port :: ${PORT} 💯📈`);
     });
   })
   .catch((error) => {
     console.log(`index.js :: connectDB connection failed  :: ${error} 😭📉`);
+    process.exit(1);
   });

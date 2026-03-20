@@ -1,10 +1,11 @@
-const asyncHandler = (requestHandler) => {
-  if (typeof requestHandler !== "function") {
-    throw new TypeError("requestHandler must be a function");
+const asyncHandler = (fn) => {
+  if (typeof fn !== "function") {
+    throw new TypeError("Route handler must be a function");
   }
-  return async (req, res, next) => {
+
+  return (req, res, next) => {
     try {
-      await requestHandler(req, res, next);
+      Promise.resolve(fn(req, res, next)).catch(next);
     } catch (err) {
       next(err);
     }

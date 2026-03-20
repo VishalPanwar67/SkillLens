@@ -3,6 +3,19 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { dateUtil } from "../utils/index.util.js";
 
+const PATTERNS = [
+  { regex: /\b\d{12,19}\b/g, replacement: "[REDACTED_CARD]" },
+  {
+    regex: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b/g,
+    replacement: "[REDACTED_EMAIL]",
+  },
+  { regex: /\b\d{10}\b/g, replacement: "[REDACTED_PHONE]" },
+  {
+    regex: /password\s*[:=]\s*["']?([^"'\s]+)/gi,
+    replacement: "password: [REDACTED]",
+  },
+];
+
 //create logs directory
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,30 +30,20 @@ const createLogsDir = async () => {
   }
 };
 
-createLogsDir();
+const logsDirReadyPromise = createLogsDir();
 
 // Define the log file path
 const logFilePath = path.join(logsDir, "error.log");
 
-// Added patterns for card numbers, email addresses, phone numbers, and passwords
 const sanitizeLogMessage = (message) => {
-  const patterns = [
-    { regex: /\b\d{12,19}\b/g, replacement: "[REDACTED_CARD]" },
-    {
-      regex: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b/g,
-      replacement: "[REDACTED_EMAIL]",
-    },
-    { regex: /\b\d{10}\b/g, replacement: "[REDACTED_PHONE]" },
-    {
-      regex: /password\s*[:=]\s*["']?([^"'\s]+)/gi,
-      replacement: "password: [REDACTED]",
-    },
-  ];
+  const safeMessage =
+    typeof message === "string" ? message : String(message ?? "");
 
-  let sanitizedMessage = message;
-  patterns.forEach(({ regex, replacement }) => {
+  // Apply redaction patterns (pre-compiled for performance).
+  let sanitizedMessage = safeMessage;
+  for (const { regex, replacement } of PATTERNS) {
     sanitizedMessage = sanitizedMessage.replace(regex, replacement);
-  });
+  }
 
   return sanitizedMessage;
 };
@@ -48,12 +51,17 @@ const sanitizeLogMessage = (message) => {
 // Write log messages to the file
 const logError = async (err) => {
   const dateIST = dateUtil();
-  console.log(dateIST);
+  if (process.env.NODE_ENV === "development") {
+    console.log(dateIST);
+  }
 
-  const logMessage = `[${dateIST}] ${sanitizeLogMessage(err.message)}\n${err.stack || ""}\n\n`;
+  const message = err?.message ?? "Internal Server Error";
+  const stack = err?.stack ?? "";
+  const logMessage = `[${dateIST}] ${sanitizeLogMessage(message)}\n${stack}\n\n`;
   console.error(logMessage);
 
   try {
+    await logsDirReadyPromise;
     await fs.appendFile(logFilePath, logMessage, { flag: "a" }); // Added append mode flag for safer file writing
   } catch (writeErr) {
     console.error("Failed to write log message to file:", writeErr);
@@ -61,14 +69,14 @@ const logError = async (err) => {
 };
 
 // Define the error handler
-const errorHandler = (err, req, res, next) => {
+const errorHandler = async (err, req, res, next) => {
   const {
     statusCode = 500,
     message = "Internal Server Error",
     errors = [],
-  } = err;
+  } = err || {};
 
-  logError(err);
+  await logError(err || {});
 
   const responseMessage =
     process.env.NODE_ENV === "development"
@@ -79,7 +87,7 @@ const errorHandler = (err, req, res, next) => {
     success: false,
     message: responseMessage,
     ...(errors.length > 0 && { errors }),
-    ...(process.env.NODE_ENV === "development" && { stack: err.stack }),
+    ...(process.env.NODE_ENV === "development" && { stack: (err || {}).stack }),
   });
 };
 
