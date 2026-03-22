@@ -123,7 +123,7 @@ export const buildQuizSession = (skillIds) => {
   };
 };
 
-export const gradeQuiz = (answers) => {
+const getQuestionMap = () => {
   const bank = loadBank();
   const idToQ = new Map();
   for (const skill of QUIZ_SKILL_IDS) {
@@ -132,6 +132,35 @@ export const gradeQuiz = (answers) => {
       idToQ.set(q.id, { ...q, skill });
     }
   }
+  return idToQ;
+};
+
+/** Per-question rows for the results UI (correct / incorrect, text, indices). */
+export const buildQuestionReviews = (answers) => {
+  const idToQ = getQuestionMap();
+  const reviews = [];
+  for (const a of answers) {
+    const q = idToQ.get(a.questionId);
+    if (!q) continue;
+    const selectedIndex = Number.isInteger(a.selectedIndex)
+      ? a.selectedIndex
+      : -1;
+    const isCorrect = selectedIndex === q.correctIndex;
+    reviews.push({
+      questionId: q.id,
+      question: q.question,
+      skill: q.skill,
+      difficulty: normalizeDifficulty(q),
+      selectedIndex,
+      correctIndex: q.correctIndex,
+      isCorrect,
+    });
+  }
+  return reviews;
+};
+
+export const gradeQuiz = (answers) => {
+  const idToQ = getQuestionMap();
 
   const bySkill = {};
   for (const skill of QUIZ_SKILL_IDS) {

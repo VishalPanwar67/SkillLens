@@ -2,12 +2,15 @@ import { asyncHandler } from "../utils/index.util.js";
 import { ApiError, ApiResponse } from "../class/index.class.js";
 import User from "../models/user.model.js";
 import SkillProfile from "../models/skillProfile.model.js";
+import mongoose from "mongoose";
 import {
   buildQuizSession,
   gradeQuiz,
+  buildQuestionReviews,
   listQuizSkillIds,
 } from "../services/quiz.service.js";
-import { isQuizSkill } from "../constants/quizSkills.js";
+import { isQuizSkill, formatQuizTitle } from "../constants/quizSkills.js";
+import QuizAttempt from "../models/quizAttempt.model.js";
 
 export const getQuizSkills = asyncHandler(async (req, res) => {
   return res.status(200).json(
@@ -74,9 +77,37 @@ export const submitQuiz = asyncHandler(async (req, res) => {
     throw new ApiError(400, "answers array is required");
   }
 
-  const graded = gradeQuiz(answers);
-  const userId = req.user.id;
+  let timeSpentSeconds = req.body.timeSpentSeconds;
+  if (timeSpentSeconds !== undefined && timeSpentSeconds !== null) {
+    const t = Number(timeSpentSeconds);
+    if (!Number.isFinite(t) || t < 0 || t > 86400) {
+      throw new ApiError(
+        400,
+        "timeSpentSeconds must be a number from 0 to 86400 (seconds)"
+      );
+    }
+    timeSpentSeconds = Math.round(t);
+  } else {
+    timeSpentSeconds = null;
+  }
 
+  const questionReviews = buildQuestionReviews(answers);
+  if (questionReviews.length === 0) {
+    throw new ApiError(
+      400,
+      "No valid answers — questionId values must match the issued quiz"
+    );
+  }
+
+  const graded = gradeQuiz(answers);
+  if (graded.skillResults.length === 0) {
+    throw new ApiError(
+      400,
+      "No valid answers — questionId values must match the issued quiz"
+    );
+  }
+
+  const userId = req.user.id;
   const skillResultsWithPrev = [];
 
   for (const r of graded.skillResults) {
@@ -105,12 +136,80 @@ export const submitQuiz = asyncHandler(async (req, res) => {
     });
   }
 
+  const skillsOrdered = graded.skillResults.map((r) => r.skill);
+  const title = formatQuizTitle(skillsOrdered);
+
+  const attempt = await QuizAttempt.create({
+    userId,
+    title,
+    skills: skillsOrdered,
+    overallPercent: graded.overall.percent,
+    totalCorrect: graded.overall.correct,
+    totalQuestions: graded.overall.totalQuestions,
+    timeSpentSeconds,
+    skillResults: skillResultsWithPrev,
+    questionReviews,
+  });
+
   return res.status(200).json(
     new ApiResponse(200, "Quiz graded", {
+      attemptId: attempt._id,
+      title,
+      timeSpentSeconds,
+      questionReviews,
       skillResults: skillResultsWithPrev,
       overall: graded.overall,
     })
   );
+});
+
+const serializeAttempt = (doc) => ({
+  attemptId: doc._id,
+  title: doc.title,
+  skills: doc.skills,
+  overallPercent: doc.overallPercent,
+  totalCorrect: doc.totalCorrect,
+  totalQuestions: doc.totalQuestions,
+  timeSpentSeconds: doc.timeSpentSeconds,
+  skillResults: doc.skillResults,
+  questionReviews: doc.questionReviews,
+  createdAt: doc.createdAt,
+});
+
+/** Reload the Quiz Results page after refresh — latest attempt for this user. */
+export const getLatestQuizAttempt = asyncHandler(async (req, res) => {
+  const doc = await QuizAttempt.findOne({ userId: req.user.id }).sort({
+    createdAt: -1,
+  });
+
+  if (!doc) {
+    throw new ApiError(404, "No quiz attempts yet");
+  }
+
+  return res.status(200).json(
+    new ApiResponse(200, "Latest quiz attempt", serializeAttempt(doc))
+  );
+});
+
+/** Fetch one saved result by id (same shape as submit / latest). */
+export const getQuizAttemptById = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new ApiError(400, "Invalid attempt id");
+  }
+
+  const doc = await QuizAttempt.findOne({
+    _id: id,
+    userId: req.user.id,
+  });
+
+  if (!doc) {
+    throw new ApiError(404, "Quiz attempt not found");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "Quiz attempt", serializeAttempt(doc)));
 });
 
 export const getSkillProfiles = asyncHandler(async (req, res) => {
