@@ -1,4 +1,4 @@
-import pdfParse from "pdf-parse/lib/pdf-parse.js";
+import { PDFParse } from "pdf-parse";
 
 const SKILL_MASTER_LIST = [
   "react",
@@ -64,25 +64,79 @@ const ROLE_REQUIRED_SKILLS = {
   java: ["java", "sql", "dsa", "git", "systemdesign", "mysql", "restapi"],
 };
 
-export const extractText = async (buffer) => {
-  try {
-    const data = await pdfParse(buffer);
+const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-    if (!data.text || data.text.trim().length === 0) {
+/**
+ * Map common resume wording to canonical skill tokens so substring checks are not fooled
+ * (e.g. Node.js → nodejs, "java" inside JavaScript → not java).
+ */
+const normalizeResumeText = (raw) => {
+  let t = raw.toLowerCase();
+
+  t = t.replace(/\bnode\.js\b/gi, "nodejs");
+  t = t.replace(/\bnode\s+js\b/gi, "nodejs");
+  t = t.replace(/\bnode\b(?=\s*(?:express|nestjs|npm|backend|runtime))/gi, "nodejs");
+  t = t.replace(/\bnext\.js\b/gi, "nextjs");
+  t = t.replace(/\bnext\s+js\b/gi, "nextjs");
+
+  t = t.replace(/\brest\s*api\b/gi, "restapi");
+  t = t.replace(/\brestful(?:\s+api)?\b/gi, "restapi");
+
+  t = t.replace(/\b(?:system\s+design|system-design|systems\s+design)\b/gi, "systemdesign");
+
+  t = t.replace(/\bmongo\s*db\b/gi, "mongodb");
+
+  t = t.replace(
+    /\b(?:data\s+structures?\s*(?:&|and)\s*algorithms?|data\s+structures?\s+(?:and\s+)?algorithms?|ds\s+and\s+algo|ds\s*&\s*algo)\b/gi,
+    " dsa "
+  );
+  t = t.replace(/\bdsa\b/gi, "dsa");
+
+  t = t.replace(/\bmy\s*sql\b/gi, "mysql");
+  t = t.replace(/\bpostgres(?:ql)?\b/gi, "postgresql");
+
+  return t;
+};
+
+/** True if the skill appears as its own word/phrase, not as a substring of another word (e.g. java vs javascript). */
+const skillMatchesText = (normalized, skill) => {
+  if (skill === "c") {
+    return /\bc(?!\+{2})\b/i.test(normalized);
+  }
+  if (skill === "cpp") {
+    return /\bc\+\+\b|\bcpp\b|\bg\+\+\b/i.test(normalized);
+  }
+
+  const escaped = escapeRegex(skill);
+  return new RegExp(`\\b${escaped}\\b`, "i").test(normalized);
+};
+
+export const extractText = async (buffer) => {
+  const parser = new PDFParse({ data: buffer });
+  try {
+    const result = await parser.getText();
+
+    if (!result.text || result.text.trim().length === 0) {
       throw new Error("PDF_EXTRACTION_FAILED");
     }
 
-    return data.text;
-  } catch (error) {
+    return result.text;
+  } catch {
     throw new Error("PDF_EXTRACTION_FAILED");
+  } finally {
+    try {
+      await parser.destroy();
+    } catch {
+      /* ignore cleanup errors */
+    }
   }
 };
 
 export const detectSkills = (text, targetRole) => {
-  const lowerText = text.toLowerCase();
+  const normalized = normalizeResumeText(text);
 
   const detectedSkills = SKILL_MASTER_LIST.filter((skill) =>
-    lowerText.includes(skill.toLowerCase())
+    skillMatchesText(normalized, skill)
   );
 
   const roleRequiredSkills = ROLE_REQUIRED_SKILLS[targetRole] || [];
