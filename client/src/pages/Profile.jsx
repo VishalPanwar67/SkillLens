@@ -13,7 +13,7 @@ import {
   Globe,
   Edit3,
   ExternalLink,
-  ChevronRight
+  ChevronRight,
 } from "lucide-react";
 
 export default function Profile() {
@@ -24,7 +24,7 @@ export default function Profile() {
     bio: "",
     github: "",
     linkedin: "",
-    profileImage: null
+    profileImage: null,
   });
   const [isEditing, setIsEditing] = useState(false);
   const [detectedSkills, setDetectedSkills] = useState([]);
@@ -38,9 +38,12 @@ export default function Profile() {
       try {
         const token = localStorage.getItem("token");
 
-        const profileRes = await fetch("http://localhost:5800/api/auth/profile", {
-          headers: { "Authorization": `Bearer ${token}` }
-        });
+        const profileRes = await fetch(
+          "http://localhost:5800/api/auth/profile",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         const profileData = await profileRes.json();
 
         if (profileData.success && profileData.data?.user) {
@@ -52,19 +55,18 @@ export default function Profile() {
             bio: u.bio || "",
             github: u.socials?.github || "",
             linkedin: u.socials?.linkedin || "",
-            profileImage: u.profileImage || null
+            profileImage: u.profileImage || null,
           });
           setDetectedSkills(u.detectedSkills || []);
         }
 
         const statsRes = await fetch("http://localhost:5800/api/quiz/stats", {
-          headers: { "Authorization": `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         });
         const statsData = await statsRes.json();
         if (statsData.success) {
           setStats(statsData.data);
         }
-
       } catch (err) {
         console.error(err);
       } finally {
@@ -103,15 +105,15 @@ export default function Profile() {
       const res = await fetch("http://localhost:5800/api/auth/profile", {
         method: "PUT",
         headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           targetRole: formData.targetRole.toLowerCase(),
           bio: formData.bio,
           profileImage: formData.profileImage,
-          socials: { github: formData.github, linkedin: formData.linkedin }
-        })
+          socials: { github: formData.github, linkedin: formData.linkedin },
+        }),
       });
       const data = await res.json();
       if (res.ok && data.success) {
@@ -127,28 +129,34 @@ export default function Profile() {
     }
   };
 
-  if (loading) return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f8faf9]">
-      <Loader2 className="w-12 h-12 animate-spin text-[#11b589]" />
-    </div>
-  );
+  if (loading)
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#f8faf9]">
+        <Loader2 className="w-12 h-12 animate-spin text-[#11b589]" />
+      </div>
+    );
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] relative flex flex-col justify-center py-4 px-4 sm:px-6">
-      <main className="w-full max-w-md mx-auto relative z-10">
+    <div className="min-h-screen flex items-start py-6 px-6">
+      <main className="w-full relative z-10">
         <AnimatePresence mode="wait">
           {isEditing ? (
             <motion.div
               key="edit"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white border border-[#E7E7E8] rounded-2xl p-5 shadow-sm flex flex-col"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="w-full bg-white border border-[#E7E7E8] rounded-2xl p-6 shadow-sm flex flex-col min-h-[calc(100vh-3rem)]"
             >
               <div className="flex items-center justify-between pb-4 border-b border-[#E7E7E8] mb-4">
                 <div>
-                  <h3 className="text-base font-bold text-[#011813]">Edit Profile</h3>
-                  <p className="text-[10px] text-[#475467] mt-0.5">Update your professional information.</p>
+                  <h3 className="text-[13px] font-extrabold text-[#011813]">
+                    Edit Profile
+                  </h3>
+                  <p className="text-[10px] text-[#8D8E8F] mt-0.5">
+                    Update your professional information.
+                  </p>
                 </div>
               </div>
 
@@ -157,15 +165,26 @@ export default function Profile() {
                   <div className="relative w-16 h-16 mb-1.5 group">
                     <div className="relative w-full h-full rounded-full border border-[#E7E7E8] bg-gray-100 flex items-center justify-center overflow-hidden shadow-sm">
                       {formData.profileImage ? (
-                        <img src={formData.profileImage} alt="Profile" className="w-full h-full object-cover" />
+                        <img
+                          src={formData.profileImage}
+                          alt="Profile"
+                          className="w-full h-full object-cover"
+                        />
                       ) : (
                         <User className="w-8 h-8 text-[#009D77]" />
                       )}
-                      
+
                       <label className="absolute inset-x-0 bottom-0 bg-[#011813]/70 py-1 flex flex-col items-center justify-center transition-all cursor-pointer hover:bg-[#009D77]/90">
                         <Camera className="w-3 h-3 text-white" />
-                        <span className="text-[7px] text-white font-bold uppercase mt-0.5">Change</span>
-                        <input type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
+                        <span className="text-[7px] text-white font-bold uppercase mt-0.5">
+                          Change
+                        </span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={handleImageChange}
+                        />
                       </label>
                     </div>
                     {uploading && (
@@ -178,11 +197,19 @@ export default function Profile() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div className="space-y-1">
-                    <label className="text-[9px] font-bold text-[#475467] uppercase tracking-wider">Full Name</label>
-                    <input readOnly value={formData.name} className="w-full bg-[#F8F9FA] border border-[#E7E7E8] p-2.5 rounded-lg text-[#011813] text-xs opacity-70 cursor-not-allowed outline-none focus:ring-0" />
+                    <label className="text-[9px] font-bold uppercase tracking-widest text-[#8D8E8F]">
+                      Full Name
+                    </label>
+                    <input
+                      readOnly
+                      value={formData.name}
+                      className="w-full bg-[#F8F8F8] border border-[#E7E7E8] p-2.5 rounded-lg text-[#011813] text-xs opacity-70 cursor-not-allowed outline-none focus:ring-2 focus:ring-[#009D77]/20"
+                    />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[9px] font-bold text-[#475467] uppercase tracking-wider">Target Role</label>
+                    <label className="text-[9px] font-bold uppercase tracking-widest text-[#8D8E8F]">
+                      Target Role
+                    </label>
                     <select
                       name="targetRole"
                       value={formData.targetRole}
@@ -199,7 +226,9 @@ export default function Profile() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[9px] font-bold text-[#475467] uppercase tracking-wider">Professional Bio</label>
+                  <label className="text-[9px] font-bold uppercase tracking-widest text-[#8D8E8F]">
+                    Professional Bio
+                  </label>
                   <textarea
                     name="bio"
                     value={formData.bio}
@@ -212,17 +241,33 @@ export default function Profile() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div className="space-y-1">
-                    <label className="text-[9px] font-bold text-[#475467] uppercase tracking-wider">GitHub URL</label>
+                    <label className="text-[9px] font-bold uppercase tracking-widest text-[#8D8E8F]">
+                      GitHub URL
+                    </label>
                     <div className="relative">
-                        <Github className="absolute left-2.5 top-1/2 transform -translate-y-1/2 w-3.5 h-3.5 text-[#98A2B3]" />
-                        <input name="github" value={formData.github} onChange={handleChange} className="w-full bg-white border border-[#E7E7E8] p-2.5 pl-8 rounded-lg text-[#011813] text-xs focus:ring-2 focus:ring-[#009D77]/20 outline-none transition-shadow" placeholder="https://github.com/..." />
+                      <Github className="absolute left-2.5 top-1/2 transform -translate-y-1/2 w-3.5 h-3.5 text-[#98A2B3]" />
+                      <input
+                        name="github"
+                        value={formData.github}
+                        onChange={handleChange}
+                        className="w-full bg-white border border-[#E7E7E8] p-2.5 pl-8 rounded-lg text-[#011813] text-xs focus:ring-2 focus:ring-[#009D77]/20 outline-none transition-shadow"
+                        placeholder="https://github.com/..."
+                      />
                     </div>
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[9px] font-bold text-[#475467] uppercase tracking-wider">LinkedIn URL</label>
+                    <label className="text-[9px] font-bold uppercase tracking-widest text-[#8D8E8F]">
+                      LinkedIn URL
+                    </label>
                     <div className="relative">
-                        <Linkedin className="absolute left-2.5 top-1/2 transform -translate-y-1/2 w-3.5 h-3.5 text-[#98A2B3]" />
-                        <input name="linkedin" value={formData.linkedin} onChange={handleChange} className="w-full bg-white border border-[#E7E7E8] p-2.5 pl-8 rounded-lg text-[#011813] text-xs focus:ring-2 focus:ring-[#009D77]/20 outline-none transition-shadow" placeholder="https://linkedin.com/..." />
+                      <Linkedin className="absolute left-2.5 top-1/2 transform -translate-y-1/2 w-3.5 h-3.5 text-[#98A2B3]" />
+                      <input
+                        name="linkedin"
+                        value={formData.linkedin}
+                        onChange={handleChange}
+                        className="w-full bg-white border border-[#E7E7E8] p-2.5 pl-8 rounded-lg text-[#011813] text-xs focus:ring-2 focus:ring-[#009D77]/20 outline-none transition-shadow"
+                        placeholder="https://linkedin.com/..."
+                      />
                     </div>
                   </div>
                 </div>
@@ -231,13 +276,13 @@ export default function Profile() {
                   <button
                     type="button"
                     onClick={() => setIsEditing(false)}
-                    className="px-4 py-2 rounded-lg border border-[#E7E7E8] text-[#475467] text-[11px] font-bold hover:bg-[#F8F9FA] transition-colors"
+                    className="border border-[#E7E7E8] text-[#475467] hover:bg-[#F8F8F8] rounded-lg px-4 py-2 text-[11px] font-bold transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 bg-[#EC4899] text-white text-[11px] font-bold rounded-lg hover:bg-[#d93a86] transition-colors flex items-center gap-1.5 shadow-sm"
+                    className="bg-[#EA4C89] hover:bg-[#d93a86] text-white rounded-lg px-5 py-2 text-[11px] font-bold flex items-center gap-1.5 transition-colors"
                   >
                     <Save className="w-3.5 h-3.5" /> Save Details
                   </button>
@@ -247,102 +292,199 @@ export default function Profile() {
           ) : (
             <motion.div
               key="view"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white border border-[#E7E7E8] rounded-2xl p-5 shadow-sm relative flex flex-col items-center overflow-hidden"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="w-full bg-white border border-[#E7E7E8] rounded-2xl overflow-hidden shadow-sm grid grid-cols-1 sm:grid-cols-[240px_1fr] min-h-[calc(100vh-3rem)]"
             >
-              <button
-                onClick={() => setIsEditing(true)}
-                className="absolute top-4 right-4 flex items-center gap-1 bg-white border border-[#E7E7E8] text-[#011813] px-2.5 py-1.5 rounded-md text-[10px] font-bold hover:bg-[#F8F9FA] transition-colors shadow-sm focus:ring-2 focus:ring-[#009D77]/20 z-10"
-              >
-                <Edit3 className="w-3 h-3" /> Edit
-              </button>
-
-              <div className="relative w-20 h-20 mb-1 mt-1">
-                <div className="relative w-full h-full rounded-full border border-[#E7E7E8] shadow-sm bg-gray-100 flex items-center justify-center overflow-hidden">
-                  {formData.profileImage ? (
-                    <img src={formData.profileImage} alt="Profile" className="w-full h-full object-cover" />
-                  ) : (
-                    <User className="w-10 h-10 text-[#009D77]" />
-                  )}
-                </div>
-              </div>
-
-              <h2 className="text-lg font-extrabold text-[#011813]">{formData.name}</h2>
-              <p className="text-[#009D77] font-semibold text-[11px] capitalize flex items-center gap-1 justify-center mb-3">
-                <Globe className="w-3 h-3" /> {formData.targetRole || "Role Not Set"}
-              </p>
-
-              {formData.bio ? (
-                  <p className="text-[#475467] text-[11px] leading-relaxed max-w-sm mx-auto mb-4 bg-[#F8F9FA] p-2.5 rounded-lg border border-[#E7E7E8] italic text-center">
-                    {formData.bio}
-                  </p>
-              ) : (
-                  <p className="text-[#98A2B3] text-[11px] leading-relaxed max-w-sm mx-auto mb-4 bg-[#F8F9FA] p-2.5 rounded-lg border border-[#E7E7E8] border-dashed text-center">
-                    No professional bio provided yet. Click 'Edit' to add one.
-                  </p>
-              )}
-
-              <div className="w-full grid grid-cols-2 gap-3 mb-4">
-                <div className="p-2.5 bg-[#F8F9FA] rounded-xl border border-[#E7E7E8] flex flex-col items-center">
-                  <span className="text-[8px] font-bold text-[#475467] uppercase mb-0.5 tracking-wider">Quizzes</span>
-                  <span className="text-xl font-extrabold text-[#011813]">{stats?.totalAttempts || 0}</span>
-                </div>
-                <div className="p-2.5 bg-[#F8F9FA] rounded-xl border border-[#E7E7E8] flex flex-col items-center">
-                  <span className="text-[8px] font-bold text-[#EC4899] uppercase mb-0.5 tracking-wider">Avg Score</span>
-                  <span className="text-xl font-extrabold text-[#EC4899]">{stats?.avgScore || 0}%</span>
-                </div>
-              </div>
-
-              <div className="w-full flex flex-col gap-3 text-left border-t border-[#E7E7E8] pt-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-[9px] font-bold uppercase tracking-wider text-[#98A2B3]">Contact Email</h3>
-                    <p className="text-[11px] font-semibold text-[#011813] flex items-center gap-1.5">
-                      <Mail className="w-3.5 h-3.5 text-[#009D77]" />
-                      {formData.email}
-                    </p>
+              <div className="bg-[#E8FAF5] border-b sm:border-b-0 sm:border-r border-[#BDF1E5] p-6 flex flex-col items-center gap-5 min-h-full">
+                <div
+                  className="w-[90px] h-[90px] rounded-full p-[8px] flex-shrink-0"
+                  // style={{
+                  //   background: `conic-gradient(#009D77 0% ${Math.min(100, Math.max(0, stats?.avgScore ?? 0))}%, #EA4C89 ${Math.min(100, Math.max(0, stats?.avgScore ?? 0))}% 100%)`,
+                  // }}
+                >
+                  <div className="w-[72px] h-[72px] rounded-full bg-white flex items-center justify-center overflow-hidden mx-auto">
+                    {formData.profileImage ? (
+                      <img
+                        src={formData.profileImage}
+                        alt="Profile"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <User className="w-9 h-9 text-[#009D77]" />
+                    )}
                   </div>
-                  
-                  <div className="flex items-center justify-between pt-2 border-t border-[#E7E7E8] border-dashed">
-                    <h3 className="text-[9px] font-bold uppercase tracking-wider text-[#98A2B3]">Social Links</h3>
-                    <div className="flex gap-2">
-                      {formData.github && (
-                        <a href={formData.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-[11px] font-semibold text-[#011813] px-2 py-1 rounded-md border border-[#E7E7E8] hover:bg-[#F8F9FA] transition-colors shadow-sm">
-                          <Github className="w-3 h-3" /> GitHub
-                        </a>
-                      )}
-                      {formData.linkedin && (
-                        <a href={formData.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-[11px] font-semibold text-[#011813] px-2 py-1 rounded-md border border-[#E7E7E8] hover:bg-[#eaf1f8] hover:border-[#0077b5] hover:text-[#0077b5] transition-colors shadow-sm">
-                          <Linkedin className="w-3 h-3" /> LinkedIn
-                        </a>
-                      )}
-                      {!formData.github && !formData.linkedin && (
-                        <span className="text-[11px] text-[#98A2B3] italic">No links added</span>
-                      )}
-                    </div>
-                  </div>
-              </div>
+                </div>
 
-              {detectedSkills.length > 0 && (
-                <div className="w-full text-left mt-4 border-t border-[#E7E7E8] pt-4">
-                  <h3 className="text-[9px] font-bold uppercase tracking-wider text-[#98A2B3] mb-2 flex items-center gap-1">
-                    <Zap className="w-3 h-3 text-[#EC4899]" /> Detected Stack
-                  </h3>
-                  <div className="flex flex-wrap gap-1.5">
+                <div className="text-center flex-1 min-w-[120px] sm:w-full sm:flex-none sm:min-w-0">
+                  <h2 className="text-[15px] font-extrabold text-[#011813] leading-tight">
+                    {formData.name}
+                  </h2>
+                  <p className="text-[11px] text-[#009D77] font-semibold mt-0.5 capitalize flex items-center justify-center gap-1">
+                    <Globe className="w-3 h-3" />{" "}
+                    {formData.targetRole || "Role Not Set"}
+                  </p>
+                </div>
+
+                <div className="hidden sm:block w-10 h-px bg-[#BDF1E5] sm:mx-auto" />
+
+                <div className="text-center sm:w-full flex-shrink-0">
+                  <p className="text-[32px] font-extrabold text-[#EA4C89] leading-none">
+                    {stats?.avgScore || 0}%
+                  </p>
+                  <p className="text-[9px] font-bold uppercase tracking-widest text-[#8D8E8F] mt-1">
+                    Avg Score
+                  </p>
+                </div>
+
+                {detectedSkills.length > 0 && (
+                  <div className="flex flex-wrap justify-center gap-1.5 w-full basis-full sm:basis-auto">
                     {detectedSkills.map((s, i) => (
-                      <span key={i} className="px-2 py-0.5 bg-[#FDF2F8] border border-[rgba(236,72,153,0.12)] rounded-md text-[9px] font-semibold text-[#EC4899] shadow-sm">
+                      <span
+                        key={i}
+                        className="px-2 py-0.5 bg-[#FCE4EE] border border-[rgba(234,76,137,0.2)] rounded-full text-[9px] font-semibold text-[#EA4C89]"
+                      >
                         {s}
                       </span>
                     ))}
                   </div>
-                </div>
-              )}
+                )}
+              </div>
 
+              <div className="p-7 flex flex-col gap-5 relative min-h-full bg-white">
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="absolute top-5 right-5 flex items-center gap-1 bg-white border border-[#E7E7E8] text-[#011813] px-2.5 py-1.5 rounded-lg text-[10px] font-bold hover:bg-[#F8F8F8] transition-colors shadow-sm"
+                >
+                  <Edit3 className="w-3 h-3" /> Edit
+                </button>
+
+                <div>
+                  <p className="text-[9px] font-bold uppercase tracking-widest text-[#8D8E8F] mb-2">
+                    Overview
+                  </p>
+                  <div className="flex gap-2">
+                    <div className="flex-1 bg-[#F8F8F8] rounded-xl p-3 text-center border border-[#E7E7E8]">
+                      <p className="text-[20px] font-extrabold text-[#011813]">
+                        {stats?.totalAttempts || 0}
+                      </p>
+                      <p className="text-[9px] font-bold uppercase tracking-wider text-[#8D8E8F] mt-0.5">
+                        Quizzes
+                      </p>
+                    </div>
+                    <div className="flex-1 bg-[#F8F8F8] rounded-xl p-3 text-center border border-[#E7E7E8]">
+                      <p className="text-[20px] font-extrabold text-[#EA4C89]">
+                        {stats?.avgScore || 0}%
+                      </p>
+                      <p className="text-[9px] font-bold uppercase tracking-wider text-[#8D8E8F] mt-0.5">
+                        Avg Score
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="h-px bg-[#E7E7E8]" />
+
+                <div>
+                  <p className="text-[9px] font-bold uppercase tracking-widest text-[#8D8E8F] mb-2">
+                    Score Progress
+                  </p>
+                  <div className="h-2 bg-[#F8F8F8] rounded-full overflow-hidden border border-[#E7E7E8]">
+                    <div
+                      className="h-full rounded-full transition-all duration-700"
+                      style={{
+                        width: `${stats?.avgScore || 0}%`,
+                        background: "linear-gradient(90deg, #009D77, #EA4C89)",
+                      }}
+                    />
+                  </div>
+                  <p className="text-[10px] text-[#8D8E8F] text-right mt-1">
+                    {stats?.avgScore || 0} / 100
+                  </p>
+                </div>
+
+                <div className="h-px bg-[#E7E7E8]" />
+
+                <div>
+                  <p className="text-[9px] font-bold uppercase tracking-widest text-[#8D8E8F] mb-2">
+                    Bio
+                  </p>
+                  {formData.bio ? (
+                    <p className="text-[12px] text-[#475467] leading-relaxed bg-[#F8F8F8] rounded-lg px-3 py-2.5 border border-[#E7E7E8] italic">
+                      {formData.bio}
+                    </p>
+                  ) : (
+                    <p className="text-[11px] text-[#8D8E8F] bg-[#F8F8F8] rounded-lg px-3 py-2.5 border border-dashed border-[#E7E7E8] italic text-center">
+                      No bio yet. Click Edit to add one.
+                    </p>
+                  )}
+                </div>
+
+                <div className="h-px bg-[#E7E7E8]" />
+
+                <div className="flex flex-col gap-2.5">
+                  <p className="text-[9px] font-bold uppercase tracking-widest text-[#8D8E8F]">
+                    Contact
+                  </p>
+                  <div className="flex items-center justify-between text-[12px]">
+                    <span className="text-[#8D8E8F]">Email</span>
+                    <span className="font-semibold text-[#011813] flex items-center gap-1">
+                      <Mail className="w-3.5 h-3.5 text-[#009D77]" />{" "}
+                      {formData.email}
+                    </span>
+                  </div>
+                  {formData.github && (
+                    <div className="flex items-center justify-between text-[12px]">
+                      <span className="text-[#8D8E8F]">GitHub</span>
+                      <a
+                        href={formData.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-semibold text-[#009D77] flex items-center gap-1 hover:underline"
+                      >
+                        <Github className="w-3.5 h-3.5" /> View Profile
+                      </a>
+                    </div>
+                  )}
+                  {formData.linkedin && (
+                    <div className="flex items-center justify-between text-[12px]">
+                      <span className="text-[#8D8E8F]">LinkedIn</span>
+                      <a
+                        href={formData.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-semibold text-[#0077b5] flex items-center gap-1 hover:underline"
+                      >
+                        <Linkedin className="w-3.5 h-3.5" /> View Profile
+                      </a>
+                    </div>
+                  )}
+                  {!formData.github && !formData.linkedin && (
+                    <span className="text-[11px] text-[#8D8E8F] italic">
+                      No social links added.
+                    </span>
+                  )}
+                </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
       </main>
+
+      <AnimatePresence>
+        {message && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-[#011813] text-white text-[11px] font-semibold px-4 py-2.5 rounded-full shadow-lg z-50 flex items-center gap-2"
+          >
+            <Save className="w-3.5 h-3.5 text-[#009D77]" /> {message}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
