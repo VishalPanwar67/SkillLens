@@ -81,13 +81,39 @@ export default function Interview() {
 
     // Submit Log
     const currentQ = questions[currentIdx];
+    
+    const evaluateAnswer = (answer, ideal) => {
+      if (!answer || answer.trim().length < 15) {
+         return { rating: 1, sentiment: "poor", improvement: "Answer was too brief or completely irrelevant. You must provide detailed technical explanations." };
+      }
+      
+      const answerWords = answer.toLowerCase().match(/\b\w+\b/g) || [];
+      const idealWords = ideal.toLowerCase().match(/\b\w+\b/g) || [];
+      const importantIdealWords = idealWords.filter(w => w.length > 3);
+      
+      const matchCount = importantIdealWords.filter(w => answerWords.includes(w)).length;
+      const matchRatio = importantIdealWords.length > 0 ? (matchCount / importantIdealWords.length) : 0;
+
+      if (matchRatio < 0.15) {
+         return { rating: 2, sentiment: "incorrect", improvement: "Answer drifted off-topic and missed core technical concepts. Study the expected ideal answer carefully to understand the required terms." };
+      } else if (matchRatio < 0.35) {
+         return { rating: 3, sentiment: "average", improvement: "Good start, but missing some key technical depth. Try to explicitly mention specific frameworks and architectural terms." };
+      } else if (matchRatio < 0.6) {
+         return { rating: 4, sentiment: "good", improvement: "Very solid technical answer! To achieve perfection, cover edge cases and advanced considerations mentioned in the ideal answer." };
+      } else {
+         return { rating: 5, sentiment: "excellent", improvement: "Outstanding response! Perfect technical accuracy combined with thorough, real-world detail." };
+      }
+    };
+
+    const evaluation = evaluateAnswer(transcript, currentQ.ideal);
+
     const newFeedback = {
       question: currentQ.question,
       ideal: currentQ.ideal,
       answer: transcript,
-      sentiment: transcript.length > 50 ? "professional" : "brief",
-      rating: transcript.length > 100 ? 5 : 3,
-      improvement: transcript.length < 50 ? "Add more technical details and specific examples." : "Great clarity, try to summarize the final impact of your choice."
+      sentiment: evaluation.sentiment,
+      rating: evaluation.rating,
+      improvement: evaluation.improvement
     };
     
     const updatedFeedback = [...feedback, newFeedback];

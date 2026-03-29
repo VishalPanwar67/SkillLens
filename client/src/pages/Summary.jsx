@@ -26,6 +26,16 @@ export default function Summary() {
     fetchStats();
   }, []);
 
+  const feedbackItems = React.useMemo(() => {
+    try {
+      return JSON.parse(localStorage.getItem('interview_feedback') || '[]');
+    } catch { return []; }
+  }, []);
+
+  const avgRating = feedbackItems.length > 0 
+    ? (feedbackItems.reduce((acc, curr) => acc + (curr.rating || 0), 0) / feedbackItems.length).toFixed(1) 
+    : 0;
+
   if (loading) {
      return (
        <div className="min-h-screen bg-[#f8faf9] flex items-center justify-center">
@@ -35,154 +45,152 @@ export default function Summary() {
   }
 
   const cards = [
-    { title: 'Learning Streak', value: `${stats?.learningStreak || 0} Days`, icon: Flame, color: 'text-orange-500', bg: 'bg-orange-50' },
-    { title: 'Quizzes Passed', value: stats?.totalAttempts || 0, icon: CheckCircle, color: 'text-emerald-500', bg: 'bg-emerald-50' },
-    { title: 'Global Score', value: `${stats?.avgScore || 0}%`, icon: TrophyIcon, color: 'text-yellow-600', bg: 'bg-yellow-50' },
-    { title: 'Skill Footprint', value: `${stats?.uniqueSkills || 0} Skills`, icon: Target, color: 'text-blue-500', bg: 'bg-blue-50' }
+    { title: 'Learning Streak', value: `${stats?.learningStreak || 0} Days`, icon: Flame, color: 'text-[#EC4899]', bg: 'bg-[#FDF2F8]' },
+    { title: 'Quizzes Passed', value: stats?.totalAttempts || 0, icon: CheckCircle, color: 'text-[#009D77]', bg: 'bg-[#E8FAF5]' },
+    { title: 'Global Score', value: `${stats?.avgScore || 0}%`, icon: TrophyIcon, color: 'text-[#EC4899]', bg: 'bg-[#FDF2F8]' },
+    { title: 'Skill Footprint', value: `${stats?.uniqueSkills || 0} Skills`, icon: Target, color: 'text-[#009D77]', bg: 'bg-[#E8FAF5]' }
   ];
 
   return (
-    <>
-            <div className="min-h-screen bg-[#f8faf9]  relative overflow-hidden flex flex-col pt-4 pb-12 px-6">
-        
-        {/* Abstract Background Matching Theme */}
-        <div className="absolute top-0 right-0 w-full h-full pointer-events-none opacity-40">
-           <div className="absolute top-[20%] left-[10%] w-[40%] h-[30%] bg-[#d2fbf0] rounded-full blur-[150px]" />
-           <div className="absolute bottom-[0%] right-[30%] w-[30%] h-[40%] bg-[#fae8fb] rounded-full blur-[140px]" />
-        </div>
-
-        <main className="flex-1 w-full max-w-6xl mx-auto relative z-10 space-y-8">
+    <div className="h-screen bg-[#F8F9FA] relative flex flex-col justify-center px-4 sm:px-6 overflow-hidden">
+        <main className="w-full max-w-6xl mx-auto flex flex-col h-[88vh] max-h-[800px] gap-4 relative z-10">
           
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex justify-between items-end mb-8">
+          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex justify-between items-center bg-white border border-[#E7E7E8] rounded-2xl p-5 shadow-sm shrink-0">
              <div>
-               <h1 className="text-4xl font-black text-[#0b261d] tracking-tight mb-3 flex items-center gap-3">
-                 <Zap className="w-8 h-8 text-[#11b589]" /> My Analytics
+               <h1 className="text-xl font-extrabold text-[#011813] tracking-tight flex items-center gap-2">
+                 <Zap className="w-5 h-5 text-[#009D77]" /> Interview & Analytics Summary
                </h1>
-               <p className="text-[#3b4b45]/70 font-medium text-lg max-w-xl">
-                 Overview of your overall progress, learning patterns, and algorithmic recommendations.
+               <p className="text-xs font-semibold text-[#475467] mt-0.5">
+                 Dynamically generated insights based on your recent activity and evaluations.
                </p>
+             </div>
+             <div className="hidden md:flex items-center gap-3">
+               <span className="px-3 py-1 bg-[#E8FAF5] text-[#009D77] rounded-lg text-[10px] font-bold uppercase tracking-wider border border-[rgba(0,157,119,0.12)]">AI Assessed</span>
              </div>
           </motion.div>
 
-          {/* Stats Grid */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-             {cards.map((stat, i) => (
-                <motion.div 
-                   key={i}
-                   initial={{ opacity: 0, scale: 0.95 }}
-                   animate={{ opacity: 1, scale: 1 }}
-                   transition={{ delay: i * 0.1 }}
-                   className="bg-white/80 backdrop-blur-xl border border-white rounded-[2rem] p-6 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-lg transition-all"
-                >
-                   <div className={`w-12 h-12 ${stat.bg} ${stat.color} rounded-2xl flex items-center justify-center mb-6`}>
-                      <stat.icon className="w-6 h-6" />
+          <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
+            {/* Left Sidebar: Core Stats & Overview */}
+            <motion.div 
+               initial={{ opacity: 0, x: -20 }}
+               animate={{ opacity: 1, x: 0 }}
+               className="lg:w-[35%] flex flex-col gap-4 min-h-0"
+            >
+              {/* Overall AI Score Card */}
+              <div className="bg-[#011813] border border-[#011813] rounded-2xl p-6 shadow-sm relative overflow-hidden shrink-0">
+                 <div className="absolute top-0 right-0 p-4 opacity-[0.05] pointer-events-none">
+                    <Target className="w-32 h-32 text-white" />
+                 </div>
+                 <div className="relative z-10 flex flex-col h-full justify-between">
+                    <h3 className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#009D77] mb-4">
+                      Interview Performance
+                    </h3>
+                    <div className="flex items-baseline gap-2 mb-2">
+                      <span className="text-5xl font-extrabold text-white tracking-tight">{avgRating}</span>
+                      <span className="text-sm font-semibold text-[rgba(255,255,255,0.4)]">/ 5.0</span>
+                    </div>
+                    <p className="text-xs text-[rgba(255,255,255,0.7)] font-medium leading-relaxed">
+                      Average AI rating based on your technical vocabulary and problem-solving formatting.
+                    </p>
+                 </div>
+              </div>
+
+              {/* Dynamic Stats Grid */}
+              <div className="bg-white border border-[#E7E7E8] rounded-2xl p-5 shadow-sm flex-1 grid grid-cols-2 gap-3 overflow-y-auto">
+                 {cards.map((stat, i) => (
+                    <div 
+                       key={i}
+                       className="bg-[#F8F9FA] border border-[#E7E7E8] rounded-xl p-4 flex flex-col justify-center items-center text-center hover:border-[#D0D5DD] transition-all group"
+                    >
+                       <div className="w-8 h-8 rounded-lg bg-white border border-[#E7E7E8] flex items-center justify-center mb-3 shadow-sm group-hover:scale-110 transition-transform">
+                          <stat.icon className={`w-4 h-4 ${stat.color.replace('text-blue-500', 'text-[#009D77]').replace('text-emerald-500', 'text-[#009D77]').replace('text-yellow-600', 'text-[#EC4899]').replace('text-orange-500', 'text-[#EC4899]')}`} />
+                       </div>
+                       <h3 className="text-sm font-extrabold text-[#011813] mb-0.5">{stat.value}</h3>
+                       <p className="text-[9px] font-bold text-[#475467] uppercase tracking-wider">{stat.title}</p>
+                    </div>
+                 ))}
+                 
+                 {/* Feedback Items Count */}
+                 <div className="col-span-2 bg-gradient-to-r from-[#E8FAF5] to-white border border-[#E7E7E8] rounded-xl p-4 flex items-center justify-between">
+                   <div className="flex items-center gap-3">
+                     <div className="w-8 h-8 rounded-lg bg-white border border-[rgba(0,157,119,0.12)] flex items-center justify-center shadow-sm">
+                        <MessageSquare className="w-4 h-4 text-[#009D77]" />
+                     </div>
+                     <div>
+                       <h3 className="text-xs font-bold text-[#011813]">Questions Checked</h3>
+                       <p className="text-[10px] text-[#475467] font-medium">Logged in this session</p>
+                     </div>
                    </div>
-                   <p className="text-gray-400 font-bold uppercase tracking-widest text-xs mb-1">{stat.title}</p>
-                   <h3 className="text-3xl font-black text-[#0b261d]">{stat.value}</h3>
-                </motion.div>
-             ))}
-          </div>
+                   <span className="text-lg font-extrabold text-[#009D77]">{feedbackItems.length}</span>
+                 </div>
+              </div>
+            </motion.div>
 
-           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-              {/* Interview Performance Section */}
-              <motion.div 
-                 initial={{ opacity: 0, y: 20 }}
-                 animate={{ opacity: 1, y: 0 }}
-                 transition={{ delay: 0.4 }}
-                 className="lg:col-span-2 bg-white/90 backdrop-blur-xl border border-white rounded-[2rem] p-8 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] flex flex-col min-h-[500px]"
-              >
-                  <div className="flex items-center justify-between mb-8">
-                     <h3 className="text-[#08241b] font-black text-2xl flex items-center gap-3">
-                       <MessageSquare className="w-6 h-6 text-[#11b589]" /> Interview Evaluation
-                     </h3>
-                     <span className="px-3 py-1 bg-[#d2fbf0] text-[#11b589] rounded-lg text-[10px] font-black uppercase tracking-widest">AI Audit v1.0</span>
-                  </div>
+            {/* Right Panel: Detailed Feedback Scroll */}
+            <motion.div 
+               initial={{ opacity: 0, x: 20 }}
+               animate={{ opacity: 1, x: 0 }}
+               className="lg:w-[65%] bg-white border border-[#E7E7E8] rounded-2xl shadow-sm flex flex-col overflow-hidden min-h-0"
+            >
+                <div className="p-5 border-b border-[#E7E7E8] bg-[#F8F9FA] shrink-0">
+                   <h3 className="text-sm font-extrabold text-[#011813] flex items-center gap-2">
+                     <Cpu className="w-4 h-4 text-[#009D77]" /> Detailed AI Transcripts
+                   </h3>
+                </div>
 
-                  <div className="space-y-6 overflow-y-auto max-h-[500px] pr-4 custom-scrollbar">
-                     {JSON.parse(localStorage.getItem('interview_feedback') || '[]').length > 0 ? (
-                       JSON.parse(localStorage.getItem('interview_feedback') || '[]').map((item, idx) => (
-                          <div key={idx} className="p-6 rounded-3xl bg-[#fbfbfa] border border-gray-100 hover:border-[#11b589]/20 transition-all">
-                             <div className="flex justify-between items-start mb-4">
-                                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Question {idx + 1}</p>
-                                <div className="flex gap-1">
+                <div className="flex-1 overflow-y-auto p-5 custom-scrollbar bg-[#F8F9FA]">
+                   <div className="flex flex-col gap-4">
+                     {feedbackItems.length > 0 ? (
+                       feedbackItems.map((item, idx) => (
+                          <div key={idx} className="p-5 rounded-2xl bg-white border border-[#E7E7E8] shadow-sm flex flex-col gap-4 group hover:border-[#009D77]/30 transition-colors">
+                             
+                             <div className="flex justify-between items-start">
+                                <div>
+                                  <p className="text-[9px] font-bold text-[#98A2B3] uppercase tracking-wider mb-1 flex items-center gap-1.5"><ShieldAlert className="w-3 h-3 text-[#EC4899]"/> Question {idx + 1}</p>
+                                  <h4 className="text-[#011813] font-bold text-sm leading-snug">"{item.question}"</h4>
+                                </div>
+                                <div className="flex gap-0.5 bg-[#F8F9FA] px-2 py-1.5 rounded-md border border-[#E7E7E8]">
                                    {[...Array(5)].map((_, i) => (
-                                      <Star key={i} className={`w-3 h-3 ${i < item.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-200'}`} />
+                                      <Star key={i} className={`w-3 h-3 ${i < item.rating ? 'text-[#009D77] fill-[#009D77]' : 'text-[#E7E7E8]'}`} />
                                    ))}
                                 </div>
                              </div>
-                             <h4 className="text-[#0b261d] font-bold text-lg mb-3">"{item.question}"</h4>
-                             <div className="bg-white p-4 rounded-2xl border border-gray-50 mb-4 shadow-sm italic text-[#3b4b45]/80 text-sm">
-                                <span className="block text-[10px] font-black text-gray-400 uppercase mb-2">Your Answer:</span>
+                             
+                             <div className="bg-[#F8F9FA] p-3.5 rounded-xl border border-[#E7E7E8] italic text-[#475467] text-xs">
+                                <span className="block text-[9px] font-bold text-[#475467] uppercase tracking-wider mb-1.5 not-italic">Your Answer:</span>
                                 "{item.answer || "No response recorded."}"
                              </div>
                              
-                             <div className="bg-[#11b589]/5 p-4 rounded-2xl border border-[#11b589]/10 mb-4 text-[#08241b] text-sm font-medium">
-                                <span className="block text-[10px] font-black text-[#11b589] uppercase mb-2">Proper Technical Answer:</span>
-                                {item.ideal}
-                             </div>
+                             <div className="flex flex-col md:flex-row gap-3">
+                               <div className="flex-1 bg-white p-3.5 rounded-xl border border-[#E7E7E8] text-[#011813] text-xs font-medium">
+                                  <span className="block text-[9px] font-bold text-[#EC4899] uppercase tracking-wider mb-1.5">Expected Ideal:</span>
+                                  {item.ideal}
+                               </div>
 
-                             <div className="flex items-start gap-3 p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
-                                <Zap className="w-4 h-4 text-[#11b589] shrink-0 mt-0.5" />
-                                <div>
-                                   <p className="text-[10px] font-black text-[#11b589] uppercase tracking-widest leading-none mb-1">AI Recommendation</p>
-                                   <p className="text-xs font-bold text-emerald-800 leading-relaxed">{item.improvement}</p>
-                                </div>
+                               <div className="flex-1 bg-[#E8FAF5] border border-[rgba(0,157,119,0.12)] p-3.5 rounded-xl text-xs font-medium">
+                                  <span className="block text-[9px] font-bold text-[#009D77] uppercase tracking-wider mb-1.5 flex items-center gap-1">
+                                    <Zap className="w-3 h-3" /> Improvement Plan
+                                  </span>
+                                  <span className="text-[#011813] leading-relaxed">{item.improvement}</span>
+                               </div>
                              </div>
                           </div>
                        ))
                      ) : (
-                       <div className="flex flex-col items-center justify-center py-20 text-center opacity-40">
-                          <Cpu className="w-16 h-16 mb-4" />
-                          <p className="font-bold italic">Speak with our AI to unlock detailed interview analysis.</p>
+                       <div className="flex flex-col items-center justify-center p-12 text-center bg-white border border-[#E7E7E8] border-dashed rounded-2xl h-full">
+                          <div className="w-16 h-16 bg-[#F8F9FA] rounded-full border border-[#E7E7E8] flex items-center justify-center mb-4">
+                            <Cpu className="w-8 h-8 text-[#98A2B3]" />
+                          </div>
+                          <p className="font-bold text-[#011813] mb-1">No feedback recorded yet</p>
+                          <p className="text-xs text-[#475467]">Complete an AI interview session to see detailed evaluations.</p>
                        </div>
                      )}
-                  </div>
-              </motion.div>
-
-              {/* Progress Chart Placeholder (Optimized for sidebar) */}
-              <motion.div 
-                 initial={{ opacity: 0, x: 20 }}
-                 animate={{ opacity: 1, x: 0 }}
-                 transition={{ delay: 0.5 }}
-                 className="flex flex-col gap-6"
-              >
-                 <div className="bg-gradient-to-br from-[#08241b] to-black rounded-[2rem] p-8 shadow-2xl relative overflow-hidden flex flex-col justify-between flex-1 min-h-[300px]">
-                    <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full blur-[60px] pointer-events-none" />
-                    <div>
-                       <h3 className="text-white/60 font-black uppercase tracking-widest text-[10px] mb-4 flex items-center gap-2">
-                         <TrendingUp className="w-4 h-4 text-[#11b589]" /> Growth Rate
-                       </h3>
-                       <div className="flex items-end gap-3">
-                         <span className="text-4xl font-black text-white">+42%</span>
-                         <span className="text-white/40 font-bold mb-1 text-xs">MONTHLY</span>
-                       </div>
-                    </div>
-                    {/* Simplified Chart for Sidebar */}
-                    <div className="w-full h-24 mt-8 flex items-end gap-2">
-                       {[30, 50, 40, 70, 60, 90, 85].map((h, i) => (
-                         <div key={i} className="flex-1 bg-[#11b589]/30 rounded-t-md hover:bg-[#11b589] transition-colors" style={{ height: `${h}%` }} />
-                       ))}
-                    </div>
-                 </div>
-
-                 {/* Recent Badges Small */}
-                 <div className="bg-white/90 backdrop-blur-xl border border-white rounded-[2rem] p-6 shadow-sm border-gray-100">
-                    <h3 className="text-[#08241b] font-black text-base mb-4 flex items-center gap-2 italic"><Award className="w-4 h-4 text-[#11b589]" /> Recent Perks</h3>
-                    <div className="space-y-3">
-                       {[{ t: "React Master", i: "⚛️" }, { t: "Node Guru", i: "🚀" }].map((b, k) => (
-                          <div key={k} className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 border border-transparent hover:border-gray-200 transition-all">
-                             <span className="text-xl">{b.i}</span>
-                             <span className="text-sm font-black text-[#0b261d]">{b.t}</span>
-                          </div>
-                       ))}
-                    </div>
-                 </div>
-              </motion.div>
-           </div>
-
+                   </div>
+                </div>
+            </motion.div>
+          </div>
         </main>
-      </div>
-    </>
+    </div>
   );
 }
 
