@@ -11,6 +11,8 @@ import quizRoutes from "./routes/quiz.routes.js";
 import companyRoutes from "./routes/companyRoutes.js";
 import roadmapRoutes from "./routes/roadmap.routes.js";
 import interviewRoutes from "./routes/interview.routes.js";
+import skillRoadmapRoutes from "./routes/skillRoadmap.routes.js";
+import customTargetRoutes from "./routes/customTarget.routes.js";
 
 const PORT = process.env.PORT;
 const app = express();
@@ -40,6 +42,8 @@ app.use("/api/quiz", quizRoutes);
 app.use("/api/companies", companyRoutes);
 app.use("/api/roadmap", roadmapRoutes);
 app.use("/api/interview", interviewRoutes);
+app.use("/api/skill-roadmap", skillRoadmapRoutes);
+app.use("/api/custom-hiring", customTargetRoutes);
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({ success: true, message: "Server is running" });

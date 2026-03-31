@@ -48,6 +48,10 @@ const userSchema = new mongoose.Schema(
       github: { type: String, default: "" },
       linkedin: { type: String, default: "" },
     },
+    xp: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

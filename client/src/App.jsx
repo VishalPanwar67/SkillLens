@@ -14,6 +14,7 @@ import Interview from "./pages/Interview.jsx";
 import Summary from "./pages/Summary.jsx";
 import Roadmap from "./pages/Roadmap.jsx";
 import Home from "./pages/Home.jsx";
+import SkillLearning from "./pages/SkillLearning.jsx";
 
 function AppContent() {
   const location = useLocation();
@@ -36,6 +37,7 @@ function AppContent() {
           <Route path="/interview" element={<Interview />} />
           <Route path="/summary" element={<Summary />} />
           <Route path="/roadmap" element={<Roadmap />} />
+          <Route path="/learning" element={<SkillLearning />} />
           <Route
             path="*"
             element={

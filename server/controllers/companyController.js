@@ -151,6 +151,7 @@ export const getAllCompanies = async (req, res) => {
       },
     });
   } catch (error) {
+    console.error("GET_ALL_COMPANIES_ERROR:", error);
     if (error.status) {
       return res
         .status(error.status)
@@ -216,6 +217,7 @@ export const getCompanyById = async (req, res) => {
       },
     });
   } catch (error) {
+    console.error("GET_COMPANY_BY_ID_ERROR:", error);
     if (error.status) {
       return res
         .status(error.status)
@@ -241,13 +243,24 @@ export const getCompanyGap = async (req, res) => {
     }
 
     const { targetRole, skillMap, takenSkills } = await buildSkillContext(req);
-    const roleData = company.roles?.[targetRole];
+    let roleData = company.roles?.[targetRole];
+    let actualRoleUsed = targetRole;
+
     if (!roleData) {
-      return res.status(400).json({
-        success: false,
-        message: "This company does not hire for your target role",
-        code: "ROLE_NOT_AVAILABLE",
-      });
+      // Fallback to first available role if specific one is missing
+      const availableRoles = Object.keys(company.roles || {});
+      if (availableRoles.length > 0) {
+        actualRoleUsed = availableRoles[0];
+        roleData = company.roles[actualRoleUsed];
+      }
+    }
+
+    if (!roleData) {
+       return res.status(400).json({
+         success: false,
+         message: "This company currently has no benchmark data available.",
+         code: "NO_DATA_AVAILABLE",
+       });
     }
 
     const currentMatchPercent = calcMatch(roleData, skillMap);
@@ -303,6 +316,7 @@ export const getCompanyGap = async (req, res) => {
       },
     });
   } catch (error) {
+    console.error("GET_COMPANY_GAP_ERROR:", error);
     if (error.status) {
       return res
         .status(error.status)
@@ -375,6 +389,7 @@ export const getAllCompanyGaps = async (req, res) => {
       },
     });
   } catch (error) {
+    console.error("GET_ALL_COMPANY_GAPS_ERROR:", error);
     if (error.status) {
       return res
         .status(error.status)

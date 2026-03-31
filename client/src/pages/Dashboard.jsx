@@ -8,6 +8,7 @@ import {
   Briefcase,
   ChevronRight,
   AlertCircle,
+  ArrowUpRight,
 } from "lucide-react";
 
 export default function Dashboard() {
@@ -34,7 +35,7 @@ export default function Dashboard() {
       try {
         const token = localStorage.getItem("token");
         const headers = { "Authorization": `Bearer ${token}` };
-        
+
         const profileRes = await fetch("http://localhost:5800/api/auth/profile", { headers });
         const profileData = await profileRes.json();
         const user = profileData?.data?.user;
@@ -48,10 +49,10 @@ export default function Dashboard() {
         let topMatches = [];
         let highestMatch = 0;
         if (compRes.ok && compData.success && compData.data.companies) {
-           topMatches = compData.data.companies.slice(0, 3).map(c => ({
-             name: c.name, score: c.matchPercent, strong: c.matchPercent >= 70
-           }));
-           highestMatch = compData.data.bestMatch?.matchPercent || 0;
+          topMatches = compData.data.companies.slice(0, 3).map(c => ({
+            name: c.name, score: c.matchPercent, strong: c.matchPercent >= 70
+          }));
+          highestMatch = compData.data.bestMatch?.matchPercent || 0;
         }
 
         const roadRes = await fetch("http://localhost:5800/api/roadmap", { headers });
@@ -62,15 +63,15 @@ export default function Dashboard() {
         const profData = await profRes.json();
         let skillsScore = 0;
         if (profData.data?.profiles && profData.data.profiles.length > 0) {
-           const profiles = profData.data.profiles;
-           const avg = profiles.reduce((sum, p) => sum + (p.depthScore || 0), 0) / (profiles.length || 1);
-           skillsScore = Math.round(avg); 
+          const profiles = profData.data.profiles;
+          const avg = profiles.reduce((sum, p) => sum + (p.depthScore || 0), 0) / (profiles.length || 1);
+          skillsScore = Math.round(avg);
         }
 
         const interviewScore = Math.min(100, skillsScore > 0 ? skillsScore + 5 : 0);
         // Readiness = weighted average pf resume, skills, and roadmap
         const readinessScore = Math.round((resumeScore * 0.4) + (skillsScore * 0.4) + (roadmapScore * 0.2)) || 0;
-        
+
         let nextStep = { title: "Upload Resume", desc: "Start by analyzing your resume for skill gaps.", link: "/resume" };
         if (resumeScore > 0 && skillsScore === 0) {
           nextStep = { title: "Take a Quiz", desc: "Verify your detected skills with a quick assessment.", link: "/quiz" };
@@ -81,7 +82,7 @@ export default function Dashboard() {
         } else if (highestMatch >= 70) {
           nextStep = { title: "Apply Now", desc: "You have strong matches! Time to reach out.", link: "/company" };
         }
-        
+
         // Map history to chart bars
         const historyBars = rawHistory.slice(-7).map(h => ({
           date: new Date(h.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
@@ -161,7 +162,7 @@ export default function Dashboard() {
           <div className="flex flex-col md:flex-row gap-8 items-stretch">
             {/* Primary Score */}
             <div className="flex-shrink-0 flex flex-col justify-center items-center bg-[#011813] rounded-2xl p-6 text-white w-full md:w-[220px] shadow-sm relative overflow-hidden">
-               {/* decorative backdrop */}
+              {/* decorative backdrop */}
               <div className="absolute top-0 right-0 opacity-[0.03] scale-150 -translate-y-4 translate-x-4">
                 <Target className="w-48 h-48" />
               </div>
@@ -183,7 +184,7 @@ export default function Dashboard() {
             {/* Sub Metrics */}
             <div className="flex-1 flex flex-col justify-center min-w-0">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 h-full">
-                
+
                 <div className="bg-[#F8F9FA] border border-[#E7E7E8] rounded-2xl p-5 flex flex-col relative overflow-hidden group hover:border-[#D0D5DD] transition-colors">
                   <div className="absolute top-3 right-3 text-[#E7E7E8] group-hover:text-[#009D77]/20 transition-colors">
                     <BookOpen className="w-12 h-12" />
@@ -264,15 +265,13 @@ export default function Dashboard() {
                       initial={{ width: 0 }}
                       animate={{ width: `${company.score}%` }}
                       transition={{ duration: 1, delay: 0.35 }}
-                      className={`h-full rounded-full ${
-                        company.strong ? "bg-[#EC4899]" : "bg-[#F472B6]"
-                      }`}
+                      className={`h-full rounded-full ${company.strong ? "bg-[#EC4899]" : "bg-[#F472B6]"
+                        }`}
                     />
                   </div>
                   <div
-                    className={`w-10 text-right text-sm font-extrabold shrink-0 ${
-                      company.strong ? "text-[#EC4899]" : "text-[#F472B6]"
-                    }`}
+                    className={`w-10 text-right text-sm font-extrabold shrink-0 ${company.strong ? "text-[#EC4899]" : "text-[#F472B6]"
+                      }`}
                   >
                     {company.score}%
                   </div>
@@ -289,10 +288,14 @@ export default function Dashboard() {
             </div>
           </div>
 
+
+
+        {/* Next Recommendation & Progression */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Next Step Banner */}
           <div className="bg-[#011813] border border-[#011813] rounded-2xl p-6 shadow-sm flex flex-col overflow-hidden relative">
             <div className="absolute top-0 right-[-10%] p-8 opacity-10 pointer-events-none">
-               <Brain className="w-40 h-40 text-white" />
+              <Brain className="w-40 h-40 text-white" />
             </div>
             <div className="relative z-10 flex flex-col h-full">
               <h3 className="text-xs font-bold uppercase tracking-[0.1em] text-[#009D77] mb-auto">
@@ -306,6 +309,7 @@ export default function Dashboard() {
                   {stats.nextStep.desc}
                 </p>
               </div>
+        </div>
               <Link
                 to={stats.nextStep.link}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#009D77] text-white text-sm font-bold px-6 py-2.5 rounded-xl hover:bg-[#008a68] transition-colors focus:ring-4 focus:ring-[#009D77]/20"
@@ -332,11 +336,10 @@ export default function Dashboard() {
                     initial={{ height: 0 }}
                     animate={{ height: bar.height }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className={`w-full max-w-[2.5rem] rounded-t-lg transition-colors duration-200 ${
-                      bar.active 
-                        ? "bg-gradient-to-t from-[#E8FAF5] to-[#009D77] group-hover:to-[#008A68]" 
+                    className={`w-full max-w-[2.5rem] rounded-t-lg transition-colors duration-200 ${bar.active
+                        ? "bg-gradient-to-t from-[#E8FAF5] to-[#009D77] group-hover:to-[#008A68]"
                         : "bg-[#F0F2F5]"
-                    }`}
+                      }`}
                   />
                   <div className={`mt-3 text-[10px] sm:text-[11px] font-bold whitespace-nowrap ${bar.active ? "text-[#475467]" : "text-[#98A2B3]"}`}>
                     {bar.date}
@@ -355,11 +358,11 @@ export default function Dashboard() {
               Placement Insight
             </h2>
             <p className="text-sm text-[#475467] leading-relaxed">
-              {stats.readinessScore > 75 
-                ? `You're in the top percentile. Keep practicing mock interviews.` 
-                : stats.readinessScore > 40 
-                ? `You have a solid foundation. Follow your roadmap to boost readiness.`
-                : `Start your journey by completing quizzes and building your roadmap.`}
+              {stats.readinessScore > 75
+                ? `You're in the top percentile. Keep practicing mock interviews.`
+                : stats.readinessScore > 40
+                  ? `You have a solid foundation. Follow your roadmap to boost readiness.`
+                  : `Start your journey by completing quizzes and building your roadmap.`}
             </p>
           </div>
 

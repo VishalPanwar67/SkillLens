@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { protectRoute } from "../middleware/protectRoute.js";
 import { acceptResumeUpload } from "../middleware/upload.middleware.js";
-import { uploadResume } from "../controllers/resume.controllers.js";
+import { uploadResume, analyzeCurrent } from "../controllers/resume.controllers.js";
 
 const resumeRoutes = Router();
 
@@ -11,5 +11,7 @@ resumeRoutes.post(
   acceptResumeUpload,
   uploadResume
 );
+
+resumeRoutes.post("/analyze-current", protectRoute, analyzeCurrent);
 
 export default resumeRoutes;

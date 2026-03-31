@@ -53,3 +53,15 @@ export const uploadResume = asyncHandler(async (req, res) => {
     })
   );
 });
+
+export const analyzeCurrent = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.id);
+  if (!user) throw new ApiError(404, "User not found");
+  
+  if (!user.resumeText || !user.targetRole) {
+    return res.status(200).json(new ApiResponse(200, "Incomplete profile", { missingSkills: [] }));
+  }
+
+  const analysis = detectSkills(user.resumeText, user.targetRole);
+  return res.status(200).json(new ApiResponse(200, "Current analysis fetched", analysis));
+});
