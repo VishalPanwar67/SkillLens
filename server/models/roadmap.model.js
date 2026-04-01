@@ -13,6 +13,7 @@ const roadmapTaskSchema = new mongoose.Schema(
       enum: ["easy", "medium", "hard"],
       default: "medium",
     },
+    xpGranted: { type: Boolean, default: false },
     done: { type: Boolean, default: false },
     completedAt: { type: Date, default: null },
   },

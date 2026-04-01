@@ -26,6 +26,104 @@ const serializeRoadmap = (doc) => ({
   updatedAt: doc.updatedAt,
 });
 
+const ROADMAP_SKILLS = new Set([
+  "react",
+  "nodejs",
+  "mongodb",
+  "sql",
+  "python",
+  "java",
+  "dsa",
+  "restapi",
+  "systemdesign",
+  "git",
+  "javascript",
+  "typescript",
+  "express",
+  "nextjs",
+  "redux",
+  "tailwind",
+  "bootstrap",
+  "html",
+  "css",
+  "mysql",
+  "postgresql",
+  "firebase",
+  "docker",
+  "aws",
+  "linux",
+  "c",
+  "cpp",
+  "php",
+  "django",
+  "flask",
+]);
+
+const toCanonicalSkill = (raw) => {
+  const s = String(raw || "").toLowerCase().trim();
+  if (!s) return "";
+  if (s === "node.js" || s === "node js") return "nodejs";
+  if (s === "next.js" || s === "next js") return "nextjs";
+  if (s === "mongo" || s === "mongo db") return "mongodb";
+  if (s === "rest api" || s === "restful api") return "restapi";
+  if (s === "system design" || s === "systems design") return "systemdesign";
+  if (s === "data structures and algorithms") return "dsa";
+  if (s === "postgres") return "postgresql";
+  return s.replace(/\s+/g, "");
+};
+
+const getTaskXp = (task) => {
+  const hours = Math.max(1, Math.min(Number(task?.estimateHours) || 2, 8));
+  const difficulty = String(task?.difficulty || "medium").toLowerCase();
+  const multiplier =
+    difficulty === "hard" ? 1.5 : difficulty === "easy" ? 1 : 1.25;
+  return Math.max(6, Math.round((6 + hours * 2) * multiplier));
+};
+
+
+const applyTaskProgressToSkillProfiles = async ({ userId, week, task }) => {
+  const skillFocus = Array.isArray(week?.skillFocus) ? week.skillFocus : [];
+  const skills = [
+    ...new Set(
+      skillFocus
+        .map(toCanonicalSkill)
+        .filter((s) => s && ROADMAP_SKILLS.has(s))
+    ),
+  ];
+
+  if (skills.length === 0) return;
+
+  const totalXp = getTaskXp(task);
+  const xpPerSkill = Math.max(2, Math.round(totalXp / skills.length));
+  const depthGain = Math.max(1, Math.min(8, Math.round(xpPerSkill / 3)));
+
+  for (const skill of skills) {
+    const existing = await SkillProfile.findOne({ userId, skill }).select(
+      "depthScore depthLevel skillXp"
+    );
+    const currentScore = existing?.depthScore ?? 0;
+    const nextDepthScore = Math.min(100, currentScore + depthGain);
+    const nextDepthLevel =
+      nextDepthScore <= 40
+        ? "Beginner"
+        : nextDepthScore <= 70
+          ? "Intermediate"
+          : "Advanced";
+
+    await SkillProfile.findOneAndUpdate(
+      { userId, skill },
+      {
+        $set: {
+          depthScore: nextDepthScore,
+          depthLevel: nextDepthLevel,
+        },
+        $inc: { skillXp: xpPerSkill },
+      },
+      { upsert: true, returnDocument: "after" }
+    );
+  }
+};
+
 export const generateRoadmap = asyncHandler(async (req, res) => {
   const userId = getAuthUserId(req);
   if (!userId) {
@@ -136,8 +234,15 @@ export const toggleRoadmapTask = asyncHandler(async (req, res) => {
 
   const bodyDone = req.body?.done;
   const nextDone = typeof bodyDone === "boolean" ? bodyDone : !task.done;
+  const wasDone = task.done;
   task.done = nextDone;
   task.completedAt = nextDone ? new Date() : null;
+
+  // Award XP only once per task to prevent toggle farming.
+  if (!wasDone && nextDone && !task.xpGranted) {
+    await applyTaskProgressToSkillProfiles({ userId, week, task });
+    task.xpGranted = true;
+  }
 
   week.done = week.tasks.length > 0 && week.tasks.every((t) => t.done);
   week.completedAt = week.done ? new Date() : null;
@@ -178,6 +283,15 @@ export const toggleRoadmapWeek = asyncHandler(async (req, res) => {
 
   const bodyDone = req.body?.done;
   const nextDone = typeof bodyDone === "boolean" ? bodyDone : !week.done;
+
+  if (nextDone) {
+    for (const task of week.tasks) {
+      if (!task.done && !task.xpGranted) {
+        await applyTaskProgressToSkillProfiles({ userId, week, task });
+        task.xpGranted = true;
+      }
+    }
+  }
 
   week.done = nextDone;
   week.completedAt = nextDone ? new Date() : null;

@@ -20,6 +20,31 @@ const toLabel = (skill) => SKILL_LABELS[skill] || skill;
 
 const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 
+const calcCompanyMatchPercent = (roleData, depthMap) => {
+  const reqScore = (roleData?.requiredSkills || []).reduce((sum, req) => {
+    const depth = depthMap[req.skill] ?? 0;
+    const ratio = Math.min(depth / req.minimumDepth, 1);
+    return sum + ratio * (req.weight || 0);
+  }, 0);
+
+  const prefScore = (roleData?.preferredSkills || []).reduce((sum, pref) => {
+    const depth = depthMap[pref.skill];
+    if (depth === undefined) return sum;
+    const ratio = Math.min(depth / pref.minimumDepth, 1);
+    return sum + ratio * (pref.weight || 0);
+  }, 0);
+
+  return Math.round(reqScore + prefScore);
+};
+
+const buildDepthMap = (skillProfiles = []) => {
+  const map = {};
+  for (const s of skillProfiles) {
+    map[String(s.skill || "").toLowerCase().trim()] = s.depthScore ?? 0;
+  }
+  return map;
+};
+
 const safeJsonParse = (text) => {
   try {
     return JSON.parse(text);
@@ -165,6 +190,93 @@ const buildFallbackRoadmap = ({
   };
 };
 
+const buildMasteryRoadmap = ({
+  totalWeeks,
+  targetRole,
+  companyName,
+  targetRoleData,
+  skillProfiles,
+}) => {
+  const depthMap = buildDepthMap(skillProfiles);
+  const preferred = (targetRoleData?.preferredSkills || [])
+    .map((p) => ({
+      skill: p.skill,
+      gap: Math.max((p.minimumDepth || 0) - (depthMap[p.skill] || 0), 0),
+    }))
+    .sort((a, b) => b.gap - a.gap)
+    .map((x) => x.skill);
+
+  const advancedDefaults = ["systemdesign", "dsa", "restapi", "git"];
+  const focusPool = [...new Set([...preferred, ...advancedDefaults])].filter(
+    Boolean
+  );
+
+  const weeks = Array.from({ length: totalWeeks }, (_, idx) => {
+    const primary = focusPool[idx % focusPool.length] || "systemdesign";
+    const secondary =
+      focusPool[(idx + 1) % focusPool.length] || "dsa";
+    const n = idx + 1;
+
+    return {
+      weekNumber: n,
+      theme: `${toLabel(primary)} mastery sprint`,
+      goal: `Convert readiness into interview-winning execution for ${toLabel(primary)}.`,
+      skillFocus: [primary, secondary],
+      tasks: [
+        {
+          id: `w${n}_t1`,
+          title: `Advanced drill: ${toLabel(primary)}`,
+          description:
+            `Solve advanced, company-style scenarios in ${toLabel(primary)}. ` +
+            "Prioritize quality, speed, and edge-case handling.",
+          why: "At 100% readiness, consistency at higher difficulty is the differentiator.",
+          deliverable:
+            "A reviewed set of solutions with notes on trade-offs and optimization decisions.",
+          estimateHours: 3,
+          difficulty: "hard",
+          done: false,
+          completedAt: null,
+        },
+        {
+          id: `w${n}_t2`,
+          title: "Interview simulation checkpoint",
+          description:
+            "Run one timed mock round (technical + discussion) and record weak communication or reasoning points.",
+          why: "Selection depends on interview performance beyond raw skill thresholds.",
+          deliverable:
+            "Mock interview summary with top 3 improvements for next sprint.",
+          estimateHours: 2,
+          difficulty: "medium",
+          done: false,
+          completedAt: null,
+        },
+        {
+          id: `w${n}_t3`,
+          title: `Retest + polish: ${toLabel(primary)}`,
+          description:
+            `Retake quiz/checkpoint for ${toLabel(primary)} and polish one portfolio-quality artifact.`,
+          why: "Retention and applied quality keep you interview-ready over time.",
+          deliverable:
+            "Updated quiz/result snapshot plus one polished implementation artifact.",
+          estimateHours: 2,
+          difficulty: "medium",
+          done: false,
+          completedAt: null,
+        },
+      ],
+      done: false,
+      completedAt: null,
+    };
+  });
+
+  return {
+    title: companyName
+      ? `${totalWeeks}-week ${targetRole} mastery roadmap for ${companyName}`
+      : `${totalWeeks}-week ${targetRole} mastery roadmap`,
+    weeks,
+  };
+};
+
 export const buildPromptPayload = ({
   totalWeeks,
   targetRole,
@@ -262,6 +374,24 @@ export const generateRoadmapWithAI = async ({
 }) => {
   const targetCompany = targetCompanyId ? getCompanyById(targetCompanyId) : null;
   const targetRoleData = targetCompany?.roles?.[targetRole] ?? null;
+  const depthMap = buildDepthMap(skillProfiles);
+  const currentCompanyMatch = targetRoleData
+    ? calcCompanyMatchPercent(targetRoleData, depthMap)
+    : 0;
+
+  // Consistent behavior: if already fully ready for selected target company,
+  // generate a mastery/maintenance roadmap (not a gap-remediation roadmap).
+  if (targetCompany && targetRoleData && currentCompanyMatch >= 100) {
+    const mastery = buildMasteryRoadmap({
+      totalWeeks,
+      targetRole,
+      companyName: targetCompany.name,
+      targetRoleData,
+      skillProfiles,
+    });
+    return { ...mastery, source: "fallback" };
+  }
+
   const prioritizedSkills = derivePrioritizedSkills(
     skillProfiles,
     targetRoleData,

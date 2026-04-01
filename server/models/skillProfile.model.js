@@ -38,6 +38,11 @@ const skillProfileSchema = new mongoose.Schema(
       type: Boolean,
       default: false, // set true if interview keywords missed
     },
+    skillXp: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
   },
   { timestamps: true }
 );
