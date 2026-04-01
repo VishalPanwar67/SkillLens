@@ -179,7 +179,7 @@ export default function Company() {
                             ) : (
                                <span className="px-2 py-0.5 border border-gray-100 text-gray-300 rounded-md text-[7px] font-black uppercase tracking-widest">Global</span>
                             )}
-                            <span className={`px-2 py-0.5 rounded-md text-[8px] font-black uppercase tracking-widest ${company.fit >= 70 ? 'bg-[#E8FAF5] text-[#009D77]' : 'bg-orange-50 text-orange-600'}`}>
+                           <span className={`px-2 py-0.5 rounded-md text-[8px] font-black uppercase tracking-widest ${company.fit > 0 ? 'bg-[#E8FAF5] text-[#009D77]' : 'bg-orange-50 text-orange-600'}`}>
                                {company.fit}% Match
                             </span>
                          </div>
