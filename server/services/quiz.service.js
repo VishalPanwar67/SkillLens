@@ -6,6 +6,7 @@ import {
   QUESTIONS_PER_SKILL,
   DIFFICULTY_MIX,
   isQuizSkill,
+  parseTierQuizSkill,
 } from "../constants/quizSkills.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -74,12 +75,59 @@ export const pickStratifiedQuestions = (pool, count = QUESTIONS_PER_SKILL) => {
   return shuffle(result.slice(0, count));
 };
 
+/**
+ * Picks `count` questions preferring one difficulty tier, then spilling into
+ * related tiers so we always reach 10 even if the bank has <10 in that tier.
+ */
+export const pickTierQuestions = (pool, primaryTier, count = QUESTIONS_PER_SKILL) => {
+  if (!pool?.length) return null;
+
+  const fallbackOrder =
+    primaryTier === "easy"
+      ? ["easy", "medium", "hard"]
+      : primaryTier === "medium"
+        ? ["medium", "easy", "hard"]
+        : ["hard", "medium", "easy"];
+
+  const picked = [];
+  const used = new Set();
+
+  for (const tier of fallbackOrder) {
+    const bucket = shuffle(
+      pool.filter((q) => normalizeDifficulty(q) === tier && !used.has(q.id))
+    );
+    for (const q of bucket) {
+      if (picked.length >= count) break;
+      picked.push(q);
+      used.add(q.id);
+    }
+    if (picked.length >= count) break;
+  }
+
+  if (picked.length < count) return null;
+  return shuffle(picked.slice(0, count));
+};
+
 export const depthLevelFromScore = (score) => {
   if (score <= 40) return "Beginner";
   if (score <= 70) return "Intermediate";
   return "Advanced";
 };
 
+/** Find a question anywhere in questions.json (ids are unique per project). */
+export const findQuestionInBank = (questionId) => {
+  const bank = loadBank();
+  const id = String(questionId || "");
+  for (const key of Object.keys(bank)) {
+    const list = bank[key];
+    if (!Array.isArray(list)) continue;
+    const q = list.find((x) => x.id === id);
+    if (q) {
+      return { ...q, bankKey: key };
+    }
+  }
+  return null;
+};
 
 export const buildQuizSession = (skillIds) => {
   const bank = loadBank();
@@ -97,6 +145,29 @@ export const buildQuizSession = (skillIds) => {
 
   const questions = [];
   for (const skill of unique) {
+    const tierInfo = parseTierQuizSkill(skill);
+
+    if (tierInfo) {
+      const pool = bank[tierInfo.base];
+      if (!Array.isArray(pool) || pool.length === 0) {
+        throw new Error(`INSUFFICIENT_QUESTIONS:${skill}`);
+      }
+      const picked = pickTierQuestions(pool, tierInfo.difficulty, QUESTIONS_PER_SKILL);
+      if (!picked) {
+        throw new Error(`INSUFFICIENT_QUESTIONS:${skill}`);
+      }
+      for (const q of picked) {
+        questions.push({
+          id: q.id,
+          skill,
+          difficulty: normalizeDifficulty(q),
+          question: q.question,
+          options: q.options,
+        });
+      }
+      continue;
+    }
+
     const pool = bank[skill];
     const picked = pickStratifiedQuestions(pool, QUESTIONS_PER_SKILL);
     if (!picked) {
@@ -114,42 +185,51 @@ export const buildQuizSession = (skillIds) => {
   }
 
   const shuffled = shuffle(questions);
+
+  const singleTier = unique.length === 1 ? parseTierQuizSkill(unique[0]) : null;
+  const difficultyMix = singleTier
+    ? {
+        easy: singleTier.difficulty === "easy" ? QUESTIONS_PER_SKILL : 0,
+        medium: singleTier.difficulty === "medium" ? QUESTIONS_PER_SKILL : 0,
+        hard: singleTier.difficulty === "hard" ? QUESTIONS_PER_SKILL : 0,
+      }
+    : { ...DIFFICULTY_MIX };
+
   return {
     questions: shuffled,
     totalQuestions: shuffled.length,
     skills: unique,
     questionsPerSkill: QUESTIONS_PER_SKILL,
-    difficultyMix: { ...DIFFICULTY_MIX },
+    difficultyMix,
   };
 };
 
-const getQuestionMap = () => {
-  const bank = loadBank();
-  const idToQ = new Map();
-  for (const skill of QUIZ_SKILL_IDS) {
-    const list = bank[skill] || [];
-    for (const q of list) {
-      idToQ.set(q.id, { ...q, skill });
-    }
-  }
-  return idToQ;
-};
-
 /** Per-question rows for the results UI (correct / incorrect, text, indices). */
-export const buildQuestionReviews = (answers) => {
-  const idToQ = getQuestionMap();
+export const buildQuestionReviews = (answers, sessionSkills) => {
+  const singleSessionSkill =
+    Array.isArray(sessionSkills) && sessionSkills.length === 1
+      ? sessionSkills[0]
+      : null;
+  const tierMeta = singleSessionSkill
+    ? parseTierQuizSkill(singleSessionSkill)
+    : null;
+
   const reviews = [];
   for (const a of answers) {
-    const q = idToQ.get(a.questionId);
+    const q = findQuestionInBank(a.questionId);
     if (!q) continue;
+
+    if (tierMeta && q.bankKey !== tierMeta.base) continue;
+
     const selectedIndex = Number.isInteger(a.selectedIndex)
       ? a.selectedIndex
       : -1;
     const isCorrect = selectedIndex === q.correctIndex;
+    const displaySkill = singleSessionSkill || q.bankKey;
     reviews.push({
       questionId: q.id,
       question: q.question,
-      skill: q.skill,
+      skill: displaySkill,
       difficulty: normalizeDifficulty(q),
       selectedIndex,
       correctIndex: q.correctIndex,
@@ -159,35 +239,41 @@ export const buildQuestionReviews = (answers) => {
   return reviews;
 };
 
-export const gradeQuiz = (answers) => {
-  const idToQ = getQuestionMap();
+export const gradeQuiz = (answers, sessionSkills) => {
+  const targetSkill =
+    Array.isArray(sessionSkills) && sessionSkills.length === 1
+      ? sessionSkills[0]
+      : null;
+  const tierInfo = targetSkill ? parseTierQuizSkill(targetSkill) : null;
 
   const bySkill = {};
-  for (const skill of QUIZ_SKILL_IDS) {
-    bySkill[skill] = { correct: 0, total: 0 };
-  }
-
   const bySkillTier = {};
 
   for (const a of answers) {
-    const q = idToQ.get(a.questionId);
+    const q = findQuestionInBank(a.questionId);
     if (!q) continue;
-    if (!bySkill[q.skill]) bySkill[q.skill] = { correct: 0, total: 0 };
-    bySkill[q.skill].total += 1;
-    const tier = normalizeDifficulty(q);
-    if (!bySkillTier[q.skill]) {
-      bySkillTier[q.skill] = {
+
+    if (tierInfo && q.bankKey !== tierInfo.base) continue;
+
+    const skillKey = targetSkill || q.bankKey;
+    if (!bySkill[skillKey]) bySkill[skillKey] = { correct: 0, total: 0 };
+    bySkill[skillKey].total += 1;
+
+    const diff = normalizeDifficulty(q);
+    if (!bySkillTier[skillKey]) {
+      bySkillTier[skillKey] = {
         easy: { correct: 0, total: 0 },
         medium: { correct: 0, total: 0 },
         hard: { correct: 0, total: 0 },
       };
     }
-    bySkillTier[q.skill][tier].total += 1;
+    bySkillTier[skillKey][diff].total += 1;
+
     const ok =
       Number.isInteger(a.selectedIndex) && a.selectedIndex === q.correctIndex;
     if (ok) {
-      bySkill[q.skill].correct += 1;
-      bySkillTier[q.skill][tier].correct += 1;
+      bySkill[skillKey].correct += 1;
+      bySkillTier[skillKey][diff].correct += 1;
     }
   }
 

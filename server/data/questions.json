@@ -119,6 +119,126 @@
       ],
       "correctIndex": 1,
       "difficulty": "easy"
+    },
+    {
+      "id": "react_10",
+      "question": "useCallback is used to:",
+      "options": [
+        "Create a new object",
+        "Memoize a function reference",
+        "Trigger re-renders",
+        "Fetch APIs"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "react_11",
+      "question": "Context API is primarily used for:",
+      "options": [
+        "Local component state",
+        "Sharing data without prop drilling",
+        "CSS theming only",
+        "Routing"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "react_12",
+      "question": "React.lazy() is used for:",
+      "options": [
+        "Suspending animations",
+        "Code splitting / lazy loading components",
+        "Event debouncing",
+        "Caching API calls"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "react_13",
+      "question": "Error boundaries can catch errors in:",
+      "options": [
+        "Event handlers",
+        "Child component rendering and lifecycle",
+        "setTimeout callbacks",
+        "Fetch requests"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "react_14",
+      "question": "What triggers a re-render in React?",
+      "options": [
+        "Only URL changes",
+        "State or prop changes",
+        "Only CSS changes",
+        "Network requests only"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "react_15",
+      "question": "useRef can be used to:",
+      "options": [
+        "Replace useState",
+        "Access DOM elements or persist mutable values without re-render",
+        "Handle routing",
+        "Create context"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "react_16",
+      "question": "The dependency array in useEffect with [] means:",
+      "options": [
+        "Run on every render",
+        "Run only once after mount",
+        "Run only on unmount",
+        "Never run"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "react_17",
+      "question": "useReducer is best suited for:",
+      "options": [
+        "Simple toggle state",
+        "Complex state logic with multiple sub-values",
+        "CSS animation",
+        "Fetching data directly"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "react_18",
+      "question": "In React, reconciliation refers to:",
+      "options": [
+        "Merging CSS files",
+        "Comparing virtual DOM trees to update the real DOM efficiently",
+        "Resolving imports",
+        "Syncing state to server"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "react_19",
+      "question": "Lifting state up means:",
+      "options": [
+        "Moving state to a global store",
+        "Moving shared state to a common parent component",
+        "Using Redux",
+        "Converting class to function component"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
     }
   ],
   "nodejs": [
@@ -241,6 +361,126 @@
       ],
       "correctIndex": 1,
       "difficulty": "easy"
+    },
+    {
+      "id": "nodejs_10",
+      "question": "The fs module in Node.js is used for:",
+      "options": [
+        "Frontend styling",
+        "File system operations",
+        "WebSocket connections",
+        "Template rendering"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "nodejs_11",
+      "question": "async/await in Node.js is built on top of:",
+      "options": [
+        "Callbacks only",
+        "Promises",
+        "Streams",
+        "Worker threads"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "nodejs_12",
+      "question": "What does setImmediate() do?",
+      "options": [
+        "Runs immediately and blocks",
+        "Schedules callback after I/O events in the event loop",
+        "Replaces setTimeout",
+        "Pauses execution"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "nodejs_13",
+      "question": "middleware in Express is:",
+      "options": [
+        "A database adapter",
+        "A function that processes requests before the route handler",
+        "A CSS loader",
+        "A template engine"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "nodejs_14",
+      "question": "package.json scripts field is used to:",
+      "options": [
+        "Define CSS",
+        "Run custom CLI commands via npm run",
+        "Configure Babel only",
+        "List team members"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "nodejs_15",
+      "question": "The http module in Node allows you to:",
+      "options": [
+        "Only make GET requests",
+        "Create HTTP servers and make requests without external libraries",
+        "Parse CSS",
+        "Handle MongoDB"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "nodejs_16",
+      "question": "Worker threads in Node.js are used for:",
+      "options": [
+        "CSS processing",
+        "CPU-intensive tasks without blocking the event loop",
+        "Routing",
+        "Template rendering"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "nodejs_17",
+      "question": "dotenv package is commonly used to:",
+      "options": [
+        "Compile TypeScript",
+        "Load environment variables from a .env file",
+        "Minify JS",
+        "Generate UUIDs"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "nodejs_18",
+      "question": "What is REPL in Node.js?",
+      "options": [
+        "A build tool",
+        "Read-Eval-Print Loop for interactive JS execution",
+        "A REST client",
+        "A module bundler"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "nodejs_19",
+      "question": "Node.js is single-threaded but handles concurrency via:",
+      "options": [
+        "Multiple CPUs directly",
+        "Non-blocking I/O and the event loop",
+        "Shared memory locks",
+        "OS threads per request"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
     }
   ],
   "mongodb": [
@@ -363,6 +603,126 @@
       ],
       "correctIndex": 1,
       "difficulty": "easy"
+    },
+    {
+      "id": "mongodb_10",
+      "question": "The $lookup stage in aggregation performs:",
+      "options": [
+        "Text search",
+        "A left outer join from another collection",
+        "Sorting only",
+        "Field renaming"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "mongodb_11",
+      "question": "updateOne with $set operator:",
+      "options": [
+        "Replaces the whole document",
+        "Updates only specified fields",
+        "Deletes the document",
+        "Creates a new collection"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "mongodb_12",
+      "question": "A capped collection in MongoDB:",
+      "options": [
+        "Limits query results",
+        "Has fixed size and overwrites oldest docs when full",
+        "Encrypts all fields",
+        "Compresses BSON"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "mongodb_13",
+      "question": "The $match stage in aggregation is similar to:",
+      "options": [
+        "ORDER BY in SQL",
+        "WHERE clause filtering in SQL",
+        "GROUP BY in SQL",
+        "JOIN in SQL"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "mongodb_14",
+      "question": "insertMany() inserts:",
+      "options": [
+        "One document always",
+        "Multiple documents in a single operation",
+        "Only if collection is empty",
+        "Only indexed fields"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "mongodb_15",
+      "question": "TTL indexes in MongoDB are used to:",
+      "options": [
+        "Speed up text searches",
+        "Automatically delete documents after a time period",
+        "Encrypt documents",
+        "Sort results"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "mongodb_16",
+      "question": "The $group stage in aggregation is used to:",
+      "options": [
+        "Filter documents",
+        "Group documents and apply accumulators like $sum or $avg",
+        "Join collections",
+        "Sort results"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "mongodb_17",
+      "question": "In Mongoose, a Schema defines:",
+      "options": [
+        "Server routes",
+        "The structure and types of a MongoDB document",
+        "CSS variables",
+        "API endpoints"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "mongodb_18",
+      "question": "db.collection.drop() does what?",
+      "options": [
+        "Removes all indexes only",
+        "Removes the entire collection",
+        "Empties the collection but keeps it",
+        "Renames the collection"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "mongodb_19",
+      "question": "An ObjectId in MongoDB is:",
+      "options": [
+        "A sequential integer",
+        "A 12-byte unique identifier auto-generated by default",
+        "A UUID v4 string",
+        "Always assigned by the user"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
     }
   ],
   "sql": [
@@ -482,6 +842,126 @@
         "DELETE removes rows; DROP removes table",
         "DROP is only NoSQL",
         "DELETE is DDL"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "sql_10",
+      "question": "HAVING clause is used to filter:",
+      "options": [
+        "Individual rows before grouping",
+        "Aggregated results after GROUP BY",
+        "Column names",
+        "JOIN conditions"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "sql_11",
+      "question": "An INNER JOIN returns:",
+      "options": [
+        "All rows from both tables",
+        "Only matching rows from both tables",
+        "All rows from left table",
+        "All rows from right table"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "sql_12",
+      "question": "A VIEW in SQL is:",
+      "options": [
+        "A physical table copy",
+        "A stored query that acts like a virtual table",
+        "An index type",
+        "A stored procedure"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "sql_13",
+      "question": "TRUNCATE vs DELETE:",
+      "options": [
+        "Identical in all ways",
+        "TRUNCATE removes all rows faster, without logging individual rows",
+        "DELETE is DDL, TRUNCATE is DML",
+        "TRUNCATE allows WHERE clause"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "sql_14",
+      "question": "A subquery is:",
+      "options": [
+        "A backup query",
+        "A query nested inside another query",
+        "A stored procedure",
+        "A trigger"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "sql_15",
+      "question": "UNIQUE constraint ensures:",
+      "options": [
+        "Rows are sorted",
+        "All values in a column are distinct",
+        "Column is never NULL",
+        "Column is a primary key"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "sql_16",
+      "question": "The DISTINCT keyword in SELECT:",
+      "options": [
+        "Counts all rows",
+        "Removes duplicate rows from results",
+        "Creates an index",
+        "Joins two tables"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "sql_17",
+      "question": "A stored procedure is:",
+      "options": [
+        "A cached query result",
+        "A precompiled set of SQL statements saved in the DB",
+        "An index type",
+        "A view"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "sql_18",
+      "question": "LEFT JOIN returns:",
+      "options": [
+        "Only matching rows",
+        "All rows from the left table and matching rows from the right",
+        "All rows from the right table only",
+        "Rows with no matches only"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "sql_19",
+      "question": "ORDER BY sorts results in what default order?",
+      "options": [
+        "Descending",
+        "Ascending",
+        "Random",
+        "Insertion order"
       ],
       "correctIndex": 1,
       "difficulty": "easy"
@@ -607,6 +1087,126 @@
       ],
       "correctIndex": 1,
       "difficulty": "easy"
+    },
+    {
+      "id": "python_10",
+      "question": "A tuple in Python is:",
+      "options": [
+        "Mutable",
+        "Immutable ordered sequence",
+        "A dictionary subtype",
+        "Only for numbers"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "python_11",
+      "question": "The self parameter in a class method refers to:",
+      "options": [
+        "The class itself",
+        "The instance of the class",
+        "The parent class",
+        "A static variable"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "python_12",
+      "question": "What does range(5) produce?",
+      "options": [
+        "[1,2,3,4,5]",
+        "A sequence of 0 to 4",
+        "A list of 5 random numbers",
+        "[5]"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "python_13",
+      "question": "Decorators in Python are used to:",
+      "options": [
+        "Add CSS styles",
+        "Wrap/extend function behavior",
+        "Declare constants",
+        "Import modules"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "python_14",
+      "question": "A generator function uses:",
+      "options": [
+        "return to produce values",
+        "yield to lazily produce values",
+        "async only",
+        "class keyword"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "python_15",
+      "question": "isinstance() checks:",
+      "options": [
+        "Variable value",
+        "Whether an object is an instance of a class",
+        "Module path",
+        "Memory address"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "python_16",
+      "question": "In Python, *args in a function allows:",
+      "options": [
+        "Only keyword arguments",
+        "Variable-length positional arguments",
+        "Only two arguments",
+        "Returning multiple values"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "python_17",
+      "question": "Python's pass statement:",
+      "options": [
+        "Exits the program",
+        "Is a no-op placeholder",
+        "Skips to next loop iteration",
+        "Returns None explicitly"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "python_18",
+      "question": "asyncio in Python is for:",
+      "options": [
+        "Multithreading only",
+        "Writing concurrent code using async/await",
+        "GPU computation",
+        "Database ORM"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "python_19",
+      "question": "The __str__ method is used to:",
+      "options": [
+        "Convert to bytes",
+        "Define string representation of an object",
+        "Compare two objects",
+        "Delete an object"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
     }
   ],
   "java": [
@@ -726,6 +1326,126 @@
         "Build/dependency tools",
         "Browsers",
         "NoSQL DBs"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "java_10",
+      "question": "The final keyword in Java means:",
+      "options": [
+        "The method is the last one",
+        "Variable/method/class cannot be changed or overridden",
+        "The class is abstract",
+        "The variable is static"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "java_11",
+      "question": "Polymorphism in Java allows:",
+      "options": [
+        "Only one type per variable",
+        "Objects of different types to be treated via a common interface",
+        "Static methods only",
+        "Interfaces to have fields"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "java_12",
+      "question": "abstract class in Java:",
+      "options": [
+        "Can be instantiated directly",
+        "Cannot be instantiated and may have abstract methods",
+        "Replaces interfaces",
+        "Is the same as a final class"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "java_13",
+      "question": "HashMap in Java:",
+      "options": [
+        "Maintains insertion order",
+        "Stores key-value pairs with O(1) average access",
+        "Only allows integer keys",
+        "Is thread-safe by default"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "java_14",
+      "question": "Java's Optional class is used to:",
+      "options": [
+        "Mark deprecated methods",
+        "Avoid NullPointerException by wrapping nullable values",
+        "Make fields optional in serialization",
+        "Declare optional parameters"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "java_15",
+      "question": "The super keyword in Java is used to:",
+      "options": [
+        "Access static fields",
+        "Call parent class constructor or methods",
+        "Create a new object",
+        "Override a method"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "java_16",
+      "question": "Checked exceptions in Java:",
+      "options": [
+        "Don't need to be handled",
+        "Must be caught or declared in the method signature",
+        "Are runtime errors only",
+        "Are ignored by the compiler"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "java_17",
+      "question": "Stream API in Java 8+ is used for:",
+      "options": [
+        "File I/O only",
+        "Functional-style operations on collections",
+        "Multithreading primitives",
+        "Network streams"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "java_18",
+      "question": "The synchronized keyword in Java ensures:",
+      "options": [
+        "Faster execution",
+        "Only one thread accesses a block at a time",
+        "Async execution",
+        "Method is static"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "java_19",
+      "question": "In Java, an enum is used to:",
+      "options": [
+        "Define dynamic lists",
+        "Represent a fixed set of named constants",
+        "Create anonymous classes",
+        "Import packages"
       ],
       "correctIndex": 1,
       "difficulty": "easy"
@@ -851,6 +1571,126 @@
       ],
       "correctIndex": 1,
       "difficulty": "easy"
+    },
+    {
+      "id": "dsa_10",
+      "question": "A stack follows which principle?",
+      "options": [
+        "FIFO",
+        "LIFO",
+        "Random access",
+        "Priority-based"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "dsa_11",
+      "question": "BFS traversal uses:",
+      "options": [
+        "Stack",
+        "Queue",
+        "Heap",
+        "Hash map"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "dsa_12",
+      "question": "Quicksort's average time complexity is:",
+      "options": [
+        "O(n^2)",
+        "O(n log n)",
+        "O(n)",
+        "O(log n)"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "dsa_13",
+      "question": "A linked list's main advantage over an array is:",
+      "options": [
+        "Faster random access",
+        "Efficient insertions/deletions at arbitrary positions",
+        "Better cache performance",
+        "Fixed size memory"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "dsa_14",
+      "question": "Space complexity O(1) means:",
+      "options": [
+        "Grows with input",
+        "Uses constant extra memory",
+        "Requires a stack",
+        "Uses O(n) memory"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "dsa_15",
+      "question": "A balanced BST has search time of:",
+      "options": [
+        "O(n)",
+        "O(log n)",
+        "O(1)",
+        "O(n^2)"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "dsa_16",
+      "question": "Dijkstra's algorithm finds:",
+      "options": [
+        "Longest path",
+        "Shortest path from a source in a weighted graph",
+        "Minimum spanning tree",
+        "Topological order"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "dsa_17",
+      "question": "Two pointers technique is commonly used for:",
+      "options": [
+        "Graph traversal",
+        "Problems on sorted arrays or linked lists",
+        "Tree balancing",
+        "Hashing"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "dsa_18",
+      "question": "Memoization is:",
+      "options": [
+        "A sorting technique",
+        "Caching results of expensive function calls to avoid recomputation",
+        "A graph algorithm",
+        "A data structure"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "dsa_19",
+      "question": "A trie (prefix tree) is primarily used for:",
+      "options": [
+        "Sorting numbers",
+        "Efficient string searching and autocomplete",
+        "Graph shortest paths",
+        "Heap operations"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
     }
   ],
   "restapi": [
@@ -973,6 +1813,126 @@
       ],
       "correctIndex": 1,
       "difficulty": "easy"
+    },
+    {
+      "id": "restapi_10",
+      "question": "HTTP 401 means:",
+      "options": [
+        "Server error",
+        "Unauthorized – authentication required",
+        "Not found",
+        "Redirect"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "restapi_11",
+      "question": "HTTP 403 vs 401:",
+      "options": [
+        "Same thing",
+        "403 is forbidden (authenticated but no permission); 401 is unauthenticated",
+        "403 is a server error",
+        "401 is a redirect"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "restapi_12",
+      "question": "CORS stands for:",
+      "options": [
+        "Cache Object Resource System",
+        "Cross-Origin Resource Sharing",
+        "Client-Origin Request Standard",
+        "Compressed Object Routing Service"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "restapi_13",
+      "question": "JWT (JSON Web Token) is commonly used for:",
+      "options": [
+        "Database queries",
+        "Stateless authentication and information exchange",
+        "CSS minification",
+        "Load balancing"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "restapi_14",
+      "question": "A 500 HTTP status code means:",
+      "options": [
+        "Client-side error",
+        "Internal server error",
+        "Resource not found",
+        "Successful creation"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "restapi_15",
+      "question": "Content-Type header tells the client:",
+      "options": [
+        "The server language",
+        "The media type of the response body",
+        "The API version",
+        "The auth method"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "restapi_16",
+      "question": "A 404 response means:",
+      "options": [
+        "Server error",
+        "Forbidden access",
+        "Resource not found",
+        "Redirect to HTTPS"
+      ],
+      "correctIndex": 2,
+      "difficulty": "easy"
+    },
+    {
+      "id": "restapi_17",
+      "question": "GraphQL differs from REST mainly because:",
+      "options": [
+        "It only supports GET",
+        "Clients specify exactly what data they need in a single request",
+        "It uses XML",
+        "It doesn't use HTTP"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "restapi_18",
+      "question": "Stateless in REST means:",
+      "options": [
+        "The server stores all session data",
+        "Each request must contain all info needed; server stores no session state",
+        "Responses are never cached",
+        "Only GET is allowed"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "restapi_19",
+      "question": "An API gateway is used to:",
+      "options": [
+        "Host static files",
+        "Act as a single entry point managing routing, auth, and rate limiting",
+        "Write SQL queries",
+        "Replace CDNs"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
     }
   ],
   "systemdesign": [
@@ -1095,6 +2055,126 @@
       ],
       "correctIndex": 1,
       "difficulty": "easy"
+    },
+    {
+      "id": "systemdesign_10",
+      "question": "A reverse proxy sits:",
+      "options": [
+        "On the client device",
+        "Between clients and backend servers, forwarding requests",
+        "Inside the database",
+        "In the browser cache"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "systemdesign_11",
+      "question": "Eventual consistency means:",
+      "options": [
+        "All nodes update instantly",
+        "Nodes will converge to the same data over time",
+        "Data is never synchronized",
+        "Only one node holds data"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "systemdesign_12",
+      "question": "A monolith vs microservices: monolith is:",
+      "options": [
+        "Always slower",
+        "A single deployable unit with all features",
+        "Only for large teams",
+        "Database-free"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "systemdesign_13",
+      "question": "Write-through cache means:",
+      "options": [
+        "Writing to cache only",
+        "Writing to both cache and storage simultaneously",
+        "Never caching writes",
+        "Deleting cache on write"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "systemdesign_14",
+      "question": "Service discovery helps microservices:",
+      "options": [
+        "Style their UI",
+        "Dynamically find network locations of other services",
+        "Share a single database",
+        "Manage CSS assets"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "systemdesign_15",
+      "question": "A circuit breaker pattern:",
+      "options": [
+        "Encrypts network traffic",
+        "Stops cascading failures by short-circuiting failing calls",
+        "Balances load evenly",
+        "Manages DNS entries"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "systemdesign_16",
+      "question": "Vertical scaling means:",
+      "options": [
+        "Adding more servers",
+        "Upgrading CPU/RAM on a single server",
+        "Adding more regions",
+        "Caching all requests"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "systemdesign_17",
+      "question": "A pub/sub model differs from a queue in that:",
+      "options": [
+        "It has no subscribers",
+        "Messages can be delivered to multiple subscribers simultaneously",
+        "Only one producer is allowed",
+        "It uses HTTP only"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "systemdesign_18",
+      "question": "Stateless services are preferred because:",
+      "options": [
+        "They cache user sessions",
+        "They scale horizontally more easily since any instance can handle any request",
+        "They require fewer servers",
+        "They don't use HTTP"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "systemdesign_19",
+      "question": "Consistent hashing is used to:",
+      "options": [
+        "Hash passwords",
+        "Distribute load with minimal remapping when nodes are added/removed",
+        "Sort database rows",
+        "Encrypt API keys"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
     }
   ],
   "git": [
@@ -1217,6 +2297,3454 @@
       ],
       "correctIndex": 1,
       "difficulty": "easy"
+    },
+    {
+      "id": "git_10",
+      "question": "git fetch vs git pull:",
+      "options": [
+        "Same command",
+        "fetch downloads changes but doesn't merge; pull does both",
+        "fetch deletes branches",
+        "pull only shows logs"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "git_11",
+      "question": "git log shows:",
+      "options": [
+        "Future commits",
+        "Commit history of the repository",
+        "Open issues",
+        "Merge conflicts only"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "git_12",
+      "question": "A tag in Git is used to:",
+      "options": [
+        "Name a file",
+        "Mark a specific commit (e.g. a release version)",
+        "Delete a branch",
+        "Create a stash"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "git_13",
+      "question": "git reset --hard:",
+      "options": [
+        "Creates a new branch",
+        "Discards all uncommitted changes and resets to a commit",
+        "Removes remote origin",
+        "Stages all files"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "git_14",
+      "question": "A pull request (PR) is used to:",
+      "options": [
+        "Pull updates from npm",
+        "Propose and review code changes before merging",
+        "Delete a branch remotely",
+        "Clone a repository"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "git_15",
+      "question": "git cherry-pick applies:",
+      "options": [
+        "All commits from a branch",
+        "A specific commit from another branch onto current branch",
+        "Random commits",
+        "Only merge commits"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "git_16",
+      "question": "git diff shows:",
+      "options": [
+        "Branch list",
+        "Changes between commits, working tree, or staged area",
+        "Remote URLs",
+        "Stash list"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "git_17",
+      "question": "Detached HEAD state means:",
+      "options": [
+        "Git is broken",
+        "HEAD points directly to a commit, not a branch",
+        "Remote is disconnected",
+        "A file is untracked"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "git_18",
+      "question": "git blame is used to:",
+      "options": [
+        "Report bugs",
+        "See who last changed each line of a file",
+        "Reset commits",
+        "Push forcefully"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "git_19",
+      "question": "Squashing commits means:",
+      "options": [
+        "Deleting all commits",
+        "Combining multiple commits into one",
+        "Reverting a merge",
+        "Tagging releases"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    }
+  ],
+  "javascript": [
+    {
+      "id": "javascript_0",
+      "question": "typeof null returns:",
+      "options": [
+        "'null'",
+        "'object'",
+        "'undefined'",
+        "'boolean'"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "javascript_1",
+      "question": "=== checks:",
+      "options": [
+        "Value only",
+        "Value and type",
+        "Type only",
+        "Reference only"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "javascript_2",
+      "question": "var has which scope?",
+      "options": [
+        "Block scope",
+        "Function scope",
+        "Module scope only",
+        "Global scope always"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "javascript_3",
+      "question": "A Promise represents:",
+      "options": [
+        "A synchronous value",
+        "A value that may be available now, later, or never",
+        "A callback pattern only",
+        "An event emitter"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "javascript_4",
+      "question": "Closures allow a function to:",
+      "options": [
+        "Run in a web worker",
+        "Remember variables from its outer lexical scope",
+        "Avoid the call stack",
+        "Block the event loop"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "javascript_5",
+      "question": "Array.map() returns:",
+      "options": [
+        "The original array mutated",
+        "A new array with transformed elements",
+        "undefined",
+        "A boolean"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "javascript_6",
+      "question": "The spread operator (...) can:",
+      "options": [
+        "Only spread strings",
+        "Expand iterables into individual elements",
+        "Delete properties",
+        "Declare variables"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "javascript_7",
+      "question": "event.preventDefault() does:",
+      "options": [
+        "Stops event bubbling",
+        "Prevents the default browser action for an event",
+        "Removes event listeners",
+        "Triggers a new event"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "javascript_8",
+      "question": "Hoisting in JavaScript means:",
+      "options": [
+        "Compressing the code",
+        "Variable and function declarations are moved to the top of scope",
+        "Inlining functions",
+        "Currying automatically"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "javascript_9",
+      "question": "JSON.stringify() converts:",
+      "options": [
+        "JSON to a DOM node",
+        "A JS object to a JSON string",
+        "A string to number",
+        "Array to a Set"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "javascript_10",
+      "question": "let and const vs var: let/const have:",
+      "options": [
+        "Function scope",
+        "Block scope",
+        "Global scope always",
+        "No scope"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "javascript_11",
+      "question": "Array.filter() returns:",
+      "options": [
+        "The first matching element",
+        "A new array with elements that pass the test",
+        "A boolean",
+        "The removed elements"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "javascript_12",
+      "question": "Array.reduce() is used to:",
+      "options": [
+        "Delete array items",
+        "Accumulate values into a single result",
+        "Sort an array",
+        "Find an item's index"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "javascript_13",
+      "question": "Prototype chain allows:",
+      "options": [
+        "CSS inheritance",
+        "Objects to inherit properties from other objects",
+        "Async execution",
+        "Module bundling"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "javascript_14",
+      "question": "async/await is syntactic sugar over:",
+      "options": [
+        "Callbacks",
+        "Promises",
+        "Generators only",
+        "Event emitters"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "javascript_15",
+      "question": "The this keyword in an arrow function refers to:",
+      "options": [
+        "The function itself",
+        "The enclosing lexical context (inherited from outer scope)",
+        "The global window always",
+        "undefined always"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "javascript_16",
+      "question": "Destructuring assignment allows:",
+      "options": [
+        "Deleting object properties",
+        "Unpacking values from arrays or objects into variables",
+        "Merging two arrays",
+        "Deep cloning objects"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "javascript_17",
+      "question": "Symbol in JavaScript is:",
+      "options": [
+        "A regex pattern",
+        "A unique and immutable primitive value",
+        "A class keyword",
+        "An alias for null"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "javascript_18",
+      "question": "Event bubbling means an event:",
+      "options": [
+        "Fires only on the target element",
+        "Propagates up from child to parent elements",
+        "Only fires on the document",
+        "Cancels automatically"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "javascript_19",
+      "question": "setTimeout with delay 0 runs the callback:",
+      "options": [
+        "Immediately and synchronously",
+        "After all synchronous code and I/O in the event loop",
+        "Before the current function",
+        "Never"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    }
+  ],
+  "typescript": [
+    {
+      "id": "typescript_0",
+      "question": "TypeScript is:",
+      "options": [
+        "A completely different language from JS",
+        "A typed superset of JavaScript that compiles to JS",
+        "A CSS preprocessor",
+        "A testing framework"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "typescript_1",
+      "question": "interface in TypeScript defines:",
+      "options": [
+        "A class implementation",
+        "A contract/shape for objects",
+        "A runtime type check",
+        "A generic function"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "typescript_2",
+      "question": "The any type in TypeScript:",
+      "options": [
+        "Disables all compilation",
+        "Opts out of type checking for that value",
+        "Is the default type",
+        "Only allows primitives"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "typescript_3",
+      "question": "Union types (A | B) mean:",
+      "options": [
+        "Both types always",
+        "A value can be either type A or type B",
+        "A new type merging A and B",
+        "Only used with generics"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "typescript_4",
+      "question": "Generics in TypeScript allow:",
+      "options": [
+        "Any type implicitly",
+        "Reusable code that works across multiple types with type safety",
+        "Only string types",
+        "Only numeric types"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "typescript_5",
+      "question": "The readonly modifier:",
+      "options": [
+        "Makes a property optional",
+        "Prevents reassignment after initialization",
+        "Marks a property as private",
+        "Converts to const"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "typescript_6",
+      "question": "Type assertion (as Type) tells the compiler:",
+      "options": [
+        "To throw an error if wrong",
+        "To treat a value as a specific type",
+        "To infer the type automatically",
+        "To make the type nullable"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "typescript_7",
+      "question": "Optional chaining (?.) in TypeScript:",
+      "options": [
+        "Makes properties optional in interfaces",
+        "Safely accesses nested properties that may be null/undefined",
+        "Declares optional parameters",
+        "Is a TypeScript-only feature not in JS"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "typescript_8",
+      "question": "Enums in TypeScript:",
+      "options": [
+        "Are only string-based",
+        "Define a set of named constants",
+        "Compile to interfaces",
+        "Are removed entirely at runtime"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "typescript_9",
+      "question": "The never type is used for:",
+      "options": [
+        "Nullable values",
+        "Functions that never return (e.g. always throw or infinite loop)",
+        "Any untyped value",
+        "Optional parameters"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "typescript_10",
+      "question": "Intersection types (A & B) mean:",
+      "options": [
+        "Either A or B",
+        "A type that has all properties of both A and B",
+        "An optional type",
+        "A generic constraint"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "typescript_11",
+      "question": "tsconfig.json is used to:",
+      "options": [
+        "Define npm scripts",
+        "Configure TypeScript compiler options",
+        "Declare global variables",
+        "Map CSS modules"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "typescript_12",
+      "question": "A type alias (type X = ...) differs from interface mainly in that:",
+      "options": [
+        "They are identical",
+        "Type aliases can represent primitives, unions, and tuples; interfaces are for object shapes",
+        "Interfaces support generics; types don't",
+        "Type aliases cannot be exported"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "typescript_13",
+      "question": "The keyof operator returns:",
+      "options": [
+        "The values of an object type",
+        "A union of all keys of a type",
+        "Only string keys",
+        "A boolean"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "typescript_14",
+      "question": "Partial<T> utility type makes:",
+      "options": [
+        "All properties required",
+        "All properties of T optional",
+        "T readonly",
+        "T a union with null"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "typescript_15",
+      "question": "Required<T> utility type makes:",
+      "options": [
+        "All properties optional",
+        "All properties of T required",
+        "T immutable",
+        "T a generic"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "typescript_16",
+      "question": "Type narrowing in TypeScript refers to:",
+      "options": [
+        "Reducing type complexity",
+        "Refining a type to a more specific one inside a conditional block",
+        "Removing unused types",
+        "Converting types at runtime"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "typescript_17",
+      "question": "Declaration files (.d.ts) are used to:",
+      "options": [
+        "Compile TypeScript faster",
+        "Provide type information for JavaScript libraries",
+        "Define CSS modules",
+        "Create enums"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "typescript_18",
+      "question": "strict mode in tsconfig enables:",
+      "options": [
+        "Faster build times",
+        "A set of stricter type-checking rules for better safety",
+        "Auto-formatting",
+        "Tree shaking"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "typescript_19",
+      "question": "The infer keyword in TypeScript is used inside:",
+      "options": [
+        "Union types",
+        "Conditional types to extract a type",
+        "Enums",
+        "Decorators"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    }
+  ],
+  "general": [
+    {
+      "id": "general_0",
+      "question": "What does OOP stand for?",
+      "options": [
+        "Object-Oriented Programming",
+        "Open-Only Protocol",
+        "Operational Output Pattern",
+        "Object Order Processing"
+      ],
+      "correctIndex": 0,
+      "difficulty": "easy"
+    },
+    {
+      "id": "general_1",
+      "question": "DRY principle stands for:",
+      "options": [
+        "Do Repeat Yourself",
+        "Don't Repeat Yourself",
+        "Data Relay Yet",
+        "Dynamic Runtime Yield"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "general_2",
+      "question": "SOLID principles are primarily for:",
+      "options": [
+        "Database design",
+        "Writing maintainable and scalable OOP code",
+        "CSS architecture",
+        "API design only"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "general_3",
+      "question": "Version control systems track:",
+      "options": [
+        "Server uptime",
+        "Changes to files over time",
+        "CSS animations",
+        "Database schemas only"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "general_4",
+      "question": "CI/CD stands for:",
+      "options": [
+        "Compiled Integration / Code Distribution",
+        "Continuous Integration / Continuous Delivery",
+        "Client Interface / Component Design",
+        "Cache Invalidation / Content Delivery"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "general_5",
+      "question": "A linter is a tool that:",
+      "options": [
+        "Compresses files",
+        "Statically analyzes code for errors and style issues",
+        "Runs unit tests",
+        "Minifies CSS"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "general_6",
+      "question": "TDD stands for:",
+      "options": [
+        "Test-Driven Development",
+        "Type-Dependent Design",
+        "Template-Driven Deployment",
+        "Transactional Data Design"
+      ],
+      "correctIndex": 0,
+      "difficulty": "medium"
+    },
+    {
+      "id": "general_7",
+      "question": "A REST API uses which protocol?",
+      "options": [
+        "FTP",
+        "HTTP/HTTPS",
+        "SMTP",
+        "TCP raw sockets"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "general_8",
+      "question": "Agile methodology emphasizes:",
+      "options": [
+        "Strict upfront planning",
+        "Iterative development and responding to change",
+        "Only backend work",
+        "One long release cycle"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "general_9",
+      "question": "A container (e.g. Docker) packages:",
+      "options": [
+        "Only the OS",
+        "App code with its dependencies in an isolated environment",
+        "Only databases",
+        "Only static files"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "general_10",
+      "question": "Open-source software allows:",
+      "options": [
+        "Only the creator to view the code",
+        "Anyone to view, use, and modify the source code under a license",
+        "Free hosting only",
+        "Unlimited commercial use without any license"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "general_11",
+      "question": "A race condition occurs when:",
+      "options": [
+        "Two servers run simultaneously",
+        "Program behavior depends on unpredictable timing of concurrent operations",
+        "CPU usage exceeds 100%",
+        "A loop runs too fast"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "general_12",
+      "question": "The Single Responsibility Principle means:",
+      "options": [
+        "Only one developer per module",
+        "A class/module should have only one reason to change",
+        "Functions must be one line",
+        "Files cannot be imported twice"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "general_13",
+      "question": "Big O notation describes:",
+      "options": [
+        "Binary encoding",
+        "Algorithm performance relative to input size",
+        "Memory limits",
+        "Code coverage"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "general_14",
+      "question": "A code review is done to:",
+      "options": [
+        "Deploy faster automatically",
+        "Catch bugs, improve quality, and share knowledge before merging",
+        "Generate documentation",
+        "Run performance benchmarks"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "general_15",
+      "question": "An API (Application Programming Interface) is:",
+      "options": [
+        "A UI design tool",
+        "A defined way for software components to communicate",
+        "A database query language",
+        "A test runner"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "general_16",
+      "question": "Dependency injection is a pattern where:",
+      "options": [
+        "Classes create their own dependencies",
+        "Dependencies are provided from outside rather than created internally",
+        "All modules share one global state",
+        "Functions are injected into CSS"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "general_17",
+      "question": "A Dockerfile is used to:",
+      "options": [
+        "Write CSS",
+        "Define instructions for building a Docker image",
+        "Configure a database",
+        "Set up a Git repository"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "general_18",
+      "question": "Unit testing tests:",
+      "options": [
+        "The full application end-to-end",
+        "Individual functions/components in isolation",
+        "Only the UI",
+        "Only the database layer"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "general_19",
+      "question": "Semantic versioning (SemVer) uses format:",
+      "options": [
+        "date.build.patch",
+        "MAJOR.MINOR.PATCH",
+        "v.release.hotfix",
+        "year.month.day"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    }
+  ],
+  "aptitude": [
+    {
+      "id": "aptitude_0",
+      "question": "If a train covers 120 km in 2 hours, what is its average speed?",
+      "options": [
+        "40 km/h",
+        "50 km/h",
+        "60 km/h",
+        "70 km/h"
+      ],
+      "correctIndex": 2,
+      "difficulty": "easy"
+    },
+    {
+      "id": "aptitude_1",
+      "question": "What is 15% of 240?",
+      "options": [
+        "30",
+        "34",
+        "36",
+        "40"
+      ],
+      "correctIndex": 2,
+      "difficulty": "easy"
+    },
+    {
+      "id": "aptitude_2",
+      "question": "A is taller than B, and B is taller than C. Who is the shortest?",
+      "options": [
+        "A",
+        "B",
+        "C",
+        "Cannot determine"
+      ],
+      "correctIndex": 2,
+      "difficulty": "easy"
+    },
+    {
+      "id": "aptitude_3",
+      "question": "Find the next number: 2, 6, 12, 20, 30, ?",
+      "options": [
+        "36",
+        "40",
+        "42",
+        "44"
+      ],
+      "correctIndex": 2,
+      "difficulty": "medium"
+    },
+    {
+      "id": "aptitude_4",
+      "question": "If the ratio of boys to girls is 3:2 and total students are 50, how many girls are there?",
+      "options": [
+        "18",
+        "20",
+        "22",
+        "24"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "aptitude_5",
+      "question": "A shop offers 20% discount on an item priced at 1500. What is the selling price?",
+      "options": [
+        "1100",
+        "1200",
+        "1250",
+        "1300"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "aptitude_6",
+      "question": "Complete the series: 3, 9, 27, 81, ?",
+      "options": [
+        "162",
+        "243",
+        "324",
+        "729"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "aptitude_7",
+      "question": "If 5 workers finish a job in 12 days, how many days will 10 workers take (same efficiency)?",
+      "options": [
+        "4",
+        "5",
+        "6",
+        "8"
+      ],
+      "correctIndex": 2,
+      "difficulty": "medium"
+    },
+    {
+      "id": "aptitude_8",
+      "question": "What is the simple interest on 1000 at 10% per annum for 2 years?",
+      "options": [
+        "100",
+        "150",
+        "200",
+        "250"
+      ],
+      "correctIndex": 2,
+      "difficulty": "easy"
+    },
+    {
+      "id": "aptitude_9",
+      "question": "Which number is odd one out: 4, 9, 16, 25, 30?",
+      "options": [
+        "9",
+        "16",
+        "25",
+        "30"
+      ],
+      "correctIndex": 3,
+      "difficulty": "easy"
+    },
+    {
+      "id": "aptitude_10",
+      "question": "A clock shows 3:00. What is the angle between hour and minute hands?",
+      "options": [
+        "60 degrees",
+        "75 degrees",
+        "90 degrees",
+        "120 degrees"
+      ],
+      "correctIndex": 2,
+      "difficulty": "medium"
+    },
+    {
+      "id": "aptitude_11",
+      "question": "If 8 + 4 = 96 and 7 + 3 = 70, then 6 + 2 = ?",
+      "options": [
+        "36",
+        "40",
+        "48",
+        "54"
+      ],
+      "correctIndex": 2,
+      "difficulty": "hard"
+    },
+    {
+      "id": "aptitude_12",
+      "question": "A person walks 5 km north and then 12 km east. How far is he from the start point?",
+      "options": [
+        "11 km",
+        "12 km",
+        "13 km",
+        "17 km"
+      ],
+      "correctIndex": 2,
+      "difficulty": "medium"
+    },
+    {
+      "id": "aptitude_13",
+      "question": "What is the probability of getting an even number on a fair six-sided die?",
+      "options": [
+        "1/6",
+        "1/3",
+        "1/2",
+        "2/3"
+      ],
+      "correctIndex": 2,
+      "difficulty": "easy"
+    },
+    {
+      "id": "aptitude_14",
+      "question": "If all roses are flowers and some flowers fade quickly, which conclusion is always true?",
+      "options": [
+        "All flowers are roses",
+        "Some roses may fade quickly",
+        "No rose fades quickly",
+        "Only roses are flowers"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    }
+  ],
+  "frontendfundamentals": [
+    {
+      "id": "frontendfundamentals_0",
+      "question": "What is JSX?",
+      "options": [
+        "A CSS file",
+        "Syntax extension for JavaScript",
+        "A database",
+        "A test runner"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "frontendfundamentals_1",
+      "question": "What does useState return?",
+      "options": [
+        "One number",
+        "An array: [state, setter]",
+        "A promise",
+        "A ref object"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "frontendfundamentals_2",
+      "question": "What is the virtual DOM?",
+      "options": [
+        "A browser plugin",
+        "An in-memory representation of the UI tree",
+        "A CDN",
+        "A WebSocket"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "frontendfundamentals_3",
+      "question": "When does useEffect run by default?",
+      "options": [
+        "Only on unmount",
+        "After every render",
+        "Never",
+        "Before first paint only"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "frontendfundamentals_4",
+      "question": "Props are:",
+      "options": [
+        "Mutable inside child",
+        "Read-only inputs to a component",
+        "Global variables",
+        "Event names"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "frontendfundamentals_5",
+      "question": "Why use keys in lists?",
+      "options": [
+        "Styling",
+        "Help React identify items across updates",
+        "SEO",
+        "Encryption"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "frontendfundamentals_6",
+      "question": "React.Fragment is used to:",
+      "options": [
+        "Add CSS",
+        "Group children without extra DOM nodes",
+        "Fetch data",
+        "Handle errors"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "frontendfundamentals_7",
+      "question": "A controlled input gets its value from:",
+      "options": [
+        "DOM only",
+        "React state",
+        "localStorage",
+        "Cookies"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "frontendfundamentals_8",
+      "question": "useMemo is for:",
+      "options": [
+        "Side effects",
+        "Caching a computed value",
+        "Subscriptions",
+        "Routing"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "frontendfundamentals_9",
+      "question": "StrictMode in development helps:",
+      "options": [
+        "Disable hooks",
+        "Surface extra checks/warnings",
+        "Minify code",
+        "Serve static files"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "frontendfundamentals_10",
+      "question": "useCallback is used to:",
+      "options": [
+        "Create a new object",
+        "Memoize a function reference",
+        "Trigger re-renders",
+        "Fetch APIs"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "frontendfundamentals_11",
+      "question": "Context API is primarily used for:",
+      "options": [
+        "Local component state",
+        "Sharing data without prop drilling",
+        "CSS theming only",
+        "Routing"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "frontendfundamentals_12",
+      "question": "React.lazy() is used for:",
+      "options": [
+        "Suspending animations",
+        "Code splitting / lazy loading components",
+        "Event debouncing",
+        "Caching API calls"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "frontendfundamentals_13",
+      "question": "Error boundaries can catch errors in:",
+      "options": [
+        "Event handlers",
+        "Child component rendering and lifecycle",
+        "setTimeout callbacks",
+        "Fetch requests"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "frontendfundamentals_14",
+      "question": "What triggers a re-render in React?",
+      "options": [
+        "Only URL changes",
+        "State or prop changes",
+        "Only CSS changes",
+        "Network requests only"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "frontendfundamentals_15",
+      "question": "useRef can be used to:",
+      "options": [
+        "Replace useState",
+        "Access DOM elements or persist mutable values without re-render",
+        "Handle routing",
+        "Create context"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "frontendfundamentals_16",
+      "question": "The dependency array in useEffect with [] means:",
+      "options": [
+        "Run on every render",
+        "Run only once after mount",
+        "Run only on unmount",
+        "Never run"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "frontendfundamentals_17",
+      "question": "useReducer is best suited for:",
+      "options": [
+        "Simple toggle state",
+        "Complex state logic with multiple sub-values",
+        "CSS animation",
+        "Fetching data directly"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "frontendfundamentals_18",
+      "question": "In React, reconciliation refers to:",
+      "options": [
+        "Merging CSS files",
+        "Comparing virtual DOM trees to update the real DOM efficiently",
+        "Resolving imports",
+        "Syncing state to server"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "frontendfundamentals_19",
+      "question": "Lifting state up means:",
+      "options": [
+        "Moving state to a global store",
+        "Moving shared state to a common parent component",
+        "Using Redux",
+        "Converting class to function component"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    }
+  ],
+  "backendfundamentals": [
+    {
+      "id": "backendfundamentals_0",
+      "question": "What is the event loop?",
+      "options": [
+        "A CSS concept",
+        "Mechanism that handles async I/O in Node",
+        "A database index",
+        "A linter"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "backendfundamentals_1",
+      "question": "require() is part of:",
+      "options": [
+        "ES modules only",
+        "CommonJS module system",
+        "HTTP/2",
+        "WebSockets"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "backendfundamentals_2",
+      "question": "process.nextTick runs:",
+      "options": [
+        "Before the next event loop tick",
+        "After server shutdown",
+        "In the browser",
+        "Only in clusters"
+      ],
+      "correctIndex": 0,
+      "difficulty": "hard"
+    },
+    {
+      "id": "backendfundamentals_3",
+      "question": "npm is:",
+      "options": [
+        "Node Package Manager",
+        "A NoSQL DB",
+        "Native Python Module",
+        "Network Print Module"
+      ],
+      "correctIndex": 0,
+      "difficulty": "easy"
+    },
+    {
+      "id": "backendfundamentals_4",
+      "question": "__dirname in a file gives:",
+      "options": [
+        "URL of the app",
+        "Directory name of the current module",
+        "CPU usage",
+        "Env name"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "backendfundamentals_5",
+      "question": "Streams are useful for:",
+      "options": [
+        "Styling",
+        "Processing large data incrementally",
+        "JWT signing",
+        "HTML parsing in browser"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "backendfundamentals_6",
+      "question": "cluster module helps:",
+      "options": [
+        "CSS bundling",
+        "Scaling across CPU cores",
+        "Image compression",
+        "PDF forms"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "backendfundamentals_7",
+      "question": "Buffer represents:",
+      "options": [
+        "A UI buffer",
+        "Binary data in memory",
+        "A log file",
+        "A cache header"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "backendfundamentals_8",
+      "question": "Express is:",
+      "options": [
+        "A React hook",
+        "A minimal web framework for Node",
+        "A MongoDB driver",
+        "A test runner"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "backendfundamentals_9",
+      "question": "NODE_ENV=production typically:",
+      "options": [
+        "Disables JS",
+        "Enables optimizations in many libraries",
+        "Starts debugger",
+        "Uses HTTP/1.0"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "backendfundamentals_10",
+      "question": "The fs module in Node.js is used for:",
+      "options": [
+        "Frontend styling",
+        "File system operations",
+        "WebSocket connections",
+        "Template rendering"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "backendfundamentals_11",
+      "question": "async/await in Node.js is built on top of:",
+      "options": [
+        "Callbacks only",
+        "Promises",
+        "Streams",
+        "Worker threads"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "backendfundamentals_12",
+      "question": "What does setImmediate() do?",
+      "options": [
+        "Runs immediately and blocks",
+        "Schedules callback after I/O events in the event loop",
+        "Replaces setTimeout",
+        "Pauses execution"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "backendfundamentals_13",
+      "question": "middleware in Express is:",
+      "options": [
+        "A database adapter",
+        "A function that processes requests before the route handler",
+        "A CSS loader",
+        "A template engine"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "backendfundamentals_14",
+      "question": "package.json scripts field is used to:",
+      "options": [
+        "Define CSS",
+        "Run custom CLI commands via npm run",
+        "Configure Babel only",
+        "List team members"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "backendfundamentals_15",
+      "question": "The http module in Node allows you to:",
+      "options": [
+        "Only make GET requests",
+        "Create HTTP servers and make requests without external libraries",
+        "Parse CSS",
+        "Handle MongoDB"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "backendfundamentals_16",
+      "question": "Worker threads in Node.js are used for:",
+      "options": [
+        "CSS processing",
+        "CPU-intensive tasks without blocking the event loop",
+        "Routing",
+        "Template rendering"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "backendfundamentals_17",
+      "question": "dotenv package is commonly used to:",
+      "options": [
+        "Compile TypeScript",
+        "Load environment variables from a .env file",
+        "Minify JS",
+        "Generate UUIDs"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "backendfundamentals_18",
+      "question": "What is REPL in Node.js?",
+      "options": [
+        "A build tool",
+        "Read-Eval-Print Loop for interactive JS execution",
+        "A REST client",
+        "A module bundler"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "backendfundamentals_19",
+      "question": "Node.js is single-threaded but handles concurrency via:",
+      "options": [
+        "Multiple CPUs directly",
+        "Non-blocking I/O and the event loop",
+        "Shared memory locks",
+        "OS threads per request"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    }
+  ],
+  "dbms": [
+    {
+      "id": "dbms_0",
+      "question": "PRIMARY KEY:",
+      "options": [
+        "Allows duplicates",
+        "Uniquely identifies rows",
+        "Is always a string",
+        "Stores JSON"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "dbms_1",
+      "question": "JOIN combines:",
+      "options": [
+        "Only indexes",
+        "Rows from related tables",
+        "Only backups",
+        "Log files"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "dbms_2",
+      "question": "Normalization reduces:",
+      "options": [
+        "Query speed always",
+        "Redundancy and anomalies",
+        "Security",
+        "Indexes"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "dbms_3",
+      "question": "Transaction ACID — I stands for:",
+      "options": [
+        "Isolation",
+        "Internet",
+        "Iteration",
+        "Injection"
+      ],
+      "correctIndex": 0,
+      "difficulty": "easy"
+    },
+    {
+      "id": "dbms_4",
+      "question": "SELECT runs in which language family?",
+      "options": [
+        "Assembler",
+        "SQL",
+        "CSS",
+        "GraphQL only"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "dbms_5",
+      "question": "Foreign key links:",
+      "options": [
+        "Unrelated tables randomly",
+        "Child rows to parent key",
+        "Files to OS",
+        "CSS to HTML"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "dbms_6",
+      "question": "GROUP BY is used with:",
+      "options": [
+        "Only DELETE",
+        "Aggregates per group",
+        "Only INSERT",
+        "DDL only"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "dbms_7",
+      "question": "Index on a column usually:",
+      "options": [
+        "Slows all reads",
+        "Speeds lookups, may slow writes",
+        "Deletes data",
+        "Encrypts column"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "dbms_8",
+      "question": "NULL means:",
+      "options": [
+        "Zero",
+        "Unknown / not applicable",
+        "Empty string always",
+        "False boolean"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "dbms_9",
+      "question": "DELETE vs DROP:",
+      "options": [
+        "Same",
+        "DELETE removes rows; DROP removes table",
+        "DROP is only NoSQL",
+        "DELETE is DDL"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "dbms_10",
+      "question": "HAVING clause is used to filter:",
+      "options": [
+        "Individual rows before grouping",
+        "Aggregated results after GROUP BY",
+        "Column names",
+        "JOIN conditions"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "dbms_11",
+      "question": "An INNER JOIN returns:",
+      "options": [
+        "All rows from both tables",
+        "Only matching rows from both tables",
+        "All rows from left table",
+        "All rows from right table"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "dbms_12",
+      "question": "A VIEW in SQL is:",
+      "options": [
+        "A physical table copy",
+        "A stored query that acts like a virtual table",
+        "An index type",
+        "A stored procedure"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "dbms_13",
+      "question": "TRUNCATE vs DELETE:",
+      "options": [
+        "Identical in all ways",
+        "TRUNCATE removes all rows faster, without logging individual rows",
+        "DELETE is DDL, TRUNCATE is DML",
+        "TRUNCATE allows WHERE clause"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "dbms_14",
+      "question": "A subquery is:",
+      "options": [
+        "A backup query",
+        "A query nested inside another query",
+        "A stored procedure",
+        "A trigger"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "dbms_15",
+      "question": "UNIQUE constraint ensures:",
+      "options": [
+        "Rows are sorted",
+        "All values in a column are distinct",
+        "Column is never NULL",
+        "Column is a primary key"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "dbms_16",
+      "question": "The DISTINCT keyword in SELECT:",
+      "options": [
+        "Counts all rows",
+        "Removes duplicate rows from results",
+        "Creates an index",
+        "Joins two tables"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "dbms_17",
+      "question": "A stored procedure is:",
+      "options": [
+        "A cached query result",
+        "A precompiled set of SQL statements saved in the DB",
+        "An index type",
+        "A view"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "dbms_18",
+      "question": "LEFT JOIN returns:",
+      "options": [
+        "Only matching rows",
+        "All rows from the left table and matching rows from the right",
+        "All rows from the right table only",
+        "Rows with no matches only"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "dbms_19",
+      "question": "ORDER BY sorts results in what default order?",
+      "options": [
+        "Descending",
+        "Ascending",
+        "Random",
+        "Insertion order"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    }
+  ],
+  "oop": [
+    {
+      "id": "oop_0",
+      "question": "JVM runs:",
+      "options": [
+        "Only CSS",
+        "Bytecode",
+        "Native machine code only",
+        "SQL"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "oop_1",
+      "question": "public static void main is:",
+      "options": [
+        "A React hook",
+        "Common Java entry point",
+        "SQL keyword",
+        "Git command"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "oop_2",
+      "question": "interface defines:",
+      "options": [
+        "Only variables",
+        "Contracts for classes to implement",
+        "HTML",
+        "Docker layers"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "oop_3",
+      "question": "try/catch handles:",
+      "options": [
+        "Imports",
+        "Exceptions",
+        "Generics only",
+        "Annotations"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "oop_4",
+      "question": "String in Java is:",
+      "options": [
+        "Primitive type",
+        "Immutable object",
+        "Mutable char array always",
+        "A keyword only"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "oop_5",
+      "question": "package organizes:",
+      "options": [
+        "CSS files",
+        "Namespaces for classes",
+        "TCP ports",
+        "JWT claims"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "oop_6",
+      "question": "ArrayList vs array:",
+      "options": [
+        "Same",
+        "Dynamic-size list implementation",
+        "Only functional",
+        "SQL type"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "oop_7",
+      "question": "equals() vs == for objects:",
+      "options": [
+        "Always same",
+        "equals compares value; == often identity",
+        "Opposite",
+        "Deprecated"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "oop_8",
+      "question": "Garbage collection reclaims:",
+      "options": [
+        "Stack frames only",
+        "Unreachable heap objects",
+        "Source files",
+        "TCP sockets"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "oop_9",
+      "question": "Maven/Gradle are:",
+      "options": [
+        "React tools",
+        "Build/dependency tools",
+        "Browsers",
+        "NoSQL DBs"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "oop_10",
+      "question": "The final keyword in Java means:",
+      "options": [
+        "The method is the last one",
+        "Variable/method/class cannot be changed or overridden",
+        "The class is abstract",
+        "The variable is static"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "oop_11",
+      "question": "Polymorphism in Java allows:",
+      "options": [
+        "Only one type per variable",
+        "Objects of different types to be treated via a common interface",
+        "Static methods only",
+        "Interfaces to have fields"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "oop_12",
+      "question": "abstract class in Java:",
+      "options": [
+        "Can be instantiated directly",
+        "Cannot be instantiated and may have abstract methods",
+        "Replaces interfaces",
+        "Is the same as a final class"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "oop_13",
+      "question": "HashMap in Java:",
+      "options": [
+        "Maintains insertion order",
+        "Stores key-value pairs with O(1) average access",
+        "Only allows integer keys",
+        "Is thread-safe by default"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "oop_14",
+      "question": "Java's Optional class is used to:",
+      "options": [
+        "Mark deprecated methods",
+        "Avoid NullPointerException by wrapping nullable values",
+        "Make fields optional in serialization",
+        "Declare optional parameters"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "oop_15",
+      "question": "The super keyword in Java is used to:",
+      "options": [
+        "Access static fields",
+        "Call parent class constructor or methods",
+        "Create a new object",
+        "Override a method"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "oop_16",
+      "question": "Checked exceptions in Java:",
+      "options": [
+        "Don't need to be handled",
+        "Must be caught or declared in the method signature",
+        "Are runtime errors only",
+        "Are ignored by the compiler"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "oop_17",
+      "question": "Stream API in Java 8+ is used for:",
+      "options": [
+        "File I/O only",
+        "Functional-style operations on collections",
+        "Multithreading primitives",
+        "Network streams"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "oop_18",
+      "question": "The synchronized keyword in Java ensures:",
+      "options": [
+        "Faster execution",
+        "Only one thread accesses a block at a time",
+        "Async execution",
+        "Method is static"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "oop_19",
+      "question": "In Java, an enum is used to:",
+      "options": [
+        "Define dynamic lists",
+        "Represent a fixed set of named constants",
+        "Create anonymous classes",
+        "Import packages"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    }
+  ],
+  "devops": [
+    {
+      "id": "devops_0",
+      "question": "git commit saves:",
+      "options": [
+        "To remote only",
+        "A snapshot to local repo history",
+        "To npm",
+        "To Mongo"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "devops_1",
+      "question": "branch lets you:",
+      "options": [
+        "Delete remote",
+        "Develop features in parallel",
+        "Compile Java",
+        "Minify PDF"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "devops_2",
+      "question": "merge combines:",
+      "options": [
+        "Only tags",
+        "Branch histories",
+        "Only stashes",
+        "Docker layers"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "devops_3",
+      "question": "git pull is roughly:",
+      "options": [
+        "fetch + merge/rebase",
+        "Only clone",
+        "Only push",
+        "Delete branch"
+      ],
+      "correctIndex": 0,
+      "difficulty": "easy"
+    },
+    {
+      "id": "devops_4",
+      "question": ".gitignore excludes:",
+      "options": [
+        "Tracked commits",
+        "Untracked files from being added",
+        "Remote URLs",
+        "Branch names"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "devops_5",
+      "question": "rebase can:",
+      "options": [
+        "Remove Git",
+        "Replay commits on another base",
+        "Only add files",
+        "Run SQL"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "devops_6",
+      "question": "HEAD usually points to:",
+      "options": [
+        "Remote server",
+        "Current checked-out commit/branch tip",
+        "First file",
+        "Tag only"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "devops_7",
+      "question": "clone copies:",
+      "options": [
+        "Only one file",
+        "A remote repository locally",
+        "Only branches list",
+        "Only issues"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "devops_8",
+      "question": "stash temporarily:",
+      "options": [
+        "Deletes repo",
+        "Shelves uncommitted changes",
+        "Pushes to main",
+        "Runs tests"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "devops_9",
+      "question": "conflict happens when:",
+      "options": [
+        "Same file edited compatibly always",
+        "Git cannot auto-merge changes",
+        "Network down",
+        "Wrong OS"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "devops_10",
+      "question": "git fetch vs git pull:",
+      "options": [
+        "Same command",
+        "fetch downloads changes but doesn't merge; pull does both",
+        "fetch deletes branches",
+        "pull only shows logs"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "devops_11",
+      "question": "git log shows:",
+      "options": [
+        "Future commits",
+        "Commit history of the repository",
+        "Open issues",
+        "Merge conflicts only"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "devops_12",
+      "question": "A tag in Git is used to:",
+      "options": [
+        "Name a file",
+        "Mark a specific commit (e.g. a release version)",
+        "Delete a branch",
+        "Create a stash"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "devops_13",
+      "question": "git reset --hard:",
+      "options": [
+        "Creates a new branch",
+        "Discards all uncommitted changes and resets to a commit",
+        "Removes remote origin",
+        "Stages all files"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "devops_14",
+      "question": "A pull request (PR) is used to:",
+      "options": [
+        "Pull updates from npm",
+        "Propose and review code changes before merging",
+        "Delete a branch remotely",
+        "Clone a repository"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "devops_15",
+      "question": "git cherry-pick applies:",
+      "options": [
+        "All commits from a branch",
+        "A specific commit from another branch onto current branch",
+        "Random commits",
+        "Only merge commits"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "devops_16",
+      "question": "git diff shows:",
+      "options": [
+        "Branch list",
+        "Changes between commits, working tree, or staged area",
+        "Remote URLs",
+        "Stash list"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "devops_17",
+      "question": "Detached HEAD state means:",
+      "options": [
+        "Git is broken",
+        "HEAD points directly to a commit, not a branch",
+        "Remote is disconnected",
+        "A file is untracked"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "devops_18",
+      "question": "git blame is used to:",
+      "options": [
+        "Report bugs",
+        "See who last changed each line of a file",
+        "Reset commits",
+        "Push forcefully"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "devops_19",
+      "question": "Squashing commits means:",
+      "options": [
+        "Deleting all commits",
+        "Combining multiple commits into one",
+        "Reverting a merge",
+        "Tagging releases"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    }
+  ],
+  "problemsolving": [
+    {
+      "id": "problemsolving_0",
+      "question": "Binary search requires:",
+      "options": [
+        "Unsorted array",
+        "Sorted array (typical assumption)",
+        "Linked list only",
+        "Graph"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "problemsolving_1",
+      "question": "Queue is:",
+      "options": [
+        "LIFO",
+        "FIFO",
+        "Random access only",
+        "Heap property"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "problemsolving_2",
+      "question": "Hash map average lookup:",
+      "options": [
+        "O(n)",
+        "O(1) average",
+        "O(log n) always",
+        "O(n^2)"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "problemsolving_3",
+      "question": "DFS uses often:",
+      "options": [
+        "Only queue",
+        "Stack or recursion",
+        "Hash table only",
+        "Sort"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "problemsolving_4",
+      "question": "Binary tree node has at most:",
+      "options": [
+        "1 child",
+        "2 children (binary)",
+        "Unlimited without name",
+        "0 edges"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "problemsolving_5",
+      "question": "Time complexity O(n) means:",
+      "options": [
+        "Constant",
+        "Linear in input size",
+        "Exponential",
+        "Logarithmic"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "problemsolving_6",
+      "question": "A min-heap supports:",
+      "options": [
+        "Fast min retrieval",
+        "Only sorted array ops",
+        "O(1) search any key",
+        "SQL joins"
+      ],
+      "correctIndex": 0,
+      "difficulty": "easy"
+    },
+    {
+      "id": "problemsolving_7",
+      "question": "Dynamic programming often:",
+      "options": [
+        "Ignores subproblems",
+        "Reuses overlapping subproblems",
+        "Only for graphs",
+        "Only sorting"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "problemsolving_8",
+      "question": "Adjacency list is for:",
+      "options": [
+        "CSS",
+        "Representing graph edges compactly",
+        "Audio",
+        "JWT"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "problemsolving_9",
+      "question": "Merge sort worst-case time:",
+      "options": [
+        "O(n)",
+        "O(n log n)",
+        "O(n^2)",
+        "O(1)"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "problemsolving_10",
+      "question": "A stack follows which principle?",
+      "options": [
+        "FIFO",
+        "LIFO",
+        "Random access",
+        "Priority-based"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "problemsolving_11",
+      "question": "BFS traversal uses:",
+      "options": [
+        "Stack",
+        "Queue",
+        "Heap",
+        "Hash map"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "problemsolving_12",
+      "question": "Quicksort's average time complexity is:",
+      "options": [
+        "O(n^2)",
+        "O(n log n)",
+        "O(n)",
+        "O(log n)"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "problemsolving_13",
+      "question": "A linked list's main advantage over an array is:",
+      "options": [
+        "Faster random access",
+        "Efficient insertions/deletions at arbitrary positions",
+        "Better cache performance",
+        "Fixed size memory"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "problemsolving_14",
+      "question": "Space complexity O(1) means:",
+      "options": [
+        "Grows with input",
+        "Uses constant extra memory",
+        "Requires a stack",
+        "Uses O(n) memory"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "problemsolving_15",
+      "question": "A balanced BST has search time of:",
+      "options": [
+        "O(n)",
+        "O(log n)",
+        "O(1)",
+        "O(n^2)"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "problemsolving_16",
+      "question": "Dijkstra's algorithm finds:",
+      "options": [
+        "Longest path",
+        "Shortest path from a source in a weighted graph",
+        "Minimum spanning tree",
+        "Topological order"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "problemsolving_17",
+      "question": "Two pointers technique is commonly used for:",
+      "options": [
+        "Graph traversal",
+        "Problems on sorted arrays or linked lists",
+        "Tree balancing",
+        "Hashing"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "problemsolving_18",
+      "question": "Memoization is:",
+      "options": [
+        "A sorting technique",
+        "Caching results of expensive function calls to avoid recomputation",
+        "A graph algorithm",
+        "A data structure"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "problemsolving_19",
+      "question": "A trie (prefix tree) is primarily used for:",
+      "options": [
+        "Sorting numbers",
+        "Efficient string searching and autocomplete",
+        "Graph shortest paths",
+        "Heap operations"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    }
+  ],
+  "aptitudeplus": [
+    {
+      "id": "aptitudeplus_0",
+      "question": "If a train covers 120 km in 2 hours, what is its average speed?",
+      "options": [
+        "40 km/h",
+        "50 km/h",
+        "60 km/h",
+        "70 km/h"
+      ],
+      "correctIndex": 2,
+      "difficulty": "easy"
+    },
+    {
+      "id": "aptitudeplus_1",
+      "question": "What is 15% of 240?",
+      "options": [
+        "30",
+        "34",
+        "36",
+        "40"
+      ],
+      "correctIndex": 2,
+      "difficulty": "easy"
+    },
+    {
+      "id": "aptitudeplus_2",
+      "question": "A is taller than B, and B is taller than C. Who is the shortest?",
+      "options": [
+        "A",
+        "B",
+        "C",
+        "Cannot determine"
+      ],
+      "correctIndex": 2,
+      "difficulty": "easy"
+    },
+    {
+      "id": "aptitudeplus_3",
+      "question": "Find the next number: 2, 6, 12, 20, 30, ?",
+      "options": [
+        "36",
+        "40",
+        "42",
+        "44"
+      ],
+      "correctIndex": 2,
+      "difficulty": "medium"
+    },
+    {
+      "id": "aptitudeplus_4",
+      "question": "If the ratio of boys to girls is 3:2 and total students are 50, how many girls are there?",
+      "options": [
+        "18",
+        "20",
+        "22",
+        "24"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "aptitudeplus_5",
+      "question": "A shop offers 20% discount on an item priced at 1500. What is the selling price?",
+      "options": [
+        "1100",
+        "1200",
+        "1250",
+        "1300"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "aptitudeplus_6",
+      "question": "Complete the series: 3, 9, 27, 81, ?",
+      "options": [
+        "162",
+        "243",
+        "324",
+        "729"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "aptitudeplus_7",
+      "question": "If 5 workers finish a job in 12 days, how many days will 10 workers take (same efficiency)?",
+      "options": [
+        "4",
+        "5",
+        "6",
+        "8"
+      ],
+      "correctIndex": 2,
+      "difficulty": "medium"
+    },
+    {
+      "id": "aptitudeplus_8",
+      "question": "What is the simple interest on 1000 at 10% per annum for 2 years?",
+      "options": [
+        "100",
+        "150",
+        "200",
+        "250"
+      ],
+      "correctIndex": 2,
+      "difficulty": "easy"
+    },
+    {
+      "id": "aptitudeplus_9",
+      "question": "Which number is odd one out: 4, 9, 16, 25, 30?",
+      "options": [
+        "9",
+        "16",
+        "25",
+        "30"
+      ],
+      "correctIndex": 3,
+      "difficulty": "easy"
+    },
+    {
+      "id": "aptitudeplus_10",
+      "question": "A clock shows 3:00. What is the angle between hour and minute hands?",
+      "options": [
+        "60 degrees",
+        "75 degrees",
+        "90 degrees",
+        "120 degrees"
+      ],
+      "correctIndex": 2,
+      "difficulty": "medium"
+    },
+    {
+      "id": "aptitudeplus_11",
+      "question": "If 8 + 4 = 96 and 7 + 3 = 70, then 6 + 2 = ?",
+      "options": [
+        "36",
+        "40",
+        "48",
+        "54"
+      ],
+      "correctIndex": 2,
+      "difficulty": "hard"
+    },
+    {
+      "id": "aptitudeplus_12",
+      "question": "A person walks 5 km north and then 12 km east. How far is he from the start point?",
+      "options": [
+        "11 km",
+        "12 km",
+        "13 km",
+        "17 km"
+      ],
+      "correctIndex": 2,
+      "difficulty": "medium"
+    },
+    {
+      "id": "aptitudeplus_13",
+      "question": "What is the probability of getting an even number on a fair six-sided die?",
+      "options": [
+        "1/6",
+        "1/3",
+        "1/2",
+        "2/3"
+      ],
+      "correctIndex": 2,
+      "difficulty": "easy"
+    },
+    {
+      "id": "aptitudeplus_14",
+      "question": "If all roses are flowers and some flowers fade quickly, which conclusion is always true?",
+      "options": [
+        "All flowers are roses",
+        "Some roses may fade quickly",
+        "No rose fades quickly",
+        "Only roses are flowers"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "aptitudeplus_15",
+      "question": "What does OOP stand for?",
+      "options": [
+        "Object-Oriented Programming",
+        "Open-Only Protocol",
+        "Operational Output Pattern",
+        "Object Order Processing"
+      ],
+      "correctIndex": 0,
+      "difficulty": "easy"
+    },
+    {
+      "id": "aptitudeplus_16",
+      "question": "DRY principle stands for:",
+      "options": [
+        "Do Repeat Yourself",
+        "Don't Repeat Yourself",
+        "Data Relay Yet",
+        "Dynamic Runtime Yield"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "aptitudeplus_17",
+      "question": "SOLID principles are primarily for:",
+      "options": [
+        "Database design",
+        "Writing maintainable and scalable OOP code",
+        "CSS architecture",
+        "API design only"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "aptitudeplus_18",
+      "question": "Version control systems track:",
+      "options": [
+        "Server uptime",
+        "Changes to files over time",
+        "CSS animations",
+        "Database schemas only"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "aptitudeplus_19",
+      "question": "CI/CD stands for:",
+      "options": [
+        "Compiled Integration / Code Distribution",
+        "Continuous Integration / Continuous Delivery",
+        "Client Interface / Component Design",
+        "Cache Invalidation / Content Delivery"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    }
+  ],
+  "datascience": [
+    {
+      "id": "datascience_0",
+      "question": "What is a list comprehension?",
+      "options": [
+        "A debugger",
+        "Concise way to build lists",
+        "A type of loop only in C",
+        "A package manager"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "datascience_1",
+      "question": "def defines:",
+      "options": [
+        "A class only",
+        "A function",
+        "A constant",
+        "A module path"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "datascience_2",
+      "question": "pip installs:",
+      "options": [
+        "Node modules",
+        "Python packages",
+        "Docker images",
+        "Mongo collections"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "datascience_3",
+      "question": "Virtual environments help:",
+      "options": [
+        "Compile C++",
+        "Isolate project dependencies",
+        "Run React",
+        "Host static files"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "datascience_4",
+      "question": "PEP 8 is:",
+      "options": [
+        "A web server",
+        "Style guide for Python code",
+        "A DB protocol",
+        "A testing framework"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "datascience_5",
+      "question": "__init__ in a class is:",
+      "options": [
+        "Destructor",
+        "Constructor-like initializer",
+        "Main entry only",
+        "Import hook"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "datascience_6",
+      "question": "A dict stores:",
+      "options": [
+        "Ordered bits only",
+        "Key-value pairs",
+        "Only integers",
+        "SQL rows"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "datascience_7",
+      "question": "with open() is used for:",
+      "options": [
+        "HTTP requests",
+        "Context-managed file handling",
+        "Threads",
+        "Regex"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "datascience_8",
+      "question": "lambda creates:",
+      "options": [
+        "A database",
+        "Anonymous small functions",
+        "A virtual env",
+        "A PDF"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "datascience_9",
+      "question": "GIL affects:",
+      "options": [
+        "CSS layout",
+        "Threading of Python bytecode execution",
+        "HTTP version",
+        "Mongo sharding"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "datascience_10",
+      "question": "A tuple in Python is:",
+      "options": [
+        "Mutable",
+        "Immutable ordered sequence",
+        "A dictionary subtype",
+        "Only for numbers"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "datascience_11",
+      "question": "The self parameter in a class method refers to:",
+      "options": [
+        "The class itself",
+        "The instance of the class",
+        "The parent class",
+        "A static variable"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "datascience_12",
+      "question": "What does range(5) produce?",
+      "options": [
+        "[1,2,3,4,5]",
+        "A sequence of 0 to 4",
+        "A list of 5 random numbers",
+        "[5]"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "datascience_13",
+      "question": "Decorators in Python are used to:",
+      "options": [
+        "Add CSS styles",
+        "Wrap/extend function behavior",
+        "Declare constants",
+        "Import modules"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "datascience_14",
+      "question": "A generator function uses:",
+      "options": [
+        "return to produce values",
+        "yield to lazily produce values",
+        "async only",
+        "class keyword"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "datascience_15",
+      "question": "isinstance() checks:",
+      "options": [
+        "Variable value",
+        "Whether an object is an instance of a class",
+        "Module path",
+        "Memory address"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "datascience_16",
+      "question": "In Python, *args in a function allows:",
+      "options": [
+        "Only keyword arguments",
+        "Variable-length positional arguments",
+        "Only two arguments",
+        "Returning multiple values"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "datascience_17",
+      "question": "Python's pass statement:",
+      "options": [
+        "Exits the program",
+        "Is a no-op placeholder",
+        "Skips to next loop iteration",
+        "Returns None explicitly"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "datascience_18",
+      "question": "asyncio in Python is for:",
+      "options": [
+        "Multithreading only",
+        "Writing concurrent code using async/await",
+        "GPU computation",
+        "Database ORM"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "datascience_19",
+      "question": "The __str__ method is used to:",
+      "options": [
+        "Convert to bytes",
+        "Define string representation of an object",
+        "Compare two objects",
+        "Delete an object"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    }
+  ],
+  "cloud": [
+    {
+      "id": "cloud_0",
+      "question": "Load balancer spreads:",
+      "options": [
+        "CSS classes",
+        "Traffic across servers",
+        "PDF pages",
+        "Git branches"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "cloud_1",
+      "question": "Caching reduces:",
+      "options": [
+        "Security",
+        "Latency/load on origin",
+        "DNS need",
+        "HTTPS"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "cloud_2",
+      "question": "CAP theorem involves:",
+      "options": [
+        "Only CPU",
+        "Consistency, availability, partition tolerance",
+        "Only REST",
+        "Only SQL"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "cloud_3",
+      "question": "CDN caches:",
+      "options": [
+        "Database rows",
+        "Static assets closer to users",
+        "JWT secrets",
+        "Source maps only"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "cloud_4",
+      "question": "Horizontal scaling adds:",
+      "options": [
+        "RAM to one machine",
+        "More machines",
+        "Only SSD",
+        "Threads only"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "cloud_5",
+      "question": "Message queue helps:",
+      "options": [
+        "CSS grid",
+        "Async decoupling of producers/consumers",
+        "JWT signing",
+        "PDF parse"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "cloud_6",
+      "question": "Idempotency keys help:",
+      "options": [
+        "CSS specificity",
+        "Safe retries in payments/orders",
+        "GraphQL only",
+        "DNS"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "cloud_7",
+      "question": "Database sharding splits:",
+      "options": [
+        "Logs only",
+        "Data across shards",
+        "React components",
+        "TCP packets"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "cloud_8",
+      "question": "Rate limiting is a:",
+      "options": [
+        "CSS property",
+        "Protection/throttling pattern",
+        "SQL join",
+        "Heap type"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "cloud_9",
+      "question": "Microservices trade:",
+      "options": [
+        "Always simpler ops",
+        "Complexity for independent scaling/deploy",
+        "No network calls",
+        "No APIs"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "cloud_10",
+      "question": "A reverse proxy sits:",
+      "options": [
+        "On the client device",
+        "Between clients and backend servers, forwarding requests",
+        "Inside the database",
+        "In the browser cache"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "cloud_11",
+      "question": "Eventual consistency means:",
+      "options": [
+        "All nodes update instantly",
+        "Nodes will converge to the same data over time",
+        "Data is never synchronized",
+        "Only one node holds data"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "cloud_12",
+      "question": "A monolith vs microservices: monolith is:",
+      "options": [
+        "Always slower",
+        "A single deployable unit with all features",
+        "Only for large teams",
+        "Database-free"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "cloud_13",
+      "question": "Write-through cache means:",
+      "options": [
+        "Writing to cache only",
+        "Writing to both cache and storage simultaneously",
+        "Never caching writes",
+        "Deleting cache on write"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "cloud_14",
+      "question": "Service discovery helps microservices:",
+      "options": [
+        "Style their UI",
+        "Dynamically find network locations of other services",
+        "Share a single database",
+        "Manage CSS assets"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "cloud_15",
+      "question": "A circuit breaker pattern:",
+      "options": [
+        "Encrypts network traffic",
+        "Stops cascading failures by short-circuiting failing calls",
+        "Balances load evenly",
+        "Manages DNS entries"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "cloud_16",
+      "question": "Vertical scaling means:",
+      "options": [
+        "Adding more servers",
+        "Upgrading CPU/RAM on a single server",
+        "Adding more regions",
+        "Caching all requests"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "cloud_17",
+      "question": "A pub/sub model differs from a queue in that:",
+      "options": [
+        "It has no subscribers",
+        "Messages can be delivered to multiple subscribers simultaneously",
+        "Only one producer is allowed",
+        "It uses HTTP only"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "cloud_18",
+      "question": "Stateless services are preferred because:",
+      "options": [
+        "They cache user sessions",
+        "They scale horizontally more easily since any instance can handle any request",
+        "They require fewer servers",
+        "They don't use HTTP"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "cloud_19",
+      "question": "Consistent hashing is used to:",
+      "options": [
+        "Hash passwords",
+        "Distribute load with minimal remapping when nodes are added/removed",
+        "Sort database rows",
+        "Encrypt API keys"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    }
+  ],
+  "security": [
+    {
+      "id": "security_0",
+      "question": "REST often uses HTTP methods for:",
+      "options": [
+        "Only downloads",
+        "CRUD-style operations",
+        "FTP",
+        "SMTP"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "security_1",
+      "question": "201 Created usually means:",
+      "options": [
+        "Not found",
+        "Resource created",
+        "Redirect",
+        "Unauthorized"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "security_2",
+      "question": "Idempotent: repeating same request",
+      "options": [
+        "Always changes data",
+        "Has same effect as once (ideal)",
+        "Only for DELETE",
+        "Impossible in HTTP"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "security_3",
+      "question": "JSON is:",
+      "options": [
+        "Binary Excel",
+        "Common text format for APIs",
+        "SQL dialect",
+        "Image codec"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "security_4",
+      "question": "Pagination helps:",
+      "options": [
+        "Encrypt payloads",
+        "Limit large result sets",
+        "Disable CORS",
+        "Replace JWT"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "security_5",
+      "question": "HATEOAS relates to:",
+      "options": [
+        "CSS hover",
+        "Hypermedia-driven responses",
+        "GPU",
+        "Docker"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "security_6",
+      "question": "API versioning can be via:",
+      "options": [
+        "Only cookies",
+        "URL path, headers, or query",
+        "Only FTP",
+        "DNS TTL"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "security_7",
+      "question": "Rate limiting protects against:",
+      "options": [
+        "CSS bugs",
+        "Abuse/overload",
+        "JSON syntax",
+        "UTF-8"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "security_8",
+      "question": "PUT vs PATCH broadly:",
+      "options": [
+        "Identical always",
+        "PUT replaces; PATCH partial update (typical)",
+        "PATCH is FTP",
+        "PUT is GraphQL"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "security_9",
+      "question": "OpenAPI/Swagger describes:",
+      "options": [
+        "Docker layers",
+        "HTTP API contracts",
+        "React props",
+        "Mongo indexes"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "security_10",
+      "question": "HTTP 401 means:",
+      "options": [
+        "Server error",
+        "Unauthorized – authentication required",
+        "Not found",
+        "Redirect"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "security_11",
+      "question": "HTTP 403 vs 401:",
+      "options": [
+        "Same thing",
+        "403 is forbidden (authenticated but no permission); 401 is unauthenticated",
+        "403 is a server error",
+        "401 is a redirect"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "security_12",
+      "question": "CORS stands for:",
+      "options": [
+        "Cache Object Resource System",
+        "Cross-Origin Resource Sharing",
+        "Client-Origin Request Standard",
+        "Compressed Object Routing Service"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "security_13",
+      "question": "JWT (JSON Web Token) is commonly used for:",
+      "options": [
+        "Database queries",
+        "Stateless authentication and information exchange",
+        "CSS minification",
+        "Load balancing"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "security_14",
+      "question": "A 500 HTTP status code means:",
+      "options": [
+        "Client-side error",
+        "Internal server error",
+        "Resource not found",
+        "Successful creation"
+      ],
+      "correctIndex": 1,
+      "difficulty": "easy"
+    },
+    {
+      "id": "security_15",
+      "question": "Content-Type header tells the client:",
+      "options": [
+        "The server language",
+        "The media type of the response body",
+        "The API version",
+        "The auth method"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": "security_16",
+      "question": "A 404 response means:",
+      "options": [
+        "Server error",
+        "Forbidden access",
+        "Resource not found",
+        "Redirect to HTTPS"
+      ],
+      "correctIndex": 2,
+      "difficulty": "easy"
+    },
+    {
+      "id": "security_17",
+      "question": "GraphQL differs from REST mainly because:",
+      "options": [
+        "It only supports GET",
+        "Clients specify exactly what data they need in a single request",
+        "It uses XML",
+        "It doesn't use HTTP"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "security_18",
+      "question": "Stateless in REST means:",
+      "options": [
+        "The server stores all session data",
+        "Each request must contain all info needed; server stores no session state",
+        "Responses are never cached",
+        "Only GET is allowed"
+      ],
+      "correctIndex": 1,
+      "difficulty": "hard"
+    },
+    {
+      "id": "security_19",
+      "question": "An API gateway is used to:",
+      "options": [
+        "Host static files",
+        "Act as a single entry point managing routing, auth, and rate limiting",
+        "Write SQL queries",
+        "Replace CDNs"
+      ],
+      "correctIndex": 1,
+      "difficulty": "medium"
     }
   ]
 }

@@ -9,13 +9,18 @@ import {
   buildQuestionReviews,
   listQuizSkillIds,
 } from "../services/quiz.service.js";
-import { isQuizSkill, formatQuizTitle } from "../constants/quizSkills.js";
+import {
+  isQuizSkill,
+  formatQuizTitle,
+  SKILL_DISPLAY_NAMES,
+} from "../constants/quizSkills.js";
 import QuizAttempt from "../models/quizAttempt.model.js";
 
 export const getQuizSkills = asyncHandler(async (req, res) => {
   return res.status(200).json(
     new ApiResponse(200, "Quiz skills", {
       skills: listQuizSkillIds(),
+      labels: SKILL_DISPLAY_NAMES,
     })
   );
 });
@@ -91,7 +96,11 @@ export const submitQuiz = asyncHandler(async (req, res) => {
     timeSpentSeconds = null;
   }
 
-  const questionReviews = buildQuestionReviews(answers);
+  const sessionSkills = Array.isArray(req.body?.skills)
+    ? req.body.skills.map((s) => String(s).toLowerCase().trim())
+    : null;
+
+  const questionReviews = buildQuestionReviews(answers, sessionSkills);
   if (questionReviews.length === 0) {
     throw new ApiError(
       400,
@@ -99,7 +108,7 @@ export const submitQuiz = asyncHandler(async (req, res) => {
     );
   }
 
-  const graded = gradeQuiz(answers);
+  const graded = gradeQuiz(answers, sessionSkills);
   if (graded.skillResults.length === 0) {
     throw new ApiError(
       400,
