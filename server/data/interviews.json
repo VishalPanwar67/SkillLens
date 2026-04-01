@@ -1,104 +1,231 @@
 {
-  "frontend": [
-    {
-      "question": "Explain the difference between Virtual DOM and Shadow DOM.",
-      "ideal": "Virtual DOM is a lightweight React-specific memory representation of the UI to optimize rendering. Shadow DOM is a browser-native technology for scoping CSS and HTML, used in Web Components."
-    },
-    {
-      "question": "How does hoisting work in JavaScript?",
-      "ideal": "Hoisting is JS's behavior of moving declarations to the top of their scope. Variables with 'var' are hoisted with 'undefined', while 'let'/'const' are in a Temporal Dead Zone."
-    },
-    {
-      "question": "What are React Hooks and why were they introduced?",
-      "ideal": "Hooks allow function components to use state and lifecycle features without writing classes. They were introduced to reuse stateful logic and solve 'this' binding complexities."
-    },
-    {
-      "question": "Explain CSS specificity and how it works.",
-      "ideal": "Specificity is the algorithm used to decide which CSS rule applies. Inline styles > IDs > Classes/Attributes > Elements/Pseudo-elements."
-    },
-    {
-      "question": "What is the difference between client-side rendering (CSR) and server-side rendering (SSR)?",
-      "ideal": "CSR renders pages in the browser using JS, while SSR generates the full HTML on the server. SSR is better for SEO and initial load speed."
-    },
-    {
-      "question": "Explain the Box Model in CSS.",
-      "ideal": "The box model consists of content, padding, border, and margin. Total width = width + padding + border + margin."
-    },
-    {
-      "question": "What is Closures in JavaScript?",
-      "ideal": "A closure is a function that remembers its outer lexical environment even after that outer scope has closed."
-    }
+  "html": [
+    { "question": "What is the difference between an inline element and a block-level element?", "ideal": "Block-level elements start on a new line and take up the full width (e.g., div, p, h1). Inline elements only take up as much width as necessary and do not force a new line (e.g., span, a, img)." },
+    { "question": "Explain the purpose of the 'alt' attribute on an image tag.", "ideal": "The 'alt' attribute provides alternative text for screen readers and displays if the image fails to load. It is essential for accessibility and SEO." },
+    { "question": "What are semantic HTML tags, and why are they important?", "ideal": "Semantic tags like <header>, <article>, and <footer> clearly describe their meaning to both the browser and the developer. They improve accessibility, SEO, and maintainability." },
+    { "question": "What is the difference between <!DOCTYPE html> and without it?", "ideal": "The DOCTYPE declaration tells the browser which version of HTML is being used. Without it, browsers may enter 'Quirks Mode', which can lead to inconsistent rendering across different browsers." },
+    { "question": "Explain the use of 'data-' attributes.", "ideal": "'data-' attributes allow us to store custom data private to the page or application inside standard HTML elements, which can then be accessed via JavaScript." },
+    { "question": "What is the purpose of the <meta charset='UTF-8'> tag?", "ideal": "It specifies the character encoding for the HTML document. UTF-8 is the standard encoding that covers almost all characters and symbols in the world." },
+    { "question": "What is the difference between local storage, session storage, and cookies?", "ideal": "LocalStorage persists even after the browser is closed. SessionStorage is cleared when the tab is closed. Cookies are smaller, have expiration times, and are sent with server requests." },
+    { "question": "Explain the concept of an iframe.", "ideal": "An iframe is used to embed another HTML document within the current document. It is commonly used for advertisements, maps, or videos." },
+    { "question": "What is the difference between the <script>, <script async>, and <script defer> tags?", "ideal": "<script> stops HTML parsing to execute. 'async' executes the script as soon as it's downloaded, possibly before parsing finishes. 'defer' executes only after the HTML parsing is complete." },
+    { "question": "What are self-closing tags in HTML?", "ideal": "These are tags that do not require a separate closing tag, such as <img>, <br>, <hr>, and <input>." },
+    { "question": "How do you group options in a select dropdown?", "ideal": "You use the <optgroup> tag with a 'label' attribute to group related <option> elements." },
+    { "question": "What is the importance of the <canvas> element?", "ideal": "The <canvas> element is used to draw graphics on the fly via JavaScript. It is used for games, animations, and data visualizations." },
+    { "question": "What is the purpose of the <label> tag and the 'for' attribute?", "ideal": "The <label> tag defines a label for a form element. The 'for' attribute links the label to the 'id' of the input, making it clickable to focus the input." },
+    { "question": "Explain the difference between <b> and <strong>, and <i> and <em>.", "ideal": "<b> and <i> are stylistic, while <strong> and <em> carry semantic weight, indicating importance or emphasis respectively for screen readers." },
+    { "question": "What is the purpose of the <svg> tag?", "ideal": "SVG (Scalable Vector Graphics) is used to define vector-based graphics in XML format. They are scalable without losing quality and are lightweight." },
+    { "question": "What are web workers in HTML5?", "ideal": "Web workers allow JS code to run in the background without affecting the performance of the UI thread, making it suitable for heavy computations." },
+    { "question": "Explain HTML5 forms and new input types.", "ideal": "HTML5 introduced new types like number, date, email, range, and color, which provide better user experiences and built-in validation." },
+    { "question": "What is the 'DOMContentLoaded' event?", "ideal": "This event fires when the initial HTML document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading." },
+    { "question": "What is the difference between <div> and <span>?", "ideal": "<div> is a block-level container for large sections of content, while <span> is an inline container for small parts of text or content." },
+    { "question": "How does the browser handle unknown tags?", "ideal": "Browsers generally treat unknown tags as inline elements and allow them to be styled, but they won't have any special built-in behavior." }
   ],
-  "backend": [
-    {
-      "question": "What is Middleware in Express?",
-      "ideal": "Middleware are functions that have access to the req and res objects. They can execute code, modify req/res, or end the request-response cycle."
-    },
-    {
-      "question": "Explain the difference between SQL and NoSQL databases.",
-      "ideal": "SQL is relational, schema-based, and better for ACID compliance (e.g., PostgreSQL). NoSQL is non-relational, document-based, and better for horizontal scaling (e.g., MongoDB)."
-    },
-    {
-      "question": "How does JWT authentication work?",
-      "ideal": "JWT (JSON Web Token) is a stateless authentication mechanism. The server issues a signed token, and the client sends it in the Authorization header for every request."
-    },
-    {
-      "question": "What is the Event Loop in Node.js?",
-      "ideal": "The Event Loop is what allows Node.js to perform non-blocking I/O operations by offloading tasks to the system kernel whenever possible."
-    },
-    {
-      "question": "Explain RESTful API principles.",
-      "ideal": "REST principles include Statelessness, Client-Server separation, Cacheability, Uniform Interface, and Layered System."
-    },
-    {
-      "question": "What are the common HTTP status codes and their meanings?",
-      "ideal": "200 (OK), 201 (Created), 400 (Bad Request), 401 (Unauthorized), 404 (Not Found), 500 (Server Error)."
-    },
-    {
-      "question": "Explain indexing in MongoDB.",
-      "ideal": "Indexes support efficient execution of queries in MongoDB. Without them, MongoDB must scan every document in a collection to select those that match the query."
-    }
+  "css": [
+    { "question": "Explain the CSS Box Model.", "ideal": "The box model consists of content, padding, border, and margin. It determines how an element's size and spacing are calculated." },
+    { "question": "What is the difference between 'absolute', 'relative', 'fixed', and 'sticky' positioning?", "ideal": "'Relative' is relative to itself. 'Absolute' is relative to its nearest positioned ancestor. 'Fixed' is relative to the viewport. 'Sticky' toggles between relative and fixed based on scroll position." },
+    { "question": "How do you center a div both horizontally and vertically?", "ideal": "Using Flexbox: 'display: flex; justify-content: center; align-items: center;'. Using Grid: 'display: grid; place-items: center;'." },
+    { "question": "What are CSS pseudo-classes and pseudo-elements?", "ideal": "Pseudo-classes like :hover or :active define a special state of an element. Pseudo-elements like ::before or ::after allow styling specific parts of an element." },
+    { "question": "Explain the concept of Z-index.", "ideal": "Z-index controls the stack order of elements along the z-axis (depth). It only works on elements with a position value other than static." },
+    { "question": "What is the difference between 'em' and 'rem' units?", "ideal": "'em' is relative to the font-size of its parent element. 'rem' is relative to the font-size of the root element (usually <html>)." },
+    { "question": "How does Flexbox work? Explain 'justify-content' vs 'align-items'.", "ideal": "'justify-content' aligns items along the main axis (horizontal by default), while 'align-items' aligns them along the cross axis (vertical by default)." },
+    { "question": "What is CSS Specificity?", "ideal": "Specificity is the set of rules browsers use to determine which CSS property is applied to an element when multiple rules target it. Inline styles > IDs > Classes > Elements." },
+    { "question": "What is a CSS Preprocessor like Sass?", "ideal": "A preprocessor extends CSS with features like variables, nesting, and mixins. It is then compiled back into standard CSS that browsers can understand." },
+    { "question": "Explain the difference between 'display: none' and 'visibility: hidden'.", "ideal": "'display: none' removes the element from the document layout completely. 'visibility: hidden' hides the element but it still occupies its space in the layout." },
+    { "question": "What are media queries?", "ideal": "Media queries allow you to apply different CSS styles depending on the device's characteristics, such as screen width, height, or orientation." },
+    { "question": "What is the CSS 'box-sizing' property?", "ideal": "'content-box' (default) adds padding and borders on top of the width. 'border-box' includes padding and borders within the defined width, which is often easier to manage." },
+    { "question": "How do you handle responsiveness without media queries?", "ideal": "Using CSS Grid with 'auto-fit' or 'auto-fill', Flexbox wrapping, and using relative units like %, vh, and vw." },
+    { "question": "Explain CSS Grid and how it differs from Flexbox.", "ideal": "Grid is 2D (rows and columns) and better for entire layouts. Flexbox is 1D (either row or column) and better for aligning items within a container." },
+    { "question": "What is a CSS Reset or Normalize.css?", "ideal": "CSS reset removes all browser-default styling. Normalize.css makes cross-browser rendering consistent by preserving useful defaults rather than erasing everything." },
+    { "question": "How can you optimize CSS for performance?", "ideal": "Minify files, remove unused CSS, use critical CSS (inline styles for above-the-fold content), and avoid deeply nested selectors." },
+    { "question": "What are CSS variables (custom properties)?", "ideal": "Variables defined as '--name: value' that can be reused throughout the stylesheet using the 'var(--name)' function. They are dynamic and can be changed via JS." },
+    { "question": "Explain the 'float' property and how to clear it.", "ideal": "Float pushes an element to the left or right allowing text to wrap around it. You clear it using 'clear: both' on a following element or using a clearfix hack." },
+    { "question": "What is 'transition' in CSS?", "ideal": "Transitions allow you to change property values smoothly over a specified duration rather than instantly." },
+    { "question": "What is '@keyframes' used for?", "ideal": "@keyframes is used to define the steps and properties of a CSS animation, allowing complex movements beyond simple transitions." }
   ],
-  "fullstack": [
-    {
-      "question": "How do you secure a MERN stack application?",
-      "ideal": "Security includes HTTPS, JWT with HTTP-only cookies, password hashing (bcrypt), input sanitization, and setting proper CORS policies."
-    },
-    {
-      "question": "Explain the process of deploying a fullstack app.",
-      "ideal": "Deployment involves environment configuration, build processes (Webpack/Vite), CI/CD pipelines, and hosting on platforms like Vercel, AWS, or DigitalOcean."
-    },
-    {
-      "question": "What is state management and when should you use Redux?",
-      "ideal": "State management handles the data flow. Use Redux for large-scale applications where many components share complex, deeply nested state."
-    },
-    {
-      "question": "How do you handle large scale data in MongoDB?",
-      "ideal": "Large scale data is handled through sharding (distributing data across machines) and replica sets (high availability)."
-    },
-    {
-      "question": "Explain the difference between monolithic and microservices architecture.",
-      "ideal": "Monolithic is a single unified unit. Microservices are independent services communicating via APIs, allowing better scalability but adding complexity."
-    }
+  "js": [
+    { "question": "What is the difference between 'var', 'let', and 'const'?", "ideal": "'var' is function-scoped and hoisted. 'let' and 'const' are block-scoped and not hoisted in the same way (Temporal Dead Zone). 'const' cannot be reassigned." },
+    { "question": "Explain closures in JavaScript.", "ideal": "A closure is a function that retains access to its lexical scope even when the function is executed outside of that scope." },
+    { "question": "What is 'hoisting'?", "ideal": "Hoisting is JS's default behavior of moving weight declarations to the top. Variables are hoisted as undefined, while function declarations are hoisted completely." },
+    { "question": "Explain the difference between '==' and '==='.", "ideal": "'==' performs type coercion before comparison. '===' compares both value and type without performing any coercion." },
+    { "question": "What is the Event Loop in JS?", "ideal": "The event loop manages the execution of multiple scripts, handling asynchronous callbacks by moving them from the task queue to the call stack whenever it's empty." },
+    { "question": "How does 'this' work in JavaScript?", "ideal": "The value of 'this' depends on how a function is called. In the global context, it's the window/global object. In an object method, it's the object. Arrow functions don't have their own 'this'." },
+    { "question": "Explain Promises and how to use them.", "ideal": "A Promise represents a value that may be available now, in the future, or never. States are pending, fulfilled, or rejected. We use .then() and .catch() to handle them." },
+    { "question": "What is the difference between 'null' and 'undefined'?", "ideal": "'undefined' means a variable has been declared but not assigned a value. 'null' is an intentional absence of any value." },
+    { "question": "What are arrow functions and how are they different from regular functions?", "ideal": "Arrow functions have a shorter syntax and do not have their own 'this', 'arguments', or 'super'. They are always anonymous." },
+    { "question": "Explain destructuring in JS.", "ideal": "Destructuring is a syntax that allows unpacking values from arrays or properties from objects into distinct variables." },
+    { "question": "What is a 'Pure Function'?", "ideal": "A pure function always produces the same output for the same input and has no side effects (doesn't modify global state or external variables)." },
+    { "question": "Explain the 'spread' and 'rest' operators.", "ideal": "Spread (...) expands an array or object into individual elements. Rest (...) collects multiple elements and condenses them into a single array." },
+    { "question": "What are Higher-Order Functions?", "ideal": "Functions that either take one or more functions as arguments or return a function as their result (e.g., map, filter, reduce)." },
+    { "question": "How do you handle errors in asynchronous code?", "ideal": "Using try-catch blocks with async/await, or using .catch() at the end of a promise chain." },
+    { "question": "Explain the difference between .map() and .forEach().", "ideal": ".map() creates a new array with the results of calling the function on every element. .forEach() simply executes the function on each element and returns undefined." },
+    { "question": "What is prototypal inheritance?", "ideal": "Objects inherit properties and methods from other objects via the prototype chain. Every object has a hidden [[Prototype]] property." },
+    { "question": "What is 'strict mode'?", "ideal": "'use strict' enables a stricter version of JS that catches common coding bloopers and prevents the use of certain potentially problematic features." },
+    { "question": "Explain the 'Temporal Dead Zone'.", "ideal": "TDZ is the period between entering a block and the actual declaration of a 'let' or 'const' variable where accessing it causes a ReferenceError." },
+    { "question": "What is the difference between call(), apply(), and bind()?", "ideal": "call() and apply() execute the function immediately (call takes args one by one, apply takes array). bind() returns a new function with 'this' permanently bound." },
+    { "question": "What are async and await?", "ideal": "Keywords that enable writing asynchronous, promise-based code in a way that looks and behaves like synchronous code, improving readability." }
   ],
-  "data": [
-    {
-      "question": "What is Normalization in SQL?",
-      "ideal": "Normalization is the process of organizing data to reduce redundancy and improve data integrity through various Normal Forms (1NF, 2NF, 3NF)."
-    },
-    {
-      "question": "Explain Exploratory Data Analysis (EDA).",
-      "ideal": "EDA is the process of visualizing and summarizing a dataset to discover patterns, spot anomalies, and test hypotheses using statistical graphs."
-    }
+  "react": [
+    { "question": "What is React and what is its main goal?", "ideal": "React is a JS library for building user interfaces. Its main goal is to handle the view layer by creating reusable UI components and optimizing rendering with a Virtual DOM." },
+    { "question": "Explain the Virtual DOM.", "ideal": "A lightweight copy of the real DOM. When state changes, React updates the Virtual DOM, compares it (diffing), and only updates the necessary parts of the real DOM (reconciliation)." },
+    { "question": "What are React Hooks?", "ideal": "Hooks like useState and useEffect allow function components to use state and other React features without writing a class." },
+    { "question": "What is the purpose of useEffect?", "ideal": "It handles side effects in function components, such as data fetching, subscriptions, or manual DOM manipulations. It runs after every render by default." },
+    { "question": "Explain the difference between Props and State.", "ideal": "Props (properties) are passed from parent to child and are read-only. State is managed within the component and can be changed using a setter function." },
+    { "question": "What is the 'key' prop and why is it important?", "ideal": "Keys help React identify which items have changed, been added, or removed in a list. They are essential for performance and keeping component state stable." },
+    { "question": "What is JSX?", "ideal": "JSX is a syntax extension for JS that looks like HTML. It is compiled into standard React.createElement calls." },
+    { "question": "Explain the concept of 'lifting state up'.", "ideal": "When two or more components need to share the same state, you move that state to their closest common ancestor and pass it down as props." },
+    { "question": "What are High-Order Components (HOC)?", "ideal": "An HOC is a function that takes a component and returns a new component, usually adding extra functionality or props." },
+    { "question": "Explain the Context API.", "ideal": "Context provides a way to pass data through the component tree without having to pass props down manually at every level (solving 'prop drilling')." },
+    { "question": "What is the difference between a functional and a class component?", "ideal": "Functional components are simpler, use Hooks, and don't have 'this'. Class components use ES6 classes, have lifecycle methods like componentDidMount, and use 'this'." },
+    { "question": "What is React Fragment?", "ideal": "Fragment allows you to group a list of children without adding extra nodes to the DOM (like a <div> wrapper)." },
+    { "question": "How do you handle forms in React?", "ideal": "Using 'controlled components' where the input value is bound to the state and updated via an onChange handler." },
+    { "question": "What is Redux and when should you use it?", "ideal": "Redux is a state management library for large apps with complex state that flows through many components. Use it when prop drilling becomes unmanageable." },
+    { "question": "Explain the React lifecycle methods.", "ideal": "In classes: mounting, updating, and unmounting. In functional components, these are mirrored by the useEffect hook with different dependency arrays." },
+    { "question": "What is React.memo()?", "ideal": "A higher-order component that prevents re-rendering of a component if its props haven't changed (memoization)." },
+    { "question": "What is useMemo and useCallback?", "ideal": "useMemo memoizes the result of a calculation. useCallback memoizes the function definition itself to prevent unnecessary child re-renders." },
+    { "question": "Explain the difference between Shadow DOM and Virtual DOM.", "ideal": "Shadow DOM is a browser-specific technology for scoping CSS and HTML in web components. Virtual DOM is a React-specific optimization for rendering." },
+    { "question": "What is 'error boundary' in React?", "ideal": "A class component that catches JS errors anywhere in its child component tree and displays a fallback UI instead of crashing the whole app." },
+    { "question": "What is React Router?", "ideal": "A standard library for routing in React. It enables navigation between different views or components while keeping the UI in sync with the URL." }
+  ],
+  "node.js": [
+    { "question": "What is Node.js?", "ideal": "Node.js is an open-source, cross-platform JS runtime environment that executes JS code outside the web browser, built on Chrome's V8 engine." },
+    { "question": "What is 'npm'?", "ideal": "The Node Package Manager. It is the world's largest software registry, used to install and manage dependencies in Node projects." },
+    { "question": "Explain the module system in Node.js.", "ideal": "Node uses CommonJS (require/module.exports) and more recently ES Modules (import/export) to organize code into separate files." },
+    { "question": "What is the difference between 'path.join' and 'path.resolve'?", "ideal": "'path.join' just concatenates strings into a path. 'path.resolve' always returns an absolute path by processing it from right to left until an absolute path is formed." },
+    { "question": "How do you read a file in Node.js?", "ideal": "Using the 'fs' (file system) module, either asynchronously with fs.readFile or synchronously with fs.readFileSync." },
+    { "question": "What are Streams in Node.js?", "ideal": "Streams are an efficient way to handle reading/writing files, network communications, or any end-to-end information exchange in chunks rather than all at once." },
+    { "question": "Explain the purpose of 'package.json'.", "ideal": "It contains metadata about the project, script commands, and an exact list of dependencies and their versions needed to run the app." },
+    { "question": "What is 'middleware' in Express?", "ideal": "Functions that run during the request-response cycle. They can modify the request or response, execute code, or end the request." },
+    { "question": "How do you handle environment variables in Node.js?", "ideal": "Using the 'process.env' object, often populated from a .env file using the 'dotenv' package." },
+    { "question": "What is the difference between process.nextTick() and setImmediate()?", "ideal": "nextTick() executes immediately after the current operation finishes (highest priority). setImmediate() runs on the next iteration of the event loop." },
+    { "question": "Explain Child Processes in Node.", "ideal": "The 'child_process' module allows running system commands or separate scripts as sub-processes, enabling multi-core usage for CPU-intensive tasks." },
+    { "question": "What is the Cluster module?", "ideal": "The Cluster module allows you to easily create child processes that all share server ports, letting you leverage all available CPU cores of the server." }
+  ],
+  "mongo": [
+    { "question": "What is MongoDB?", "ideal": "A NoSQL, document-oriented database that stores data in flexible, JSON-like BSON documents. It is designed for scalability and high availability." },
+    { "question": "What is a Collection in MongoDB?", "ideal": "A group of documents, equivalent to a 'table' in relational databases. Collections do not enforce a strict schema." },
+    { "question": "Explain the difference between MongoDB and SQL databases.", "ideal": "SQL is relational, has a strict schema, and uses joins. MongoDB is non-relational, flexible schema, and typically uses embedding or references instead of joins." },
+    { "question": "What is BSON?", "ideal": "BSON stands for Binary JSON. It is the binary-encoded serialization of JSON documents that MongoDB uses for storage and network transfer." },
+    { "question": "How do you perform a query in MongoDB?", "ideal": "Using methods like .find(), .findOne(), or .aggregate() with a filter object representing the query criteria." },
+    { "question": "Explain Indexing in MongoDB.", "ideal": "Indexes support the efficient execution of queries (collection scans vs index scans). Common types are Single Field, Compound, and TTL." }
   ],
   "java": [
-    {
-      "question": "What is JVM and how does it work?",
-      "ideal": "JVM (Java Virtual Machine) is an abstract machine that provides a runtime environment for Java bytecode. It manages memory and executes the code on any OS."
-    },
-    {
-      "question": "Explain OOP principles in Java.",
-      "ideal": "OOP principles include Encapsulation, Inheritance, Polymorphism, and Abstraction."
-    }
+    { "question": "What is Java?", "ideal": "A high-level, object-oriented language. Its 'Write Once, Run Anywhere' capability is provided by the JVM." },
+    { "question": "Explain the difference between JDK, JRE, and JVM.", "ideal": "JDK is for development. JRE provides the environment to run apps. JVM is the engine that executes bytecode." },
+    { "question": "What are the OOP pillars?", "ideal": "Inheritance, Encapsulation, Abstraction, and Polymorphism." },
+    { "question": "What is an Interface?", "ideal": "A contract defining methods but no implementation (since Java 8, it can have default/static methods)." },
+    { "question": "Explain Garbage Collection.", "ideal": "Automatic memory management that reclaims heap space by deleting unreachable objects." }
+  ],
+  "python": [
+    { "question": "What makes Python so popular?", "ideal": "Readability, simplicity, large library support, and its versatility in data science, AI, and web development." },
+    { "question": "Explain the difference between Lists and Tuples.", "ideal": "Lists are mutable and use brackets []. Tuples are immutable and use parentheses ()." },
+    { "question": "What are Python Decorators?", "ideal": "Functions that modify the behavior of another function or class using the @ symbol." },
+    { "question": "Explain the 'with' statement.", "ideal": "Context management that ensures resources like files are automatically closed even if errors occur." }
+  ],
+  "git": [
+    { "question": "What is Git?", "ideal": "A distributed version control system for tracking changes in source code." },
+    { "question": "Explain 'rebase' vs 'merge'.", "ideal": "Merge combines histories with a merge commit. Rebase moves history to a new base for a linear sequence." },
+    { "question": "What is 'git stash'?", "ideal": "Temporarily saves changes in a dirty working directory to be applied later." }
+  ],
+  "oops": [
+    { "question": "What is Encapsulation?", "ideal": "Grouping data and methods together and hiding data using private/protected access modifiers." },
+    { "question": "Explain Polymorphism.", "ideal": "The ability of a single interface to represent different underlying forms (overloading vs overriding)." },
+    { "question": "What is the SOLID principle?", "ideal": "Five architectural principles (Single Responsibility, Open/Closed, Liskov, Interface Segregation, Dependency Inversion) for clean code." }
+  ],
+  "sql": [
+    { "question": "What is SQL?", "ideal": "Structured Query Language, used for managing and manipulating relational databases." },
+    { "question": "Explain different types of JOINS.", "ideal": "INNER (matches in both), LEFT (all from left + matched right), RIGHT, and FULL outer join." },
+    { "question": "What is Normalization?", "ideal": "Organizing data to reduce redundancy and improve data integrity (1NF, 2NF, 3NF)." },
+    { "question": "What are ACID properties?", "ideal": "Atomicity, Consistency, Isolation, and Durability - ensuring reliable database transactions." },
+    { "question": "Explain the difference between DELETE and TRUNCATE.", "ideal": "DELETE removes rows one by one and is logged. TRUNCATE is a DDL operation that clears the entire table and is faster." },
+    { "question": "What is an Index and why use it?", "ideal": "A data structure that speeds up data retrieval. It works like an index in a book." },
+    { "question": "What is a Primary Key vs Foreign Key?", "ideal": "Primary Key uniquely identifies a row. Foreign Key links two tables by referencing the primary key of another." },
+    { "question": "Explain subqueries in SQL.", "ideal": "A query nested inside another query, used to retrieve data based on the results of the inner query." },
+    { "question": "What is a View in SQL?", "ideal": "A virtual table based on the result-set of an SQL statement, used for security or simplifying complex queries." },
+    { "question": "What is a Stored Procedure?", "ideal": "A group of SQL statements that can be saved and reused, reducing network traffic and improving performances." }
+  ],
+  "os": [
+    { "question": "What is an Operating System (OS)?", "ideal": "Software that manages hardware resources and provides services for computer programs." },
+    { "question": "Explain Kernel vs Shell.", "ideal": "Kernel is the core that interacts with hardware. Shell is the interface between user and kernel." },
+    { "question": "What is a Process vs Thread?", "ideal": "A process is a program in execution with its own memory. A thread is the smallest unit of execution within a process." },
+    { "question": "What is Deadlock and how to prevent it?", "ideal": "A situation where processes are stuck waiting for each other's resources. Prevent by ensuring one of the 4 conditions (Mutual exclusion, etc.) isn't met." },
+    { "question": "Explain Virtual Memory.", "ideal": "Management technique that lets programs use more RAM than physically available by using disk space as an extension." },
+    { "question": "What is Paging vs Segmentation?", "ideal": "Paging divides memory into fixed-size blocks (pages). Segmentation divides into varying-sized logical units (segments)." },
+    { "question": "Explain CPU Scheduling algorithms.", "ideal": "FCFS, SJF, Round Robin, and Priority scheduling are used to decide which process runs next." },
+    { "question": "What is a Context Switch?", "ideal": "The process of saving the state of a running process so it can be resumed later when the CPU executes another process." },
+    { "question": "What is Semaphore?", "ideal": "A synchronization tool (variable or abstract data type) used to manage concurrent processes and avoid critical section problems." },
+    { "question": "What is the difference between monolithic and microkernel?", "ideal": "Monolithic puts all services in kernel space. Microkernel puts only essential services in kernel and others in user space." }
+  ],
+  "c": [
+    { "question": "What is C language?", "ideal": "A procedural, low-level language that provides direct access to memory and hardware." },
+    { "question": "Explain Pointers in C.", "ideal": "Variables that store the memory address of another variable, allowing efficient memory management and data manipulation." },
+    { "question": "What is'malloc' vs 'calloc'?", "ideal": "'malloc' allocates a single block of raw memory. 'calloc' allocates multiple blocks and initializes them to zero." },
+    { "question": "Explain the purpose of 'static' variables in C.", "ideal": "They preserve their value even after they go out of scope and are initialized only once during the program's execution." },
+    { "question": "What is a Struct in C?", "ideal": "A user-defined data type that allows grouping different types of variables together under a single name." },
+    { "question": "What is a Macro in C?", "ideal": "A fragment of code defined using #define that is replaced by the preprocessor before compilation." },
+    { "question": "Explain 'volatile' keyword.", "ideal": "Informs the compiler that the value of a variable may change at any time without any action being taken by the nearby code (e.g., hardware register)." },
+    { "question": "What is the difference between array and pointer?", "ideal": "An array is a collection of continuous memory. A pointer is a variable holding an address. Arrays can decay into pointers." },
+    { "question": "What is 'dangling pointer'?", "ideal": "A pointer that points to a memory location that has been deleted or freed." },
+    { "question": "Explain 'storage classes' in C.", "ideal": "auto, register, static, and extern - they define the scope and lifetime of variables." }
+  ],
+  "cpp": [
+    { "question": "What are the main features of C++?", "ideal": "Object-oriented programming, standard template library (STL), exception handling, and low-level memory manipulation." },
+    { "question": "Explain Virtual Functions and runtime polymorphism.", "ideal": "A member function in the base class that you expect to redefine in derived classes. They ensure the right function is called for the object type." },
+    { "question": "What is a Constructor vs Destructor?", "ideal": "Constructor initializes an object. Destructor cleans up resources when the object is destroyed." },
+    { "question": "What is STL in C++?", "ideal": "Standard Template Library - a collection of template classes for containers (vectors, maps), algorithms, and iterators." },
+    { "question": "Explain 'friend' class and function.", "ideal": "Allows a non-member function or another class to access private and protected members of a class." },
+    { "question": "What is the difference between struct and class in C++?", "ideal": "The only difference is default access: members of a struct are public by default, while class members are private." },
+    { "question": "What are Smart Pointers (unique_ptr, shared_ptr)?", "ideal": "Objects that manage the lifetime of a pointer, automatically deleting the memory when it's no longer needed." },
+    { "question": "Explain Inline functions.", "ideal": "Suggests the compiler to replace the function call with its actual code to save overhead of jumping to function stack." },
+    { "question": "What is Multiple Inheritance and the Diamond Problem?", "ideal": "Inheriting from more than one class. The Diamond Problem occurs when two classes inherit from a common base, and a fourth class inherits from those two." },
+    { "question": "Explain Templates in C++.", "ideal": "Feature that allows writing generic programs where the data type is passed as a parameter." }
+  ],
+  "springboot": [
+    { "question": "What is Spring Boot?", "ideal": "An extension of the Spring framework that simplifies the setup and development of new Spring applications through auto-configuration." },
+    { "question": "Explain @SpringBootApplication annotation.", "ideal": "A combination of @Configuration, @EnableAutoConfiguration, and @ComponentScan." },
+    { "question": "What is Dependency Injection (DI)?", "ideal": "A design pattern where objects receive their dependencies from an external source rather than creating them themselves." },
+    { "question": "Explain the difference between @RestController and @Controller.", "ideal": "@RestController is a specialized version that combines @Controller and @ResponseBody, simplifying REST API creation." },
+    { "question": "What are Spring Boot Starters?", "ideal": "A set of convenient dependency descriptors that you can include in your application to get all the logic related to a specific technology (e.g., starter-web)." },
+    { "question": "Explain 'auto-configuration'.", "ideal": "Spring Boot automatically configures your app based on the jars present in the classpath (e.g., finding H2 jar configures an in-memory DB)." },
+    { "question": "What is Spring Data JPA?", "ideal": "A library that makes it easy to implement JPA-based repositories, reducing the boilerplate code for data access." },
+    { "question": "Explain Application Properties vs YAML.", "ideal": "Both are used for configuration. YAML is more readable and supports hierarchical structure; properties are flat." },
+    { "question": "What is Spring Boot Actuator?", "ideal": "Feature that provides production-ready features like health checks, metrics, and application info via HTTP endpoints." },
+    { "question": "How do you handle exceptions in Spring Boot?", "ideal": "Using @ControllerAdvice and @ExceptionHandler annotations to provide global or specific error handling." }
+  ],
+  "hibernate": [
+    { "question": "What is Hibernate?", "ideal": "An Object-Relational Mapping (ORM) framework for Java that simplifies database interactions by mapping Java classes to database tables." },
+    { "question": "Explain Session vs SessionFactory.", "ideal": "SessionFactory is a heavy, thread-safe object used to create Sessions. Session is a short-lived object used for single database operations." },
+    { "question": "What is HQL (Hibernate Query Language)?", "ideal": "An object-oriented query language, similar to SQL but works with persistent objects and their properties instead of tables and columns." },
+    { "question": "Explain First-level vs Second-level cache.", "ideal": "First-level cache is associated with the Session (default). Second-level cache is associated with the SessionFactory and shared across sessions." },
+    { "question": "What is Lazy Loading vs Eager Loading?", "ideal": "Lazy loading fetches child entities only when accessed. Eager loading fetches them immediately along with the parent." },
+    { "question": "Explain Hibernate states (Transient, Persistent, Detached).", "ideal": "Transient: Not associated with session. Persistent: Associated with session and DB. Detached: Was persistent but session is closed." },
+    { "question": "What is 'Criteria API' in Hibernate?", "ideal": "A programmatic way to create queries without writing string-based HQL, allowing for type-safe and dynamic query generation." },
+    { "question": "Explain 'n+1 select problem'.", "ideal": "A performance issue where Hibernate executes one query to fetch N parent records and then N additional queries for each record's child entities." },
+    { "question": "What is 'dirty checking'?", "ideal": "Feature where Hibernate automatically detects changes in persistent objects and updates the database during flush or commit." },
+    { "question": "What is the difference between get() and load()?", "ideal": "get() always hits the DB and returns null if not found. load() returns a proxy and only hits the DB when properties are accessed (throws exception if not found)." }
+  ],
+  "dsa": [
+    { "question": "What is an Array vs Linked List?", "ideal": "Array is contiguous memory with O(1) access. Linked List is non-contiguous with O(n) access but O(1) insertion/deletion at known points." },
+    { "question": "Explain Binary Search and its complexity.", "ideal": "Divide and conquer algorithm for sorted arrays. Complexity is O(log n)." },
+    { "question": "What is a Stack vs Queue?", "ideal": "Stack is LIFO (Last In First Out). Queue is FIFO (First In First Out)." },
+    { "question": "Explain the difference between DFS and BFS in Graphs.", "ideal": "DFS (Depth First) uses recursion or a stack to go deep. BFS (Breadth First) uses a queue to visit neighbors level by level." },
+    { "question": "What is a Hash Map and how does collision occur?", "ideal": "Data structure mapping keys to values using a hashing function. Collision occurs when two different keys hash to the same index." },
+    { "question": "What is a Binary Search Tree (BST)?", "ideal": "A binary tree where the left child is smaller and the right child is larger than the parent node." },
+    { "question": "Explain 'Time Complexity' vs 'Space Complexity'.", "ideal": "Performance metrics: Time measures how execution time increases with input; Space measures memory usage." },
+    { "question": "What is Dynamic Programming?", "ideal": "Technique for solving complex problems by breaking them into overlapping subproblems and storing results (memoization/tabulation)." },
+    { "question": "What is a Heap data structure?", "ideal": "A complete binary tree that satisfies the heap property (Max Heap: parent >= children; Min Heap: parent <= children)." },
+    { "question": "Explain Recursion.", "ideal": "A programming technique where a function calls itself to solve a smaller instance of the same problem. Requires a base case to stop." }
+  ],
+  "systemdesign": [
+    { "question": "What is Scalability?", "ideal": "The ability of a system to handle increasing amounts of work by adding resources (Vertical vs Horizontal scaling)." },
+    { "question": "Explain Load Balancing.", "ideal": "Distributed incoming network traffic across multiple servers to ensure no single server becomes overwhelmed." },
+    { "question": "What is Caching and where can it be applied?", "ideal": "Storing frequently accessed data in fast memory (e.g., Redis, CDN, Browser cache) to reduce latency and database load." },
+    { "question": "Explain Microservices vs Monolithic architecture.", "ideal": "Monolith is a single unit. Microservices are independent services communicating via APIs, allowing better decoupled scaling." },
+    { "question": "What is a Content Delivery Network (CDN)?", "ideal": "A distributed system of servers that delivers web content to users based on their geographic location, reducing latency." },
+    { "question": "Explain Database Sharding.", "ideal": "Breaking a large database into smaller, faster, more manageable pieces (shards) across multiple servers." },
+    { "question": "What is CAP Theorem?", "ideal": "In a distributed system, you can only guarantee two out of three: Consistency, Availability, and Partition Tolerance." },
+    { "question": "What is a Message Queue (e.g., Kafka, RabbitMQ)?", "ideal": "A way for different parts of a system to communicate asynchronously by sending messages through a queue." },
+    { "question": "Explain DNS (Domain Name System).", "ideal": "The 'phonebook' of the internet that translates human-readable domain names (example.com) into IP addresses." },
+    { "question": "What is Rate Limiting?", "ideal": "A strategy to limit the number of requests a user or client can make to a server in a given timeframe, protecting against abuse." }
   ]
 }

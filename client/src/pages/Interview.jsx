@@ -12,6 +12,11 @@ export default function Interview() {
   const [feedback, setFeedback] = useState([]);
   const [mode, setMode] = useState("audio"); // "audio" or "text"
   const [hasStarted, setHasStarted] = useState(false);
+  const [selectedTopic, setSelectedTopic] = useState(null);
+  const [topics] = useState([
+    "React", "HTML", "CSS", "Node.js", "Java", "JavaScript", "MongoDB", "Git", "Python", "OOPS",
+    "SQL", "OS", "C", "C++", "Spring Boot", "Hibernate", "DSA", "System Design"
+  ]);
 
   // Use Speech Recognition and Synthesis
   const recognition = window.SpeechRecognition || window.webkitSpeechRecognition 
@@ -38,25 +43,32 @@ export default function Interview() {
     synth.speak(utterance);
   };
 
-  useEffect(() => {
-    const fetchInterview = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const res = await fetch("http://localhost:5800/api/interview", {
-          headers: { "Authorization": `Bearer ${token}` }
-        });
-        const data = await res.json();
-        if (data.success) {
-          setQuestions(data.data.questions);
-        }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
+  const fetchInterview = async (topic) => {
+    setLoading(true);
+    try {
+      const token = localStorage.getItem('token');
+      const url = topic 
+        ? `http://localhost:5800/api/interview?topic=${encodeURIComponent(topic)}`
+        : "http://localhost:5800/api/interview";
+      
+      const res = await fetch(url, {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      const data = await res.json();
+      if (data.success) {
+        setQuestions(data.data.questions);
       }
-    };
-    fetchInterview();
-  }, []);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleTopicSelect = (topic) => {
+    setSelectedTopic(topic);
+    fetchInterview(topic);
+  };
 
   const startInterview = () => {
     setHasStarted(true);
@@ -142,9 +154,88 @@ export default function Interview() {
     recognition?.stop();
   };
 
+  const topicIcons = {
+    "React": <Cpu className="w-6 h-6" />,
+    "HTML": <Cpu className="w-6 h-6" />,
+    "CSS": <Cpu className="w-6 h-6" />,
+    "Node.js": <Cpu className="w-6 h-6" />,
+    "Java": <Cpu className="w-6 h-6" />,
+    "JavaScript": <Cpu className="w-6 h-6" />,
+    "MongoDB": <Cpu className="w-6 h-6" />,
+    "Git": <Cpu className="w-6 h-6" />,
+    "Python": <Cpu className="w-6 h-6" />,
+    "OOPS": <Cpu className="w-6 h-6" />,
+    "SQL": <Cpu className="w-6 h-6" />,
+    "OS": <Cpu className="w-6 h-6" />,
+    "C": <Cpu className="w-6 h-6" />,
+    "C++": <Cpu className="w-6 h-6" />,
+    "Spring Boot": <Cpu className="w-6 h-6" />,
+    "Hibernate": <Cpu className="w-6 h-6" />,
+    "DSA": <Cpu className="w-6 h-6" />,
+    "System Design": <Cpu className="w-6 h-6" />
+  };
+
+  if (!selectedTopic) {
+    return (
+      <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center p-2">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="w-full max-w-4xl bg-white border border-[#E7E7E8] rounded-[1.5rem] p-6 shadow-xl text-center relative overflow-hidden"
+        >
+          {/* Background decorative elements */}
+          <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-[#009D77]/5 to-transparent rounded-full -mr-16 -mt-16 blur-2xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-[#EC4899]/5 to-transparent rounded-full -ml-16 -mb-16 blur-2xl pointer-events-none" />
+
+          <div className="relative z-10">
+            <div className="w-12 h-12 bg-gradient-to-br from-[#009D77] to-[#007D5F] rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[#009D77]/20 transform transition-transform hover:rotate-3">
+              <Cpu className="w-6 h-6 text-white" />
+            </div>
+            
+            <h1 className="text-2xl font-extrabold text-[#011813] mb-1 tracking-tight">Technical Validator</h1>
+            <p className="text-[#475467] text-sm font-medium mb-6 max-w-md mx-auto">
+              Select your domain to begin AI-powered evaluation.
+            </p>
+            
+            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2">
+              {topics.map((topic) => (
+                <button
+                  key={topic}
+                  onClick={() => handleTopicSelect(topic)}
+                  className="group relative h-20 flex flex-col items-center justify-center gap-1 rounded-xl border border-[#F1F1F2] bg-white transition-all duration-200 hover:border-[#009D77] hover:bg-[#E8FAF5] hover:shadow-md"
+                >
+                  <div className="text-[#98A2B3] group-hover:text-[#009D77] transition-colors scale-75 group-hover:scale-90 duration-200">
+                    {topicIcons[topic] || <Settings2 className="w-5 h-5" />}
+                  </div>
+                  <span className="font-bold text-[10px] uppercase tracking-wide text-[#475467] group-hover:text-[#011813]">
+                    {topic}
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-[#F1F1F2] flex items-center justify-center gap-4">
+              <div className="flex items-center gap-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#009D77]" />
+                <span className="text-[9px] font-bold text-[#475467] uppercase tracking-wider">Dynamic Bank</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#EC4899]" />
+                <span className="text-[9px] font-bold text-[#475467] uppercase tracking-wider">AI Powered</span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center bg-[#fbfbfa]">
-       <Loader2 className="w-12 h-12 animate-spin text-[#11b589]" />
+       <div className="text-center">
+         <Loader2 className="w-12 h-12 animate-spin text-[#11b589] mx-auto mb-4" />
+         <p className="text-[#475467] font-bold text-sm uppercase tracking-widest">Generating Questions for {selectedTopic}...</p>
+       </div>
     </div>
   );
 
@@ -156,7 +247,7 @@ export default function Interview() {
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex justify-between items-center bg-white border border-[#E7E7E8] rounded-2xl p-4 shadow-sm shrink-0">
           <div className="flex items-center gap-4">
             <h1 className="text-xl font-extrabold text-[#011813] flex items-center gap-2">
-              <Cpu className="w-5 h-5 text-[#009D77]" /> AI Technical Interview
+              <Cpu className="w-5 h-5 text-[#009D77]" /> {selectedTopic} Interview
             </h1>
             <div className="h-4 w-px bg-[#E7E7E8]" />
             <div className="flex bg-[#F8F9FA] p-1 rounded-lg border border-[#E7E7E8]">
@@ -173,6 +264,12 @@ export default function Interview() {
                 Text
               </button>
             </div>
+            <button 
+                onClick={() => setSelectedTopic(null)}
+                className="text-[10px] font-bold uppercase tracking-wider text-[#EC4899] hover:underline"
+              >
+                Change Topic
+            </button>
           </div>
           <p className="text-xs font-semibold text-[#475467] hidden md:block">
             {hasStarted ? `Question ${currentIdx + 1} of ${questions.length}` : 'Ready to begin evaluation'}
