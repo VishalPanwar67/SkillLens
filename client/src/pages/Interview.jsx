@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Mic, ShieldAlert, Cpu, Settings2, Loader2, MessageSquare, Volume2 } from 'lucide-react';
+import { Mic, ShieldAlert, Cpu, Settings2, Loader2, MessageSquare, Volume2, Zap, AlertCircle, X, ChevronRight } from 'lucide-react';
 
 export default function Interview() {
   const [isRecording, setIsRecording] = useState(false);
@@ -17,6 +17,7 @@ export default function Interview() {
     "React", "HTML", "CSS", "Node.js", "Java", "JavaScript", "MongoDB", "Git", "Python", "OOPS",
     "SQL", "OS", "C", "C++", "Spring Boot", "Hibernate", "DSA", "System Design"
   ]);
+  const [showCreditModal, setShowCreditModal] = useState(false);
 
   // Use Speech Recognition and Synthesis
   const recognition = window.SpeechRecognition || window.webkitSpeechRecognition 
@@ -55,11 +56,19 @@ export default function Interview() {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const data = await res.json();
+      
+      if (res.status === 403 && data.data?.needsCredits) {
+        setShowCreditModal(true);
+        return;
+      }
+
       if (data.success) {
         setQuestions(data.data.questions);
+        // Refresh credits in local view if possible or just assume consumption
       }
     } catch (err) {
       console.error(err);
+      alert("Error starting interview. Please check your credit balance.");
     } finally {
       setLoading(false);
     }
@@ -85,62 +94,67 @@ export default function Interview() {
     }
   };
 
-  const handleNext = () => {
-    if (mode === "audio" && !isRecording) {
+  const handleNext = async () => {
+    if (mode === "audio" && !isRecording && !transcript) {
       startRecording();
       return;
     }
 
-    // Submit Log
+    if (!transcript) return;
+
+    setLoading(true);
     const currentQ = questions[currentIdx];
     
-    const evaluateAnswer = (answer, ideal) => {
-      if (!answer || answer.trim().length < 15) {
-         return { rating: 1, sentiment: "poor", improvement: "Answer was too brief or completely irrelevant. You must provide detailed technical explanations." };
-      }
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch("http://localhost:5800/api/interview/evaluate", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}` 
+        },
+        body: JSON.stringify({
+          question: currentQ.question,
+          answer: transcript,
+          ideal: currentQ.ideal
+        })
+      });
       
-      const answerWords = answer.toLowerCase().match(/\b\w+\b/g) || [];
-      const idealWords = ideal.toLowerCase().match(/\b\w+\b/g) || [];
-      const importantIdealWords = idealWords.filter(w => w.length > 3);
-      
-      const matchCount = importantIdealWords.filter(w => answerWords.includes(w)).length;
-      const matchRatio = importantIdealWords.length > 0 ? (matchCount / importantIdealWords.length) : 0;
+      const data = await res.json();
+      const evaluation = data.success ? data.data : {
+        rating: (transcript.toLowerCase().includes("know") || transcript.length < 20) ? 1 : 2,
+        sentiment: "Poor",
+        critique: "Validation failed. Response was either evasive or lacked technical substance."
+      };
 
-      if (matchRatio < 0.15) {
-         return { rating: 2, sentiment: "incorrect", improvement: "Answer drifted off-topic and missed core technical concepts. Study the expected ideal answer carefully to understand the required terms." };
-      } else if (matchRatio < 0.35) {
-         return { rating: 3, sentiment: "average", improvement: "Good start, but missing some key technical depth. Try to explicitly mention specific frameworks and architectural terms." };
-      } else if (matchRatio < 0.6) {
-         return { rating: 4, sentiment: "good", improvement: "Very solid technical answer! To achieve perfection, cover edge cases and advanced considerations mentioned in the ideal answer." };
+      const newFeedback = {
+        question: currentQ.question,
+        ideal: currentQ.ideal,
+        answer: transcript,
+        sentiment: evaluation.sentiment,
+        rating: evaluation.rating,
+        critique: evaluation.critique,
+        score: evaluation.score || 0
+      };
+      
+      const updatedFeedback = [...feedback, newFeedback];
+      setFeedback(updatedFeedback);
+      
+      if (isRecording) stopRecording();
+
+      const nextIdx = currentIdx + 1;
+      if (nextIdx < questions.length) {
+        setCurrentIdx(nextIdx);
+        setTranscript("");
+        setTimeout(() => speak(questions[nextIdx].question), 500);
       } else {
-         return { rating: 5, sentiment: "excellent", improvement: "Outstanding response! Perfect technical accuracy combined with thorough, real-world detail." };
+        localStorage.setItem('interview_feedback', JSON.stringify(updatedFeedback));
+        setTimeout(() => window.location.href = '/summary', 800);
       }
-    };
-
-    const evaluation = evaluateAnswer(transcript, currentQ.ideal);
-
-    const newFeedback = {
-      question: currentQ.question,
-      ideal: currentQ.ideal,
-      answer: transcript,
-      sentiment: evaluation.sentiment,
-      rating: evaluation.rating,
-      improvement: evaluation.improvement
-    };
-    
-    const updatedFeedback = [...feedback, newFeedback];
-    setFeedback(updatedFeedback);
-    
-    if (isRecording) stopRecording();
-
-    const nextIdx = currentIdx + 1;
-    if (nextIdx < questions.length) {
-      setCurrentIdx(nextIdx);
-      setTranscript("");
-      setTimeout(() => speak(questions[nextIdx].question), 500);
-    } else {
-      localStorage.setItem('interview_feedback', JSON.stringify(updatedFeedback));
-      window.location.href = '/summary';
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -271,9 +285,15 @@ export default function Interview() {
                 Change Topic
             </button>
           </div>
-          <p className="text-xs font-semibold text-[#475467] hidden md:block">
-            {hasStarted ? `Question ${currentIdx + 1} of ${questions.length}` : 'Ready to begin evaluation'}
-          </p>
+          <div className="flex items-center gap-4">
+            <div className="bg-[#E8FAF5] border border-[#009D77]/20 px-3 py-1.5 rounded-full flex items-center gap-2">
+               <Zap className="w-3 h-3 text-[#009D77]" />
+               <span className="text-[10px] font-black text-[#009D77] uppercase tracking-tighter">-5 Credits</span>
+            </div>
+            <p className="text-xs font-semibold text-[#475467] hidden md:block">
+              {hasStarted ? `Question ${currentIdx + 1} of ${questions.length}` : 'Ready to begin evaluation'}
+            </p>
+          </div>
         </motion.div>
 
         {/* Main Content Split */}
@@ -459,6 +479,69 @@ export default function Interview() {
           </motion.div>
         </div>
       </main>
+
+      {/* Beautiful Credit Modal */}
+      {showCreditModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            className="absolute inset-0 bg-[#011813]/60 backdrop-blur-md"
+            onClick={() => setShowCreditModal(false)}
+          />
+          
+          {/* Modal Content */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            className="relative w-full max-w-md bg-white rounded-[2rem] overflow-hidden shadow-2xl border border-[#009D77]/10"
+          >
+            {/* Design accents */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#E8FAF5] rounded-full -mr-16 -mt-16" />
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-[#FFF0F6] rounded-full -ml-12 -mb-12" />
+
+            <div className="relative p-8 text-center">
+              <div className="w-16 h-16 bg-[#F8FAFF] border-4 border-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg transform rotate-3">
+                <Zap className="w-8 h-8 text-[#009D77]" />
+              </div>
+
+              <h2 className="text-2xl font-black text-[#011813] mb-3 tracking-tight">Insufficient Credits</h2>
+              <p className="text-sm text-[#475467] font-medium leading-relaxed mb-8 px-4">
+                Oops! You've used your daily credits. To continue with this <span className="text-[#009D77] font-bold">Premium Interview</span>, please upgrade your pack.
+              </p>
+
+              <div className="space-y-3">
+                <button 
+                  onClick={() => window.location.href = "/pricing"}
+                  className="w-full py-4 bg-[#011813] text-white rounded-2xl font-black text-sm flex items-center justify-center gap-2 hover:bg-[#08241b] transition-all shadow-lg shadow-[#011813]/20 group"
+                >
+                  Buy More Credits <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+                
+                <button 
+                  onClick={() => setShowCreditModal(false)}
+                  className="w-full py-4 bg-white text-[#475467] border border-[#E7E7E8] rounded-2xl font-bold text-sm hover:bg-gray-50 transition-all"
+                >
+                  Maybe Later
+                </button>
+              </div>
+
+              <p className="mt-8 text-[10px] font-bold text-[#98A2B3] uppercase tracking-[0.2em]">
+                Secure Payments via <span className="text-[#635BFF]">StripE</span>
+              </p>
+            </div>
+
+            {/* Close btn */}
+            <button 
+              onClick={() => setShowCreditModal(false)}
+              className="absolute top-4 right-4 p-2 bg-white/50 hover:bg-white rounded-full transition-colors"
+            >
+              <X className="w-4 h-4 text-[#98A2B3]" />
+            </button>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 }

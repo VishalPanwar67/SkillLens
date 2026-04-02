@@ -15,6 +15,9 @@ import Summary from "./pages/Summary.jsx";
 import Roadmap from "./pages/Roadmap.jsx";
 import Home from "./pages/Home.jsx";
 import SkillLearning from "./pages/SkillLearning.jsx";
+import Pricing from "./pages/Pricing.jsx";
+import Success from "./pages/Success.jsx";
+import Cancel from "./pages/Cancel.jsx";
 
 function AppContent() {
   const location = useLocation();
@@ -38,6 +41,9 @@ function AppContent() {
           <Route path="/summary" element={<Summary />} />
           <Route path="/roadmap" element={<Roadmap />} />
           <Route path="/learning" element={<SkillLearning />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/payment/success" element={<Success />} />
+          <Route path="/payment/cancel" element={<Cancel />} />
           <Route
             path="*"
             element={

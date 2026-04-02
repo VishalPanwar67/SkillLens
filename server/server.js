@@ -13,6 +13,7 @@ import roadmapRoutes from "./routes/roadmap.routes.js";
 import interviewRoutes from "./routes/interview.routes.js";
 import skillRoadmapRoutes from "./routes/skillRoadmap.routes.js";
 import customTargetRoutes from "./routes/customTarget.routes.js";
+import paymentRoutes from "./routes/payment.routes.js";
 
 const PORT = process.env.PORT;
 const app = express();
@@ -26,6 +27,15 @@ app.use(
     credentials: true,
   })
 );
+
+// Special handling for Stripe Webhook (needs raw body)
+// Must be BEFORE express.json()
+app.post("/api/payment/webhook", express.raw({ type: 'application/json' }), (req, res, next) => {
+  // Pass to router later if preferred, or handle here. 
+  // Let's pass it through.
+  next();
+});
+
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(cookieParser());
@@ -44,6 +54,7 @@ app.use("/api/roadmap", roadmapRoutes);
 app.use("/api/interview", interviewRoutes);
 app.use("/api/skill-roadmap", skillRoadmapRoutes);
 app.use("/api/custom-hiring", customTargetRoutes);
+app.use("/api/payment", paymentRoutes);
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({ success: true, message: "Server is running" });

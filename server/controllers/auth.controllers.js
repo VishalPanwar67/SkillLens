@@ -50,6 +50,7 @@ export const googleAuth = asyncHandler(async (req, res) => {
           profileImage: user.profileImage,
           bio: user.bio,
           socials: user.socials,
+          credits: user.credits || 0,
           createdAt: user.createdAt,
         },
       }
@@ -77,6 +78,7 @@ export const getProfile = asyncHandler(async (req, res) => {
           profileImage: user.profileImage,
           bio: user.bio,
           socials: user.socials,
+          credits: user.credits || 0,
           createdAt: user.createdAt,
         },
     })
@@ -114,6 +116,7 @@ export const updateProfile = asyncHandler(async (req, res) => {
         profileImage: user.profileImage,
         bio: user.bio,
         socials: user.socials,
+        credits: user.credits || 0,
       },
     })
   );

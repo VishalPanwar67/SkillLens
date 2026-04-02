@@ -9,6 +9,8 @@ import {
   ChevronRight,
   AlertCircle,
   ArrowUpRight,
+  Zap,
+  CreditCard
 } from "lucide-react";
 
 export default function Dashboard() {
@@ -114,14 +116,26 @@ export default function Dashboard() {
     <div className="min-h-screen relative pb-12">
       <div className="max-w-5xl mx-auto space-y-6 relative">
         {/* Page title */}
-        <div className="mb-2 relative flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-extrabold text-[#011813] tracking-tight">
-              Dashboard
-            </h1>
-            <p className="text-sm text-[#475467] font-medium mt-1">Overview of your placement preparation progress.</p>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-0.5">
+              <h1 className="text-2xl font-black text-[#011813] tracking-tight">
+                Dashboard
+              </h1>
+              <p className="text-[13px] text-[#475467] font-medium">Overview of your preparation progress</p>
+            </div>
+            
+            {/* Small Credit Badge */}
+            <Link to="/pricing" className="flex items-center gap-2.5 bg-white border border-[#E7E7E8] px-3.5 py-1.5 rounded-2xl hover:border-[#009D77] transition-all group shadow-sm">
+              <div className="w-6 h-6 rounded-lg bg-[#E8FAF5] flex items-center justify-center">
+                <Zap className="w-3 h-3 text-[#009D77]" />
+              </div>
+              <div className="flex flex-col -space-y-0.5">
+                <span className="text-[9px] font-black text-[#98A2B3] uppercase tracking-widest leading-none">Your Balance</span>
+                <span className="text-sm font-black text-[#011813]">{userData.credits || 0} <span className="text-[10px] opacity-50">Credits</span></span>
+              </div>
+              <ChevronRight className="w-3.5 h-3.5 text-[#98A2B3] group-hover:text-[#009D77] transition-colors ml-1" />
+            </Link>
           </div>
-        </div>
 
         {/* Greeting & Quick Status */}
         <div className="bg-white border border-[#E7E7E8] rounded-2xl p-6 shadow-sm flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">

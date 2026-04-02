@@ -9,14 +9,15 @@ import { fileURLToPath } from "url";
 const router = Router();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-import { generateInterviewQuestions } from "../services/interview.service.js";
+import { generateInterviewQuestions, evaluateAnswer } from "../services/interview.service.js";
+import { checkDailyCredits, consumeCredits } from "../middleware/credit.middleware.js";
 
-router.get("/", protectRoute, asyncHandler(async (req, res) => {
-  const { topic } = req.query; // Get topic from query params
+router.get("/", protectRoute, checkDailyCredits, consumeCredits(5), asyncHandler(async (req, res) => {
+  // Existing GET logic...
+  const { topic } = req.query; 
   const defaultRole = req.user?.targetRole || "frontend";
   const rawTopic = (topic || defaultRole).toLowerCase().trim();
 
-  // Map UI names to JSON bank keys
   const topicMap = {
     "c++": "cpp",
     "node.js": "node.js",
@@ -35,21 +36,28 @@ router.get("/", protectRoute, asyncHandler(async (req, res) => {
     );
   } catch (error) {
     console.error("Interview Route Error (AI Failed):", error.message);
-    
-    // Fallback to local data
     const p = path.join(__dirname, "../data/interviews.json");
     const bank = JSON.parse(readFileSync(p, "utf8"));
-    
-    // Attempt lookup with mapping or direct key
     let questions = bank[usedTopic] || bank[rawTopic] || bank["frontend"];
-    
-    // Randomize and slice
     const shuffled = [...questions].sort(() => Math.random() - 0.5).slice(0, 5);
-    
     return res.status(200).json(
       new ApiResponse(200, "Interview questions fetched from bank (fallback)", { questions: shuffled })
     );
   }
+}));
+
+router.post("/evaluate", protectRoute, asyncHandler(async (req, res) => {
+  const { question, answer, ideal } = req.body;
+  
+  if (!question || !ideal) {
+    return res.status(400).json(new ApiResponse(400, "Missing question or ideal answer"));
+  }
+
+  const evaluation = await evaluateAnswer(question, answer, ideal);
+  
+  return res.status(200).json(
+    new ApiResponse(200, "Answer evaluated successfully", evaluation)
+  );
 }));
 
 export default router;

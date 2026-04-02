@@ -52,6 +52,14 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    credits: {
+      type: Number,
+      default: 5,
+    },
+    lastCreditReset: {
+      type: Date,
+      default: Date.now,
+    },
   },
   { timestamps: true }
 );
