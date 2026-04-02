@@ -8,8 +8,13 @@ import {
   ArrowRight,
   ArrowLeft,
   Loader2,
+  Zap,
+  ChevronRight,
+  X,
+  ChevronDown,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 
 const QUIZZES_PER_PAGE = 8;
 
@@ -23,6 +28,7 @@ export default function Quiz() {
   const [submitting, setSubmitting] = useState(false);
   const [sessionSkills, setSessionSkills] = useState(null);
   const [quizPage, setQuizPage] = useState(0);
+  const [showCreditModal, setShowCreditModal] = useState(false);
   const quizGridScrollRef = useRef(null);
 
   const totalQuizPages = Math.max(
@@ -110,6 +116,10 @@ export default function Quiz() {
         },
         body: JSON.stringify({ skills: [skill] }),
       });
+      if (res.status === 403) {
+        setShowCreditModal(true);
+        return;
+      }
       const data = await res.json();
       if (data.success) {
         setActiveQuiz(data.data.questions);
@@ -118,7 +128,8 @@ export default function Quiz() {
         setAnswers([]);
       }
     } catch (err) {
-      alert("Failed to start quiz");
+      console.error(err);
+      alert("Failed to start quiz session.");
     } finally {
       setLoading(false);
     }
@@ -352,11 +363,10 @@ export default function Quiz() {
                     {/* Action Button */}
                     <button
                       onClick={() => startQuiz(quiz.rawSkill)}
-                      className={`w-full py-2.5 rounded-lg font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm ${
-                        quiz.completed
+                      className={`w-full py-2.5 rounded-lg font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm ${quiz.completed
                           ? "bg-white border border-[#009D77] text-[#009D77] hover:bg-[#E8FAF5]"
                           : "bg-[#011813] text-white border border-[#011813] group-hover:bg-[#009D77] group-hover:border-[#009D77] group-hover:shadow-[0_4px_14px_rgba(0,157,119,0.39)]"
-                      }`}
+                        }`}
                     >
                       {quiz.completed ? "Retake" : "Start Assessment"}
                       <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
@@ -410,6 +420,71 @@ export default function Quiz() {
           )}
         </div>
       </main>
+
+      {/* Beautiful Credit Modal */}
+      <AnimatePresence>
+        {showCreditModal && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 overflow-hidden">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-[#011813]/60 backdrop-blur-md"
+              onClick={() => setShowCreditModal(false)}
+            />
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative w-full max-w-md bg-white rounded-[2rem] overflow-hidden shadow-2xl border border-[#009D77]/10"
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#E8FAF5] rounded-full -mr-16 -mt-16" />
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-[#FFF0F6] rounded-full -ml-12 -mb-12" />
+
+              <div className="relative p-8 text-center">
+                <div className="w-16 h-16 bg-[#F8FAFF] border-4 border-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg transform rotate-3 transition-transform hover:rotate-0">
+                  <Zap className="w-8 h-8 text-[#009D77]" />
+                </div>
+
+                <h2 className="text-2xl font-black text-[#011813] mb-3 tracking-tight">Assessment Unavailable</h2>
+                <div className="px-6 py-2 bg-[#E8FAF5] rounded-full inline-block mb-6 border border-[#009D77]/10">
+                  <p className="text-[10px] font-black text-[#009D77] uppercase tracking-widest flex items-center gap-1.5">
+                    <Target className="w-3 h-3" /> Insufficient Credits
+                  </p>
+                </div>
+
+                <p className="text-sm text-[#475467] font-medium leading-relaxed mb-8 px-4">
+                  Assessment attempts cost <span className="text-[#009D77] font-bold underline underline-offset-4 decoration-2 decoration-[#009D77]/20">5 Credits for 1 Quizzes</span>. Upgrade your plan to unlock full technical validation.
+                </p>
+
+                <div className="space-y-3">
+                  <button
+                    onClick={() => window.location.href = "/pricing"}
+                    className="w-full py-4 bg-[#011813] text-white rounded-2xl font-black text-sm flex items-center justify-center gap-2 hover:bg-[#009D77] transition-all shadow-lg shadow-[#011813]/20 group"
+                  >
+                    Buy More Credits <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </button>
+
+                  <button
+                    onClick={() => setShowCreditModal(false)}
+                    className="w-full py-4 bg-white text-[#475467] border border-[#E7E7E8] rounded-2xl font-bold text-sm hover:bg-gray-50 transition-all"
+                  >
+                    Not Right Now
+                  </button>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setShowCreditModal(false)}
+                className="absolute top-4 right-4 p-2 bg-white/50 hover:bg-white rounded-full transition-colors"
+              >
+                <X className="w-4 h-4 text-[#98A2B3]" />
+              </button>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

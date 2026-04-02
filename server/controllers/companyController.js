@@ -1,8 +1,84 @@
 import { createRequire } from "module";
 import SkillProfile from "../models/skillProfile.model.js";
+import { ApiResponse } from "../class/index.class.js";
+import { SKILL_MASTER_LIST, normalizeResumeText, skillMatchesText } from "../services/resume.service.js";
 
 const require = createRequire(import.meta.url);
 const companies = require("../data/companies.json");
+
+export const getCustomBenchmark = async (req, res) => {
+  try {
+    const { benchmarkText } = req.body;
+    if (!benchmarkText) {
+      return res.status(400).json({ success: false, message: "No benchmark context provided. Please paste the JD or interview process." });
+    }
+
+    const { skillMap } = await buildSkillContext(req);
+    const normalized = normalizeResumeText(benchmarkText);
+
+    const detectedInBenchmark = SKILL_MASTER_LIST.filter((skill) =>
+      skillMatchesText(normalized, skill)
+    );
+
+    if (detectedInBenchmark.length === 0) {
+      return res.status(200).json({
+        success: true,
+        data: {
+          company: "Custom Analysis",
+          currentMatchPercent: 0,
+          topGaps: [],
+          projectedMatchIfAllFixed: 0,
+          verdict: "Technical Gap Analysis: No specific technical skills (like Java, React, Python, etc.) were found in your text. Please paste the full JD or specific requirements so we can judge the alignment."
+        }
+      });
+    }
+
+    // Treat as required skills with 50 depth threshold
+    const requiredSkills = detectedInBenchmark.map(skill => {
+      const depth = skillMap[skill] ?? 0;
+      const minimumDepth = 50; 
+      return {
+        skill,
+        minimumDepth,
+        studentDepth: depth,
+        met: depth >= minimumDepth,
+        gap: Math.max(minimumDepth - depth, 0),
+        weight: Math.round(100 / detectedInBenchmark.length)
+      };
+    });
+
+    const metCount = requiredSkills.filter(s => s.met).length;
+    const currentMatchPercent = Math.round((metCount / requiredSkills.length) * 100);
+
+    const topGaps = requiredSkills.filter(s => !s.met).slice(0, 3).map((s, idx) => ({
+      rank: idx + 1,
+      skill: s.skill,
+      studentDepth: s.studentDepth,
+      minimumDepth: s.minimumDepth,
+      depthGap: s.gap,
+      actionToFix: `The process specifically mentions ${s.skill}. You should verify your expertise level via the dedicated assessment module.`
+    }));
+
+    const verdict = topGaps.length === 0
+      ? "Impressive! Your current profile perfectly aligns with all technical mentions in this custom interview process."
+      : `Critical Gaps Detected: This process emphasizes ${topGaps.map(g => g.skill.toUpperCase()).join(' & ')}. You need higher technical depth in these areas to clear the rounds.`;
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        company: "Custom Benchmark",
+        currentMatchPercent,
+        topGaps,
+        projectedMatchIfAllFixed: 100,
+        verdict
+      }
+    });
+
+  } catch (error) {
+    console.error("CUSTOM_BENCHMARK_ERROR:", error);
+    return res.status(500).json({ success: false, message: "Failed to run custom benchmark analysis" });
+  }
+};
 
 const makeError = (status, message, code) => {
   const err = new Error(message);

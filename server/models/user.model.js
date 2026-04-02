@@ -60,6 +60,10 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    quizCreditsRemaining: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

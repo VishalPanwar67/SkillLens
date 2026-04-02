@@ -1,6 +1,6 @@
 import { PDFParse } from "pdf-parse";
 
-const SKILL_MASTER_LIST = [
+export const SKILL_MASTER_LIST = [
   "react",
   "nodejs",
   "mongodb",
@@ -31,6 +31,16 @@ const SKILL_MASTER_LIST = [
   "php",
   "django",
   "flask",
+  "spark",
+  "hadoop",
+  "selenium",
+  "cypress",
+  "jest",
+  "mocha",
+  "powerbi",
+  "tableau",
+  "flutter",
+  "kotlin"
 ];
 export const ROLE_REQUIRED_SKILLS = {
   frontend: [
@@ -64,13 +74,13 @@ export const ROLE_REQUIRED_SKILLS = {
   java: ["java", "sql", "dsa", "git", "systemdesign", "mysql", "restapi"],
 };
 
-const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+export const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 /**
  * Map common resume wording to canonical skill tokens so substring checks are not fooled
  * (e.g. Node.js → nodejs, "java" inside JavaScript → not java).
  */
-const normalizeResumeText = (raw) => {
+export const normalizeResumeText = (raw) => {
   let t = raw.toLowerCase();
 
   t = t.replace(/\bnode\.js\b/gi, "nodejs");
@@ -99,7 +109,7 @@ const normalizeResumeText = (raw) => {
 };
 
 /** True if the skill appears as its own word/phrase, not as a substring of another word (e.g. java vs javascript). */
-const skillMatchesText = (normalized, skill) => {
+export const skillMatchesText = (normalized, skill) => {
   if (skill === "c") {
     return /\bc(?!\+{2})\b/i.test(normalized);
   }

@@ -31,6 +31,34 @@ export default function Match() {
   const [selectedCompanyId, setSelectedCompanyId] = useState(null);
   const [gapData, setGapData] = useState(null);
   const [fetchingGap, setFetchingGap] = useState(false);
+  const [customText, setCustomText] = useState("");
+  const [analyzingCustom, setAnalyzingCustom] = useState(false);
+
+  const handleCustomBenchmark = async () => {
+    if (!customText.trim()) return;
+    setAnalyzingCustom(true);
+    setGapData(null);
+    setSelectedCompanyId("custom");
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch("http://localhost:5800/api/companies/custom-benchmark", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}` 
+        },
+        body: JSON.stringify({ benchmarkText: customText })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setGapData({
+          ...data.data,
+          about: "AI-parsed custom interview process analysis based on user-provided JD/Process."
+        });
+      }
+    } catch (err) { console.error(err); }
+    finally { setAnalyzingCustom(false); }
+  };
 
   const fetchGap = async (id) => {
     setSelectedCompanyId(id);
@@ -86,6 +114,43 @@ export default function Match() {
                <p className="text-[10px] font-black text-[#475467] uppercase tracking-widest mb-1">Last Analysis</p>
                <p className="text-sm font-bold text-[#011813]">Current Session</p>
             </div>
+          </motion.div>
+
+          {/* Custom Benchmark Analysis Card */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-[#FFF0F6] border border-[#EC4899]/10 rounded-[2rem] p-8 shadow-sm flex flex-col md:flex-row items-center gap-8 group"
+          >
+             <div className="w-16 h-16 bg-[#EC4899] rounded-[1.2rem] flex items-center justify-center shrink-0 shadow-lg shadow-[#EC4899]/20 transform group-hover:rotate-6 transition-transform">
+                <Zap className="w-8 h-8 text-white" />
+             </div>
+             
+             <div className="flex-1 space-y-4">
+                <div>
+                   <h2 className="text-xl font-black text-[#011813] tracking-tight uppercase">Custom Benchmark Analysis</h2>
+                   <p className="text-[#3b4b45]/60 font-medium text-[11px] leading-relaxed">
+                     Paste a specific job description or an interview process description here. 
+                     Our AI will judge your <span className="text-[#EC4899] font-bold">Industry Match Score</span> against these custom requirements.
+                   </p>
+                </div>
+                
+                <div className="relative">
+                  <textarea 
+                    value={customText}
+                    onChange={(e) => setCustomText(e.target.value)}
+                    placeholder="Example: Round 1 involves React & System Design. Round 2 is Python based DSA..."
+                    className="w-full h-24 bg-white/60 border border-[#EC4899]/10 rounded-2xl p-4 text-xs font-semibold text-[#011813] focus:outline-none focus:ring-2 focus:ring-[#EC4899]/20 resize-none transition-all placeholder:opacity-50"
+                  />
+                  <button 
+                    onClick={handleCustomBenchmark}
+                    disabled={analyzingCustom || !customText.trim()}
+                    className="absolute bottom-3 right-3 px-6 py-2 bg-[#011813] text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-[#EC4899] transition-all disabled:opacity-50 shadow-lg"
+                  >
+                    {analyzingCustom ? "Analyzing..." : "Analyze Process"}
+                  </button>
+                </div>
+             </div>
           </motion.div>
 
           {matches.length === 0 ? (
@@ -197,7 +262,7 @@ export default function Match() {
                 &times;
               </button>
 
-              {fetchingGap ? (
+              {(fetchingGap || analyzingCustom) ? (
                 <div className="py-20 flex flex-col items-center">
                   <Loader2 className="w-10 h-10 animate-spin text-[#009D77] mb-6" />
                   <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] animate-pulse">Running Benchmark Engine...</p>
@@ -249,11 +314,17 @@ export default function Match() {
                              </div>
                           </div>
                         ))}
-                        {gapData.topGaps.length === 0 && (
-                          <div className="bg-[#E8FAF5] p-6 rounded-xl text-[#009D77] text-[10px] font-black uppercase tracking-widest text-center border border-[#009D77]/20">
-                            Requirement threshold reached. Readiness: Optimum.
-                          </div>
-                        )}
+                        {gapData.topGaps.length === 0 ? (
+                           gapData.currentMatchPercent === 100 ? (
+                            <div className="bg-[#E8FAF5] p-6 rounded-xl text-[#009D77] text-[10px] font-black uppercase tracking-widest text-center border border-[#009D77]/20">
+                              Requirement threshold reached. Readiness: Optimum.
+                            </div>
+                           ) : (
+                            <div className="bg-[#FFF8F8] p-6 rounded-xl text-[#EA4C89] text-[10px] font-black uppercase tracking-widest text-center border border-[#EA4C89]/10">
+                              0 Skills Recognized. Please describe the tech requirements specifically.
+                            </div>
+                           )
+                        ) : null}
                       </div>
                     </div>
 
