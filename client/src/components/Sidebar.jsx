@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   BookOpen,
   LogIn,
@@ -15,38 +15,72 @@ import {
   Eye,
   Settings,
   LogOut,
-} from 'lucide-react';
+} from "lucide-react";
 
 export default function Sidebar() {
   const location = useLocation();
   const navigate = useNavigate();
-  const isAuthenticated = !!localStorage.getItem('token');
+  const isAuthenticated = !!localStorage.getItem("token");
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    navigate('/login');
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/login");
   };
 
   const sections = [
     {
-      title: 'CORE',
+      title: "CORE",
       items: [
-        { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, badge: 'P3' },
-        { name: 'Resume Upload', path: '/resume', icon: FileUp, badge: 'P4' },
-        { name: 'Skill Quiz', path: '/quiz', icon: Clock, badge: 'P5' },
-        { name: 'Quiz Results', path: '/results', icon: CheckSquare, badge: 'NEW', isNew: true },
+        {
+          name: "Dashboard",
+          path: "/dashboard",
+          icon: LayoutDashboard,
+          badge: "P3",
+        },
+        { name: "Resume Upload", path: "/resume", icon: FileUp, badge: "P4" },
+        { name: "Skill Quiz", path: "/quiz", icon: Clock, badge: "P5" },
+        {
+          name: "Quiz Results",
+          path: "/results",
+          icon: CheckSquare,
+          badge: "NEW",
+          isNew: true,
+        },
       ],
     },
     {
-      title: 'INTELLIGENCE',
+      title: "INTELLIGENCE",
       items: [
-        { name: 'Company Match', path: '/match', icon: Target, badge: 'P6' },
-        { name: 'Company Detail', path: '/company', icon: Building2, badge: 'NEW', isNew: true },
-        { name: 'Interview', path: '/interview', icon: TrendingUp, badge: 'P7' },
-        { name: 'Interview Summary', path: '/summary', icon: FileText, badge: 'NEW', isNew: true },
-        { name: 'Roadmap', path: '/roadmap', icon: Map, badge: 'P8' },
-        { name: 'Profile / Settings', path: '/profile', icon: Settings, badge: 'NEW', isNew: true },
+        { name: "Company Match", path: "/match", icon: Target, badge: "P6" },
+        {
+          name: "Company Detail",
+          path: "/company",
+          icon: Building2,
+          badge: "NEW",
+          isNew: true,
+        },
+        {
+          name: "Interview",
+          path: "/interview",
+          icon: TrendingUp,
+          badge: "P7",
+        },
+        {
+          name: "Interview Summary",
+          path: "/summary",
+          icon: FileText,
+          badge: "NEW",
+          isNew: true,
+        },
+        { name: "Roadmap", path: "/roadmap", icon: Map, badge: "P8" },
+        {
+          name: "Profile / Settings",
+          path: "/profile",
+          icon: Settings,
+          badge: "NEW",
+          isNew: true,
+        },
       ],
     },
   ];
@@ -77,36 +111,36 @@ export default function Sidebar() {
               {section.items.map((item) => {
                 const isActive =
                   location.pathname === item.path ||
-                  (location.pathname === '/' && item.path === '/dashboard');
+                  (location.pathname === "/" && item.path === "/dashboard");
                 return (
                   <Link
                     key={item.name}
                     to={item.path}
                     className={`flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-sm font-semibold transition-colors duration-150 cursor-pointer ${
                       isActive
-                        ? 'bg-[#009D77] text-white'
-                        : 'text-[#313233] hover:bg-[#E8FAF5] hover:text-[#009D77]'
+                        ? "bg-[#009D77] text-white"
+                        : "text-[#313233] hover:bg-[#E8FAF5] hover:text-[#009D77]"
                     }`}
                   >
                     <item.icon
                       className={`w-4 h-4 flex-shrink-0 ${
-                        isActive ? 'text-white' : 'text-[#8D8E8F]'
+                        isActive ? "text-white" : "text-[#8D8E8F]"
                       }`}
                     />
                     <span className="flex-1 truncate">{item.name}</span>
-                    <span
+                    {/* <span
                       className={`text-[10px] font-bold shrink-0 ${
                         item.isNew
                           ? isActive
-                            ? 'px-2 py-0.5 rounded-full bg-white/20 text-white border border-white/30'
-                            : 'px-2 py-0.5 rounded-full bg-[#E8FAF5] text-[#009D77] border border-[rgba(0,157,119,0.2)]'
+                            ? "px-2 py-0.5 rounded-full bg-white/20 text-white border border-white/30"
+                            : "px-2 py-0.5 rounded-full bg-[#E8FAF5] text-[#009D77] border border-[rgba(0,157,119,0.2)]"
                           : isActive
-                            ? 'px-1.5 py-0.5 rounded-md bg-white/20 text-white'
-                            : 'px-1.5 py-0.5 rounded-md bg-[#F0F0F0] text-[#8D8E8F]'
+                            ? "px-1.5 py-0.5 rounded-md bg-white/20 text-white"
+                            : "px-1.5 py-0.5 rounded-md bg-[#F0F0F0] text-[#8D8E8F]"
                       }`}
                     >
                       {item.badge}
-                    </span>
+                    </span> */}
                   </Link>
                 );
               })}
@@ -129,12 +163,14 @@ export default function Sidebar() {
         <Link
           to="/login"
           className={`flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-sm font-semibold transition-colors duration-150 ${
-            location.pathname === '/login'
-              ? 'bg-[#009D77] text-white'
-              : 'text-[#313233] hover:bg-[#E8FAF5] hover:text-[#009D77]'
+            location.pathname === "/login"
+              ? "bg-[#009D77] text-white"
+              : "text-[#313233] hover:bg-[#E8FAF5] hover:text-[#009D77]"
           }`}
         >
-          <LogIn className={`w-4 h-4 flex-shrink-0 ${location.pathname === '/login' ? 'text-white' : 'text-[#8D8E8F]'}`} />
+          <LogIn
+            className={`w-4 h-4 flex-shrink-0 ${location.pathname === "/login" ? "text-white" : "text-[#8D8E8F]"}`}
+          />
           <span>Login</span>
         </Link>
       )}
