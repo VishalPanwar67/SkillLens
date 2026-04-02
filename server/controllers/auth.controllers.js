@@ -26,9 +26,16 @@ export const googleAuth = asyncHandler(async (req, res) => {
   if (!user) {
     user = await User.create({ name, email, targetRole });
     isNewUser = true;
-  } else if (user.targetRole !== targetRole) {
-    user.targetRole = targetRole;
-    await user.save();
+  } else {
+    // STRICT NAME CHECK: Prevent using multiple names on one Google account
+    if (user.name !== name) {
+      throw new ApiError(400, `This Google account is already registered as "${user.name}". Please use your original name to login.`);
+    }
+
+    if (user.targetRole !== targetRole) {
+      user.targetRole = targetRole;
+      await user.save();
+    }
   }
 
   const token = generateToken(user._id);

@@ -9,6 +9,9 @@ import {
   Loader2,
 } from "lucide-react";
 
+import { auth, googleProvider } from "../firebase";
+import { signInWithPopup } from "firebase/auth";
+
 export default function Login() {
   const [name, setName] = useState("");
   const [role, setRole] = useState("Frontend");
@@ -19,9 +22,7 @@ export default function Login() {
 
   const handleGoogleLogin = async () => {
     if (!name || !role) {
-      setErrorMessage(
-        "Please enter your name and select a role before continuing."
-      );
+      setErrorMessage("Please enter your name and select a target role before continuing.");
       return;
     }
 
@@ -29,14 +30,20 @@ export default function Login() {
     setLoginState("loading");
 
     try {
-      const simulatedEmail = `${name.toLowerCase().replace(/\s+/g, "")}@skillslens.com`;
+      // FORCE REAL FIREBASE GOOGLE LOGIN
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+
+      if (!user.email) {
+        throw new Error("Could not retrieve a valid email from your Google account. Please try again.");
+      }
 
       const response = await fetch("http://localhost:5800/api/auth/google", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name,
-          email: simulatedEmail,
+          name: name || user.displayName, // We prioritize the typed name for first enrollment as requested
+          email: user.email,
           targetRole: role.toLowerCase(),
         }),
       });
@@ -53,12 +60,19 @@ export default function Login() {
         }, 1500);
       } else {
         setLoginState("idle");
-        setErrorMessage(data.message || "Login failed");
+        setErrorMessage(data.message || "Email identity error. Please use your original name.");
       }
     } catch (error) {
       console.error("Error during login:", error);
       setLoginState("idle");
-      setErrorMessage("Error connecting to backend API");
+      
+      if (error.code === 'auth/configuration-not-found') {
+        setErrorMessage("Firebase Error: Please enable 'Google' as a Sign-in provider in your Firebase Console (Authentication > Sign-in Method).");
+      } else if (error.code === 'auth/operation-not-allowed') {
+        setErrorMessage("Firebase Error: Operations are currently disabled. Check your console settings.");
+      } else {
+        setErrorMessage(error.message || "Error connecting to backend API");
+      }
     }
   };
 
@@ -126,10 +140,9 @@ export default function Login() {
                       />
                     </div>
                   </div>
-
                   <div className="relative">
                     <label className="block text-xs font-semibold text-[#8D8E8F] uppercase tracking-wider mb-1.5">
-                      Select role
+                      Select target role
                     </label>
                     <button
                       type="button"
