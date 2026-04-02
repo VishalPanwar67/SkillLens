@@ -1,5 +1,6 @@
 import SkillRoadmap from "../models/skillRoadmap.model.js";
 import { fetchYouTubeVideos } from "./youtube.service.js";
+import { generateGeminiText, hasGeminiApiKey } from "./gemini.service.js";
 
 const SKILL_LABELS = {
   react: "React",
@@ -22,8 +23,6 @@ const SKILL_LABELS = {
 const toLabel = (skill) => SKILL_LABELS[skill] || skill.charAt(0).toUpperCase() + skill.slice(1);
 
 export const generateSkillRoadmap = async (userId, skill) => {
-  const apiKey = process.env.GEMINI_API_KEY || process.env.OPENAI_API_KEY; 
-  const isGemini = !!process.env.GEMINI_API_KEY;
 
   const labels = {
     react: "React",
@@ -70,51 +69,42 @@ export const generateSkillRoadmap = async (userId, skill) => {
 
   try {
     let content;
-    
-    if (isGemini) {
-      const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-      const response = await fetch(GEMINI_API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: `${systemPrompt}\n\n${userPrompt}` }] }],
-          generationConfig: { temperature: 0.4, responseMimeType: "application/json" }
-        }),
-      });
 
-      if (!response.ok) throw new Error(`Gemini Error: ${response.statusText}`);
-      const data = await response.json();
-      const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (hasGeminiApiKey()) {
+      const rawText = await generateGeminiText({
+        systemInstruction: systemPrompt,
+        prompt: userPrompt,
+        temperature: 0.4,
+        responseMimeType: "application/json",
+      });
       content = JSON.parse(rawText || "{}");
     } else {
-      // OpenAI Fallback
-      if (!process.env.OPENAI_API_KEY) {
-        // Mock fallback if NO key at all
-        content = {
-          steps: [
-            { title: "Basics of " + currentLabel, description: "Learn the core concepts.", estimatedTime: "2 hours", docLink: "https://docs.google.com", projectIdea: "Hello World" }
-          ],
-          projects: [{ title: "Mini implementation", description: "A small project", difficulty: "Beginner", outcome: "A basic app" }],
-          questions: [{ question: "What is " + currentLabel + "?", type: "Conceptual", answer: "A powerful technology." }]
-        };
-      } else {
-        const response = await fetch("https://api.openai.com/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${apiKey}`,
+      content = {
+        steps: [
+          {
+            title: "Basics of " + currentLabel,
+            description: "Learn the core concepts.",
+            estimatedTime: "2 hours",
+            docLink: "https://docs.google.com",
+            projectIdea: "Hello World",
           },
-          body: JSON.stringify({
-            model: "gpt-4o-mini",
-            messages: [{ role: "system", content: systemPrompt }, { role: "user", content: userPrompt }],
-            response_format: { type: "json_object" },
-            temperature: 0.7,
-          }),
-        });
-        if (!response.ok) throw new Error("API_LIMIT_REACHED");
-        const data = await response.json();
-        content = JSON.parse(data.choices[0].message.content);
-      }
+        ],
+        projects: [
+          {
+            title: "Mini implementation",
+            description: "A small project",
+            difficulty: "Beginner",
+            outcome: "A basic app",
+          },
+        ],
+        questions: [
+          {
+            question: "What is " + currentLabel + "?",
+            type: "Conceptual",
+            answer: "A powerful technology.",
+          },
+        ],
+      };
     }
 
     const videos = await fetchYouTubeVideos(skill);
@@ -253,35 +243,17 @@ export const generateSkillRoadmap = async (userId, skill) => {
 };
 
 export const getDailyStudyPlan = async (skill, days) => {
-  const apiKey = process.env.GEMINI_API_KEY || process.env.OPENAI_API_KEY;
-  const isGemini = !!process.env.GEMINI_API_KEY;
-  
-  if (!apiKey) return [];
+  if (!hasGeminiApiKey()) return [];
 
   const prompt = `Generate a ${days}-day study plan for ${skill}. Return JSON: { "plan": [{ "day": 1, "tasks": "...", "goal": "..." }] }.`;
 
   try {
-    if (isGemini) {
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { responseMimeType: "application/json" }
-        })
-      });
-      const data = await response.json();
-      const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-      return JSON.parse(rawText || "{}").plan || [];
-    } else {
-       const response = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
-        body: JSON.stringify({ model: "gpt-4o-mini", messages: [{ role: "user", content: prompt }], response_format: { type: "json_object" } }),
-      });
-      const data = await response.json();
-      return JSON.parse(data.choices[0].message.content).plan || [];
-    }
+    const rawText = await generateGeminiText({
+      prompt,
+      temperature: 0.5,
+      responseMimeType: "application/json",
+    });
+    return JSON.parse(rawText || "{}").plan || [];
   } catch (error) {
     return [];
   }

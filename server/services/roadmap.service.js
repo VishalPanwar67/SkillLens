@@ -1,4 +1,5 @@
 import { createRequire } from "module";
+import { generateGeminiText, hasGeminiApiKey } from "./gemini.service.js";
 
 const require = createRequire(import.meta.url);
 const companies = require("../data/companies.json");
@@ -406,8 +407,7 @@ export const generateRoadmapWithAI = async ({
     prioritizedSkills,
   });
 
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
+  if (!hasGeminiApiKey()) {
     return { ...fallback, source: "fallback" };
   }
 
@@ -459,32 +459,12 @@ export const generateRoadmapWithAI = async ({
   ].join("\n");
 
   try {
-    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-    const response = await fetch(GEMINI_API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [{ text: `${system}\n\n${user}` }]
-          }
-        ],
-        generationConfig: {
-          temperature: 0.4,
-          responseMimeType: "application/json"
-        }
-      }),
+    const content = await generateGeminiText({
+      systemInstruction: system,
+      prompt: user,
+      temperature: 0.4,
+      responseMimeType: "application/json",
     });
-
-    if (!response.ok) {
-      console.error("Gemini API Error:", await response.text());
-      return { ...fallback, source: "fallback" };
-    }
-
-    const data = await response.json();
-    const content = data?.candidates?.[0]?.content?.parts?.[0]?.text;
     if (!content) {
       return { ...fallback, source: "fallback" };
     }

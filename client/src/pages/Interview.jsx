@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Mic, ShieldAlert, Cpu, Settings2, Loader2, MessageSquare, Volume2, Zap, AlertCircle, X, ChevronRight } from 'lucide-react';
 
 export default function Interview() {
+  const navigate = useNavigate();
   const [isRecording, setIsRecording] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
   const [transcript, setTranscript] = useState("");
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [feedback, setFeedback] = useState([]);
@@ -102,7 +105,7 @@ export default function Interview() {
 
     if (!transcript) return;
 
-    setLoading(true);
+    setSubmitting(true);
     const currentQ = questions[currentIdx];
     
     try {
@@ -134,6 +137,7 @@ export default function Interview() {
         sentiment: evaluation.sentiment,
         rating: evaluation.rating,
         critique: evaluation.critique,
+        improvement: evaluation.critique,
         score: evaluation.score || 0
       };
       
@@ -149,12 +153,12 @@ export default function Interview() {
         setTimeout(() => speak(questions[nextIdx].question), 500);
       } else {
         localStorage.setItem('interview_feedback', JSON.stringify(updatedFeedback));
-        setTimeout(() => window.location.href = '/summary', 800);
+        setTimeout(() => navigate('/summary'), 800);
       }
     } catch (err) {
       console.error(err);
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
 
@@ -255,6 +259,14 @@ export default function Interview() {
 
   return (
     <div className="h-screen bg-[#F8F9FA] relative flex flex-col justify-center px-4 sm:px-6 overflow-hidden">
+      {submitting && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#011813]/25 backdrop-blur-[2px]">
+          <div className="flex flex-col items-center gap-3 rounded-2xl bg-white/95 px-8 py-6 shadow-xl border border-[#E7E7E8]">
+            <Loader2 className="w-10 h-10 animate-spin text-[#009D77]" />
+            <p className="text-xs font-bold text-[#475467] uppercase tracking-wider">Scoring your answer…</p>
+          </div>
+        </div>
+      )}
       <main className="w-full max-w-6xl mx-auto flex flex-col h-[88vh] max-h-[800px] gap-4 relative z-10">
         
         {/* Header Compact */}
@@ -440,10 +452,17 @@ export default function Interview() {
                     )}
                     <button 
                       onClick={handleNext}
-                      disabled={!transcript && hasStarted}
-                      className={`flex-1 py-3.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm ${!transcript ? 'bg-[#F8F9FA] text-[#98A2B3] border border-[#E7E7E8] cursor-not-allowed' : 'bg-[#011813] text-white hover:bg-[#08241b]'}`}
+                      disabled={(!transcript && hasStarted) || submitting}
+                      className={`flex-1 py-3.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm ${!transcript || submitting ? 'bg-[#F8F9FA] text-[#98A2B3] border border-[#E7E7E8] cursor-not-allowed' : 'bg-[#011813] text-white hover:bg-[#08241b]'}`}
                     >
-                      Submit & Next Question
+                      {submitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          Scoring…
+                        </>
+                      ) : (
+                        'Submit & Next Question'
+                      )}
                     </button>
                   </div>
                )}

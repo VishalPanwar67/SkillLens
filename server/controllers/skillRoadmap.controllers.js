@@ -1,8 +1,8 @@
 import SkillRoadmap from "../models/skillRoadmap.model.js";
 import { generateSkillRoadmap, getDailyStudyPlan } from "../services/skillRoadmap.service.js";
+import { generateGeminiText, hasGeminiApiKey } from "../services/gemini.service.js";
 import { asyncHandler } from "../utils/index.util.js";
 import { ApiError, ApiResponse } from "../class/index.class.js";
-import User from "../models/user.model.js";
 
 export const getSkillRoadmap = asyncHandler(async (req, res) => {
   const userId = req.user?._id || req.user?.id;
@@ -75,14 +75,12 @@ export const generateDailyPlan = asyncHandler(async (req, res) => {
 
 export const handleMockInterview = asyncHandler(async (req, res) => {
   const { skill, userMessage, chatHistory } = req.body;
-  const apiKey = process.env.GEMINI_API_KEY || process.env.OPENAI_API_KEY;
-  const isGemini = !!process.env.GEMINI_API_KEY;
 
   if (!skill || !userMessage) {
     throw new ApiError(400, "Skill and user message are required");
   }
 
-  const systemPrompt = `You are an AI Interviewer for a candidate applying for a position requiring ${skill} skills.
+  const systemInstruction = `You are an AI Interviewer for a candidate applying for a position requiring ${skill} skills.
   Context: ${skill} interview.
   Recent history: ${JSON.stringify(chatHistory || [])}
   User said: "${userMessage}"
@@ -93,34 +91,19 @@ export const handleMockInterview = asyncHandler(async (req, res) => {
   try {
     let aiResponse = "";
 
-    if (isGemini) {
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: `${systemPrompt}\n\nUser: ${userMessage}` }] }],
-          generationConfig: { temperature: 0.7 }
-        })
+    if (hasGeminiApiKey()) {
+      aiResponse = await generateGeminiText({
+        systemInstruction,
+        prompt: userMessage,
+        temperature: 0.7,
       });
-      const data = await response.json();
-      aiResponse = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Interesting. Let's move on to the next topic.";
-    } else if (apiKey) {
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          model: "gpt-4o-mini",
-          messages: [{ role: "system", content: systemPrompt }, { role: "user", content: userMessage }],
-          temperature: 0.7,
-        }),
-      });
-      const result = await response.json();
-      aiResponse = result.choices[0].message.content;
     } else {
-      aiResponse = "I'm currently in manual mode. Please check your API configuration.";
+      aiResponse =
+        "I'm currently in manual mode. Set GEMINI_API_KEY in server/config/.env for AI responses.";
+    }
+
+    if (!aiResponse) {
+      aiResponse = "Interesting. Let's move on to the next topic.";
     }
 
     return res.status(200).json(new ApiResponse(200, "AI responded", aiResponse));

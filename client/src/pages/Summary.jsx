@@ -171,7 +171,7 @@ export default function Summary() {
                                   <span className="block text-[9px] font-bold text-[#009D77] uppercase tracking-wider mb-1.5 flex items-center gap-1">
                                     <Zap className="w-3 h-3" /> Improvement Plan
                                   </span>
-                                  <span className="text-[#011813] leading-relaxed">{item.improvement}</span>
+                                  <span className="text-[#011813] leading-relaxed">{item.critique || item.improvement || '—'}</span>
                                </div>
                              </div>
                           </div>
