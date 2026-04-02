@@ -1,6 +1,12 @@
 import SkillRoadmap from "../models/skillRoadmap.model.js";
-import { generateSkillRoadmap, getDailyStudyPlan } from "../services/skillRoadmap.service.js";
-import { generateGeminiText, hasGeminiApiKey } from "../services/gemini.service.js";
+import {
+  generateSkillRoadmap,
+  getDailyStudyPlan,
+} from "../services/skillRoadmap.service.js";
+import {
+  generateGeminiText,
+  hasGeminiApiKey,
+} from "../services/gemini.service.js";
 import { asyncHandler } from "../utils/index.util.js";
 import { ApiError, ApiResponse } from "../class/index.class.js";
 
@@ -12,13 +18,20 @@ export const getSkillRoadmap = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Skill is required");
   }
 
-  let roadmap = await SkillRoadmap.findOne({ userId, skill: skill.toLowerCase() });
+  let roadmap = await SkillRoadmap.findOne({
+    userId,
+    skill: skill.toLowerCase(),
+  });
 
-  if (!roadmap || refresh === "true" || 
-      (roadmap.steps && roadmap.steps.length <= 1) || 
-      (roadmap.projects && roadmap.projects.length < 3) || 
-      (roadmap.questions && roadmap.questions.length < 4) ||
-      (!roadmap.videos || roadmap.videos.length === 0)) {
+  if (
+    !roadmap ||
+    refresh === "true" ||
+    (roadmap.steps && roadmap.steps.length <= 1) ||
+    (roadmap.projects && roadmap.projects.length < 3) ||
+    (roadmap.questions && roadmap.questions.length < 4) ||
+    !roadmap.videos ||
+    roadmap.videos.length === 0
+  ) {
     // Re-generate if videos are missing or data is incomplete
     roadmap = await generateSkillRoadmap(userId, skill);
   }
@@ -30,7 +43,10 @@ export const toggleTaskProgress = asyncHandler(async (req, res) => {
   const userId = req.user?._id || req.user?.id;
   const { skill, stepId, done } = req.body;
 
-  const roadmap = await SkillRoadmap.findOne({ userId, skill: skill.toLowerCase() });
+  const roadmap = await SkillRoadmap.findOne({
+    userId,
+    skill: skill.toLowerCase(),
+  });
   if (!roadmap) throw new ApiError(404, "Roadmap not found");
 
   const step = roadmap.steps.find((s) => s.id === stepId);
@@ -44,14 +60,19 @@ export const toggleTaskProgress = asyncHandler(async (req, res) => {
   roadmap.overallProgress = Math.round((completed / total) * 100);
 
   await roadmap.save();
-  return res.status(200).json(new ApiResponse(200, "Progress updated", roadmap));
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "Progress updated", roadmap));
 });
 
 export const toggleProjectStatus = asyncHandler(async (req, res) => {
   const userId = req.user?._id || req.user?.id;
   const { skill, projectId, done } = req.body;
 
-  const roadmap = await SkillRoadmap.findOne({ userId, skill: skill.toLowerCase() });
+  const roadmap = await SkillRoadmap.findOne({
+    userId,
+    skill: skill.toLowerCase(),
+  });
   if (!roadmap) throw new ApiError(404, "Roadmap not found");
 
   const project = roadmap.projects.find((p) => p.id === projectId);
@@ -60,7 +81,9 @@ export const toggleProjectStatus = asyncHandler(async (req, res) => {
   }
 
   await roadmap.save();
-  return res.status(200).json(new ApiResponse(200, "Project status updated", roadmap));
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "Project status updated", roadmap));
 });
 
 export const generateDailyPlan = asyncHandler(async (req, res) => {
@@ -70,7 +93,9 @@ export const generateDailyPlan = asyncHandler(async (req, res) => {
   }
 
   const plan = await getDailyStudyPlan(skill, days);
-  return res.status(200).json(new ApiResponse(200, "Daily plan generated", plan));
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "Daily plan generated", plan));
 });
 
 export const handleMockInterview = asyncHandler(async (req, res) => {
@@ -106,7 +131,9 @@ export const handleMockInterview = asyncHandler(async (req, res) => {
       aiResponse = "Interesting. Let's move on to the next topic.";
     }
 
-    return res.status(200).json(new ApiResponse(200, "AI responded", aiResponse));
+    return res
+      .status(200)
+      .json(new ApiResponse(200, "AI responded", aiResponse));
   } catch (error) {
     throw new ApiError(500, "Mock interview failed: " + error.message);
   }
