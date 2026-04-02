@@ -305,7 +305,7 @@ export default function Dashboard() {
 
 
         {/* Next Recommendation & Progression */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
           {/* Next Step Banner */}
           <div className="bg-[#011813] border border-[#011813] rounded-2xl p-6 shadow-sm flex flex-col overflow-hidden relative">
             <div className="absolute top-0 right-[-10%] p-8 opacity-10 pointer-events-none">
