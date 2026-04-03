@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { generateGeminiText, hasGeminiApiKey } from "./gemini.service.js";
+import { generateGeminiText } from "./gemini.service.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -49,7 +49,7 @@ export function getInterviewQuestionsFromBank(usedTopic, rawTopic) {
   return { questions: shuffled };
 }
 
-export const evaluateAnswer = async (question, answer, ideal) => {
+export const evaluateAnswer = async (question, answer, ideal, userApiKey) => {
   const systemInstruction = [
     "You are a strict technical interviewer.",
     "Evaluate the user's answer against the ideal answer.",
@@ -61,18 +61,17 @@ export const evaluateAnswer = async (question, answer, ideal) => {
 
   const user = `Question: ${question}\nIdeal Answer: ${ideal}\nUser Answer: ${answer}`;
 
-  if (hasGeminiApiKey()) {
-    try {
-      const raw = await generateGeminiText({
-        systemInstruction,
-        prompt: user,
-        temperature: 0.4,
-        responseMimeType: "application/json",
-      });
-      if (raw) return safeJsonParse(raw);
-    } catch (e) {
-      logGeminiFailureOncePerMinute("evaluate answer", e);
-    }
+  try {
+    const raw = await generateGeminiText({
+      systemInstruction,
+      prompt: user,
+      temperature: 0.4,
+      responseMimeType: "application/json",
+      apiKey: userApiKey,
+    });
+    if (raw) return safeJsonParse(raw);
+  } catch (e) {
+    logGeminiFailureOncePerMinute("evaluate answer", e);
   }
 
   const lowAnswer = (answer || "").toLowerCase();
@@ -93,6 +92,6 @@ export const evaluateAnswer = async (question, answer, ideal) => {
     score: 50,
     sentiment: "Average",
     critique:
-      "AI scoring is unavailable (set GEMINI_API_KEY in server/config/.env or check quota). This is a basic heuristic only.",
+      "Gemini could not score this answer (network, quota, or API error). This is a basic heuristic only.",
   };
 };

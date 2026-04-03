@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { apiUrl } from '../config/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BookOpen, Clock, Activity, Flag, Plus, Loader2, CheckCircle2, ChevronRight } from 'lucide-react';
 import RoadmapModal from './RoadmapModal';
+import { useRequireApiKey } from '../hooks/useRequireApiKey';
+import { apiFetch } from '../utils/apiFetch';
+import { hasUserApiKey } from '../utils/apiKey';
+import ApiKeyModal from '../components/ApiKeyModal';
 
 export default function Roadmap() {
   const [weeks, setWeeks] = useState([]);
@@ -12,6 +16,8 @@ export default function Roadmap() {
   const [selectedWeekIdx, setSelectedWeekIdx] = useState(null);
   const [hasResume, setHasResume] = useState(false);
   const [profileLoading, setProfileLoading] = useState(true);
+  const { showModal, setShowModal, checkKey } = useRequireApiKey();
+  const pendingGenerateRef = useRef(null);
 
   const fetchProfile = async () => {
     try {
@@ -23,8 +29,8 @@ export default function Roadmap() {
       if (response.ok && result.data?.user) {
         setHasResume(!!result.data.user.detectedSkills && result.data.user.detectedSkills.length > 0);
       }
-    } catch (err) {
-      console.error("Profile fetch error", err);
+    } catch {
+      console.error("Profile fetch error");
     } finally {
       setProfileLoading(false);
     }
@@ -44,7 +50,7 @@ export default function Roadmap() {
         setWeeks([]);
         setError(result?.message || "Failed to load roadmap");
       }
-    } catch (err) {
+    } catch {
       setError("Error connecting to backend");
     } finally {
       setLoading(false);
@@ -57,23 +63,35 @@ export default function Roadmap() {
     const companyId = params.get('generateFor');
     const shouldGenerate = params.get('generate');
     if (companyId) {
-      generateRoadmap(companyId);
+      if (!hasUserApiKey()) {
+        pendingGenerateRef.current = { targetCompanyId: companyId };
+        setShowModal(true);
+      } else {
+        generateRoadmap(companyId);
+      }
     } else if (shouldGenerate === 'true') {
-      generateRoadmap();
+      if (!hasUserApiKey()) {
+        pendingGenerateRef.current = { targetCompanyId: null };
+        setShowModal(true);
+      } else {
+        generateRoadmap();
+      }
     } else {
       fetchRoadmap();
     }
+    // Intentionally run once on mount; generateRoadmap/setShowModal are stable for this flow.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- mount-only URL / gate handling
   }, []);
 
   const generateRoadmap = async (targetCompanyId = null) => {
     setLoading(true);
+    setError(null);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(apiUrl('/api/roadmap/generate'), {
+      const response = await apiFetch('/api/roadmap/generate', {
         method: "POST",
         headers: { 
           "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
         },
         body: JSON.stringify({ targetCompanyId })
       });
@@ -85,7 +103,7 @@ export default function Roadmap() {
       } else {
         setError(result.message || "Failed to generate roadmap");
       }
-    } catch (err) {
+    } catch {
       setError("Error connecting to backend");
     } finally {
       setLoading(false);
@@ -104,12 +122,12 @@ export default function Roadmap() {
         body: JSON.stringify({ done })
       });
       fetchRoadmap();
-    } catch (err) {
-       console.error(err);
+    } catch {
+       console.error("Toggle task failed");
     }
   };
 
-  const handleToggleWeek = async (weekNumber, done) => {
+  const _handleToggleWeek = async (weekNumber, done) => {
     try {
       const token = localStorage.getItem('token');
       await fetch(apiUrl(`/api/roadmap/${weekNumber}/complete`), {
@@ -121,13 +139,28 @@ export default function Roadmap() {
         body: JSON.stringify({ done })
       });
       fetchRoadmap();
-    } catch (err) {
-       console.error(err);
+    } catch {
+       console.error("Toggle week failed");
+    }
+  };
+
+  const handleApiKeyModalSuccess = () => {
+    setShowModal(false);
+    const pending = pendingGenerateRef.current;
+    pendingGenerateRef.current = null;
+    if (pending) {
+      generateRoadmap(pending.targetCompanyId);
     }
   };
 
   return (
     <>
+      {showModal && (
+        <ApiKeyModal
+          required={true}
+          onSuccess={handleApiKeyModalSuccess}
+        />
+      )}
       <div className="min-h-screen bg-[#fbfbfa] relative overflow-hidden flex flex-col pt-4 pb-12 px-6">
         <div className="absolute top-0 right-0 w-full h-full pointer-events-none opacity-40">
            <div className="absolute top-[20%] left-[20%] w-[40%] h-[50%] bg-[#d2fbf0] rounded-full blur-[140px]" />
@@ -135,6 +168,11 @@ export default function Roadmap() {
         </div>
 
         <main className="flex-1 w-full max-w-4xl mx-auto relative z-10 space-y-8">
+          {error && (
+            <div className="rounded-2xl border border-red-100 bg-red-50 px-4 py-3 text-sm font-semibold text-red-900">
+              {error}
+            </div>
+          )}
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex justify-between items-end mb-8 border-b border-gray-100 pb-10">
              <div>
                 <div className="flex items-center gap-3 mb-3">
@@ -182,7 +220,10 @@ export default function Roadmap() {
                   Your resume is ready! Now let's calculate the perfect 8-week journey for your career goals.
                </p>
                <button 
-                 onClick={() => generateRoadmap()}
+                 onClick={() => {
+                   if (!checkKey()) return;
+                   generateRoadmap();
+                 }}
                  className="inline-flex items-center gap-3 px-10 py-4 bg-[#11b589] text-white rounded-2xl font-black hover:bg-[#0b261d] transition-all hover:scale-[1.02] active:scale-[0.98]"
                >
                  Generate My Roadmap <Activity className="w-5 h-5" />

@@ -1,6 +1,6 @@
 import SkillRoadmap from "../models/skillRoadmap.model.js";
 import { fetchYouTubeVideos } from "./youtube.service.js";
-import { generateGeminiText, hasGeminiApiKey } from "./gemini.service.js";
+import { generateGeminiText } from "./gemini.service.js";
 
 const SKILL_LABELS = {
   react: "React",
@@ -22,7 +22,7 @@ const SKILL_LABELS = {
 
 const toLabel = (skill) => SKILL_LABELS[skill] || skill.charAt(0).toUpperCase() + skill.slice(1);
 
-export const generateSkillRoadmap = async (userId, skill) => {
+export const generateSkillRoadmap = async (userId, skill, userApiKey) => {
 
   const labels = {
     react: "React",
@@ -68,44 +68,14 @@ export const generateSkillRoadmap = async (userId, skill) => {
   }`;
 
   try {
-    let content;
-
-    if (hasGeminiApiKey()) {
-      const rawText = await generateGeminiText({
-        systemInstruction: systemPrompt,
-        prompt: userPrompt,
-        temperature: 0.4,
-        responseMimeType: "application/json",
-      });
-      content = JSON.parse(rawText || "{}");
-    } else {
-      content = {
-        steps: [
-          {
-            title: "Basics of " + currentLabel,
-            description: "Learn the core concepts.",
-            estimatedTime: "2 hours",
-            docLink: "https://docs.google.com",
-            projectIdea: "Hello World",
-          },
-        ],
-        projects: [
-          {
-            title: "Mini implementation",
-            description: "A small project",
-            difficulty: "Beginner",
-            outcome: "A basic app",
-          },
-        ],
-        questions: [
-          {
-            question: "What is " + currentLabel + "?",
-            type: "Conceptual",
-            answer: "A powerful technology.",
-          },
-        ],
-      };
-    }
+    const rawText = await generateGeminiText({
+      systemInstruction: systemPrompt,
+      prompt: userPrompt,
+      temperature: 0.4,
+      responseMimeType: "application/json",
+      apiKey: userApiKey,
+    });
+    const content = JSON.parse(rawText || "{}");
 
     const videos = await fetchYouTubeVideos(skill);
     const steps = (content.steps || []).map((step, idx) => ({
@@ -242,9 +212,7 @@ export const generateSkillRoadmap = async (userId, skill) => {
   }
 };
 
-export const getDailyStudyPlan = async (skill, days) => {
-  if (!hasGeminiApiKey()) return [];
-
+export const getDailyStudyPlan = async (skill, days, userApiKey) => {
   const prompt = `Generate a ${days}-day study plan for ${skill}. Return JSON: { "plan": [{ "day": 1, "tasks": "...", "goal": "..." }] }.`;
 
   try {
@@ -252,6 +220,7 @@ export const getDailyStudyPlan = async (skill, days) => {
       prompt,
       temperature: 0.5,
       responseMimeType: "application/json",
+      apiKey: userApiKey,
     });
     return JSON.parse(rawText || "{}").plan || [];
   } catch (error) {

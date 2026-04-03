@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { apiUrl } from "../../config/api";
+import { apiFetch } from "../../utils/apiFetch";
+import ApiKeyModal from "../ApiKeyModal";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   BookOpen, 
@@ -25,6 +27,7 @@ export default function RoadmapDetails({ skill, onComplete }) {
   const [userAnswers, setUserAnswers] = useState({});
   const [hasBrokenLinks, setHasBrokenLinks] = useState(false);
   const [showFixPopup, setShowFixPopup] = useState(false);
+  const [apiKeyGate, setApiKeyGate] = useState(false);
 
   useEffect(() => {
     fetchRoadmap();
@@ -39,10 +42,18 @@ export default function RoadmapDetails({ skill, onComplete }) {
   const fetchRoadmap = async () => {
     try {
       setLoading(true);
+      setApiKeyGate(false);
       const token = localStorage.getItem("token");
-      const headers = { "Authorization": `Bearer ${token}` };
-      const res = await fetch(apiUrl(`/api/skill-roadmap?skill=${skill.id}`), { headers });
-      
+      const headers = { Authorization: `Bearer ${token}` };
+      const res = await apiFetch(`/api/skill-roadmap?skill=${skill.id}`, {
+        headers,
+      });
+
+      if (res.status === 401) {
+        setApiKeyGate(true);
+        return;
+      }
+
       if (!res.ok) throw new Error("Failed to fetch roadmap.");
       
       const result = await res.json();
@@ -105,6 +116,30 @@ export default function RoadmapDetails({ skill, onComplete }) {
   };
 
   if (loading) return <LoadingSpinner />;
+
+  if (apiKeyGate && !data) {
+    return (
+      <>
+        <ApiKeyModal
+          required={true}
+          onSuccess={() => {
+            setApiKeyGate(false);
+            fetchRoadmap();
+          }}
+        />
+        <div className="flex flex-col items-center justify-center p-12 bg-white border border-[#E7E7E8] rounded-3xl shadow-sm text-center max-w-lg mx-auto">
+          <MessageSquare className="w-10 h-10 text-[#009D77] mb-4" />
+          <h3 className="text-lg font-black text-[#011813] mb-2 uppercase tracking-tight">
+            Gemini API key required
+          </h3>
+          <p className="text-sm text-[#475467] font-medium">
+            Add your key in the dialog above to generate and load this skill roadmap.
+          </p>
+        </div>
+      </>
+    );
+  }
+
   if (error || !data) return <ErrorState message={error} />;
 
   const tabs = [

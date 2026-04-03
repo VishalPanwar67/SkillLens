@@ -12,6 +12,8 @@ import {
 import { apiUrl } from "../config/api";
 import { auth, googleProvider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
+import { hasUserApiKey } from "../utils/apiKey";
+import ApiKeyModal from "../components/ApiKeyModal";
 
 export default function Login() {
   const [name, setName] = useState("");
@@ -19,6 +21,7 @@ export default function Login() {
   const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false);
   const [loginState, setLoginState] = useState("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [showPostLoginApiKey, setShowPostLoginApiKey] = useState(false);
   const navigate = useNavigate();
 
   const handleGoogleLogin = async () => {
@@ -52,13 +55,18 @@ export default function Login() {
       const data = await response.json();
 
       if (response.ok && data.success) {
-        setLoginState("success");
         localStorage.setItem("token", data.data.token);
         localStorage.setItem("user", JSON.stringify(data.data.user));
 
-        setTimeout(() => {
-          navigate("/dashboard");
-        }, 1500);
+        if (hasUserApiKey()) {
+          setLoginState("success");
+          setTimeout(() => {
+            navigate("/dashboard");
+          }, 1500);
+        } else {
+          setLoginState("success");
+          setShowPostLoginApiKey(true);
+        }
       } else {
         setLoginState("idle");
         setErrorMessage(data.message || "Email identity error. Please use your original name.");
@@ -79,8 +87,22 @@ export default function Login() {
 
   const roles = ["Frontend", "Backend", "Fullstack", "Data", "Java"];
 
+  const finishLoginAndRedirect = () => {
+    setShowPostLoginApiKey(false);
+    setTimeout(() => {
+      navigate("/dashboard");
+    }, 400);
+  };
+
   return (
     <div className="relative flex flex-col items-center justify-center py-6">
+      {showPostLoginApiKey && (
+        <ApiKeyModal
+          required={false}
+          onSuccess={finishLoginAndRedirect}
+          onSkip={finishLoginAndRedirect}
+        />
+      )}
             <div className="w-full max-w-md px-1 relative z-10">
         <div className="flex justify-center mb-6">
           <div className="px-3 py-1.5 rounded-full flex items-center gap-2 text-[10px] font-bold bg-[#E8FAF5] text-[#009D77] border border-[rgba(0,157,119,0.2)]">

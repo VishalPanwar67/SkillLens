@@ -15,7 +15,10 @@ import {
   Edit3,
   ExternalLink,
   ChevronRight,
+  Key,
 } from "lucide-react";
+import ApiKeyModal from "../components/ApiKeyModal";
+import { hasUserApiKey, maskUserApiKey, saveUserApiKey } from "../utils/apiKey";
 
 export default function Profile() {
   const [formData, setFormData] = useState({
@@ -33,6 +36,8 @@ export default function Profile() {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [showApiKeySettingsModal, setShowApiKeySettingsModal] = useState(false);
+  const [apiKeyTick, setApiKeyTick] = useState(0);
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -422,6 +427,58 @@ export default function Profile() {
 
                 <div className="h-px bg-[#E7E7E8]" />
 
+                <div>
+                  <p className="text-[9px] font-bold uppercase tracking-widest text-[#8D8E8F] mb-2 flex items-center gap-2">
+                    <Key className="w-3 h-3 text-[#009D77]" />
+                    Gemini API key
+                  </p>
+                  {hasUserApiKey() ? (
+                    <div className="space-y-3">
+                      <p
+                        className="text-[12px] font-mono font-semibold text-[#011813] bg-[#F8F8F8] rounded-lg px-3 py-2 border border-[#E7E7E8]"
+                        key={apiKeyTick}
+                      >
+                        {maskUserApiKey()}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setShowApiKeySettingsModal(true)}
+                          className="text-[11px] font-bold text-[#009D77] border border-[#009D77]/30 rounded-lg px-3 py-1.5 hover:bg-[#E8FAF5] transition-colors"
+                        >
+                          Update key
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            saveUserApiKey(null);
+                            setApiKeyTick((t) => t + 1);
+                          }}
+                          className="text-[11px] font-bold text-[#475467] border border-[#E7E7E8] rounded-lg px-3 py-1.5 hover:bg-[#F8F8F8] transition-colors"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <p className="text-[11px] text-[#8D8E8F] leading-relaxed">
+                        No key saved. Add your Gemini key to use roadmap generation
+                        and interview features.
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => setShowApiKeySettingsModal(true)}
+                        className="text-[11px] font-bold text-white bg-[#009D77] rounded-lg px-3 py-1.5 hover:bg-[#008a68] transition-colors"
+                      >
+                        Add API key
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                <div className="h-px bg-[#E7E7E8]" />
+
                 <div className="flex flex-col gap-2.5">
                   <p className="text-[9px] font-bold uppercase tracking-widest text-[#8D8E8F]">
                     Contact
@@ -470,6 +527,17 @@ export default function Profile() {
           )}
         </AnimatePresence>
       </main>
+
+      {showApiKeySettingsModal && (
+        <ApiKeyModal
+          required={false}
+          onSuccess={() => {
+            setShowApiKeySettingsModal(false);
+            setApiKeyTick((t) => t + 1);
+          }}
+          onSkip={() => setShowApiKeySettingsModal(false)}
+        />
+      )}
 
       <AnimatePresence>
         {message && (

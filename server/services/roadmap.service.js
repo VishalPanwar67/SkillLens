@@ -1,5 +1,5 @@
 import { createRequire } from "module";
-import { generateGeminiText, hasGeminiApiKey } from "./gemini.service.js";
+import { generateGeminiText } from "./gemini.service.js";
 
 const require = createRequire(import.meta.url);
 const companies = require("../data/companies.json");
@@ -372,6 +372,7 @@ export const generateRoadmapWithAI = async ({
   roleRequiredSkills = [],
   detectedSkills = [],
   resumeText = "",
+  userApiKey,
 }) => {
   const targetCompany = targetCompanyId ? getCompanyById(targetCompanyId) : null;
   const targetRoleData = targetCompany?.roles?.[targetRole] ?? null;
@@ -406,10 +407,6 @@ export const generateRoadmapWithAI = async ({
     companyName: targetCompany?.name ?? null,
     prioritizedSkills,
   });
-
-  if (!hasGeminiApiKey()) {
-    return { ...fallback, source: "fallback" };
-  }
 
   const payload = buildPromptPayload({
     totalWeeks,
@@ -464,6 +461,7 @@ export const generateRoadmapWithAI = async ({
       prompt: user,
       temperature: 0.4,
       responseMimeType: "application/json",
+      apiKey: userApiKey,
     });
     if (!content) {
       return { ...fallback, source: "fallback" };

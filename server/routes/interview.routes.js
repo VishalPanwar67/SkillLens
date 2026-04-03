@@ -9,6 +9,7 @@ import {
   getInterviewQuestionsFromBank,
   evaluateAnswer,
 } from "../services/interview.service.js";
+import { requireUserGeminiKey } from "../utils/userGeminiKey.js";
 import {
   checkDailyCredits,
   consumeCredits,
@@ -52,6 +53,7 @@ router.post(
   "/evaluate",
   protectRoute,
   asyncHandler(async (req, res) => {
+    const userGeminiKey = requireUserGeminiKey(req);
     const { question, answer, ideal } = req.body;
 
     if (!question || !ideal) {
@@ -60,7 +62,12 @@ router.post(
         .json(new ApiResponse(400, "Missing question or ideal answer"));
     }
 
-    const evaluation = await evaluateAnswer(question, answer, ideal);
+    const evaluation = await evaluateAnswer(
+      question,
+      answer,
+      ideal,
+      userGeminiKey
+    );
 
     return res
       .status(200)

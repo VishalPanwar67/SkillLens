@@ -3,12 +3,22 @@ import {
   generateSkillRoadmap,
   getDailyStudyPlan,
 } from "../services/skillRoadmap.service.js";
-import {
-  generateGeminiText,
-  hasGeminiApiKey,
-} from "../services/gemini.service.js";
+import { generateGeminiText } from "../services/gemini.service.js";
 import { asyncHandler } from "../utils/index.util.js";
 import { ApiError, ApiResponse } from "../class/index.class.js";
+import { requireUserGeminiKey } from "../utils/userGeminiKey.js";
+
+function roadmapNeedsRegeneration(roadmap, refresh) {
+  return (
+    !roadmap ||
+    refresh === "true" ||
+    (roadmap.steps && roadmap.steps.length <= 1) ||
+    (roadmap.projects && roadmap.projects.length < 3) ||
+    (roadmap.questions && roadmap.questions.length < 4) ||
+    !roadmap.videos ||
+    roadmap.videos.length === 0
+  );
+}
 
 export const getSkillRoadmap = asyncHandler(async (req, res) => {
   const userId = req.user?._id || req.user?.id;
@@ -23,17 +33,9 @@ export const getSkillRoadmap = asyncHandler(async (req, res) => {
     skill: skill.toLowerCase(),
   });
 
-  if (
-    !roadmap ||
-    refresh === "true" ||
-    (roadmap.steps && roadmap.steps.length <= 1) ||
-    (roadmap.projects && roadmap.projects.length < 3) ||
-    (roadmap.questions && roadmap.questions.length < 4) ||
-    !roadmap.videos ||
-    roadmap.videos.length === 0
-  ) {
-    // Re-generate if videos are missing or data is incomplete
-    roadmap = await generateSkillRoadmap(userId, skill);
+  if (roadmapNeedsRegeneration(roadmap, refresh)) {
+    const userGeminiKey = requireUserGeminiKey(req);
+    roadmap = await generateSkillRoadmap(userId, skill, userGeminiKey);
   }
 
   return res.status(200).json(new ApiResponse(200, "Roadmap fetched", roadmap));
@@ -54,7 +56,6 @@ export const toggleTaskProgress = asyncHandler(async (req, res) => {
     step.done = done;
   }
 
-  // Recalculate overall progress
   const total = roadmap.steps.length;
   const completed = roadmap.steps.filter((s) => s.done).length;
   roadmap.overallProgress = Math.round((completed / total) * 100);
@@ -87,18 +88,20 @@ export const toggleProjectStatus = asyncHandler(async (req, res) => {
 });
 
 export const generateDailyPlan = asyncHandler(async (req, res) => {
+  const userGeminiKey = requireUserGeminiKey(req);
   const { skill, days } = req.body;
   if (!skill || !days) {
     throw new ApiError(400, "Skill and days are required");
   }
 
-  const plan = await getDailyStudyPlan(skill, days);
+  const plan = await getDailyStudyPlan(skill, days, userGeminiKey);
   return res
     .status(200)
     .json(new ApiResponse(200, "Daily plan generated", plan));
 });
 
 export const handleMockInterview = asyncHandler(async (req, res) => {
+  const userGeminiKey = requireUserGeminiKey(req);
   const { skill, userMessage, chatHistory } = req.body;
 
   if (!skill || !userMessage) {
@@ -114,26 +117,18 @@ export const handleMockInterview = asyncHandler(async (req, res) => {
   Keep responses short and focused on ${skill} concepts.`;
 
   try {
-    let aiResponse = "";
+    const aiResponse = await generateGeminiText({
+      systemInstruction,
+      prompt: userMessage,
+      temperature: 0.7,
+      apiKey: userGeminiKey,
+    });
 
-    if (hasGeminiApiKey()) {
-      aiResponse = await generateGeminiText({
-        systemInstruction,
-        prompt: userMessage,
-        temperature: 0.7,
-      });
-    } else {
-      aiResponse =
-        "I'm currently in manual mode. Set GEMINI_API_KEY in server/config/.env for AI responses.";
-    }
+    const text =
+      aiResponse ||
+      "Interesting. Let's move on to the next topic.";
 
-    if (!aiResponse) {
-      aiResponse = "Interesting. Let's move on to the next topic.";
-    }
-
-    return res
-      .status(200)
-      .json(new ApiResponse(200, "AI responded", aiResponse));
+    return res.status(200).json(new ApiResponse(200, "AI responded", text));
   } catch (error) {
     throw new ApiError(500, "Mock interview failed: " + error.message);
   }

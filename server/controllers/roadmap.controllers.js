@@ -8,6 +8,7 @@ import {
   computeRoadmapCompletion,
   generateRoadmapWithAI,
 } from "../services/roadmap.service.js";
+import { requireUserGeminiKey } from "../utils/userGeminiKey.js";
 
 const getAuthUserId = (req) =>
   req.user?.userId ?? req.user?.id ?? req.user?._id ?? null;
@@ -142,6 +143,7 @@ export const generateRoadmap = asyncHandler(async (req, res) => {
     : null;
 
   const roleRequiredSkills = ROLE_REQUIRED_SKILLS[targetRole] || [];
+  const userGeminiKey = requireUserGeminiKey(req);
 
   const skillProfiles = await SkillProfile.find({ userId })
     .select("skill depthScore depthLevel")
@@ -155,6 +157,7 @@ export const generateRoadmap = asyncHandler(async (req, res) => {
     roleRequiredSkills,
     detectedSkills: user.detectedSkills,
     resumeText: user.resumeText,
+    userApiKey: userGeminiKey,
   });
 
   const completionPercent = computeRoadmapCompletion(generated.weeks);

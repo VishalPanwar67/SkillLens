@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { apiUrl } from '../config/api';
 import { useNavigate } from 'react-router-dom';
+import { useRequireApiKey } from '../hooks/useRequireApiKey';
+import { apiFetch } from '../utils/apiFetch';
+import ApiKeyModal from '../components/ApiKeyModal';
 import { motion } from 'framer-motion';
 import { Mic, ShieldAlert, Cpu, Settings2, Loader2, MessageSquare, Volume2, Zap, AlertCircle, X, ChevronRight } from 'lucide-react';
 
@@ -34,6 +36,7 @@ export default function Interview() {
     "SQL", "OS", "C", "C++", "Spring Boot", "Hibernate", "DSA", "System Design"
   ]);
   const [showCreditModal, setShowCreditModal] = useState(false);
+  const { showModal, setShowModal, checkKey } = useRequireApiKey();
 
   useEffect(() => {
     transcriptRef.current = transcript;
@@ -115,12 +118,12 @@ export default function Interview() {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const url = topic
-        ? apiUrl(`/api/interview?topic=${encodeURIComponent(topic)}`)
-        : apiUrl("/api/interview");
-      
-      const res = await fetch(url, {
-        headers: { "Authorization": `Bearer ${token}` }
+      const path = topic
+        ? `/api/interview?topic=${encodeURIComponent(topic)}`
+        : "/api/interview";
+
+      const res = await apiFetch(path, {
+        headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
       
@@ -142,11 +145,13 @@ export default function Interview() {
   };
 
   const handleTopicSelect = (topic) => {
+    if (!checkKey()) return;
     setSelectedTopic(topic);
     fetchInterview(topic);
   };
 
   const startInterview = () => {
+    if (!checkKey()) return;
     setHasStarted(true);
     if (questions.length > 0) {
        speak(questions[0].question);
@@ -177,10 +182,9 @@ export default function Interview() {
     
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(apiUrl("/api/interview/evaluate"), {
+      const res = await apiFetch("/api/interview/evaluate", {
         method: "POST",
         headers: { 
-          "Content-Type": "application/json",
           "Authorization": `Bearer ${token}` 
         },
         body: JSON.stringify({
@@ -298,6 +302,13 @@ export default function Interview() {
 
   if (!selectedTopic) {
     return (
+      <>
+      {showModal && (
+        <ApiKeyModal
+          required={true}
+          onSuccess={() => setShowModal(false)}
+        />
+      )}
       <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center p-2">
         <motion.div 
           initial={{ opacity: 0, scale: 0.98 }}
@@ -348,6 +359,7 @@ export default function Interview() {
           </div>
         </motion.div>
       </div>
+      </>
     );
   }
 
@@ -362,6 +374,12 @@ export default function Interview() {
 
   return (
     <div className="h-screen bg-[#F8F9FA] relative flex flex-col justify-center px-4 sm:px-6 overflow-hidden">
+      {showModal && (
+        <ApiKeyModal
+          required={true}
+          onSuccess={() => setShowModal(false)}
+        />
+      )}
       {submitting && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#011813]/25 backdrop-blur-[2px]">
           <div className="flex flex-col items-center gap-3 rounded-2xl bg-white/95 px-8 py-6 shadow-xl border border-[#E7E7E8]">

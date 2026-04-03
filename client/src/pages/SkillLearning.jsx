@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { apiUrl } from "../config/api";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -20,6 +20,8 @@ import SkillRoadmapCard from "../components/Learning/SkillRoadmapCard";
 import RoadmapDetails from "../components/Learning/RoadmapDetails";
 import MockInterviewChat from "../components/Learning/MockInterviewChat";
 import DailyPlanner from "../components/Learning/DailyPlanner";
+import { useRequireApiKey } from "../hooks/useRequireApiKey";
+import ApiKeyModal from "../components/ApiKeyModal";
 
 export default function SkillLearning() {
   const [skills, setSkills] = useState([]);
@@ -28,6 +30,8 @@ export default function SkillLearning() {
   const [showInterview, setShowInterview] = useState(false);
   const [showPlanner, setShowPlanner] = useState(false);
   const [xp, setXp] = useState(0);
+  const { showModal, setShowModal, checkKey } = useRequireApiKey();
+  const openInterviewAfterKey = useRef(false);
 
   useEffect(() => {
     fetchInitialData();
@@ -158,6 +162,20 @@ export default function SkillLearning() {
               </button>
               <div className="flex gap-3">
                 <button
+                  type="button"
+                  onClick={() => {
+                    if (!checkKey()) {
+                      openInterviewAfterKey.current = true;
+                      return;
+                    }
+                    setShowInterview(true);
+                  }}
+                  className="flex items-center gap-2 bg-[#009D77] text-white border border-[#009D77] px-4 py-2 rounded-xl text-sm font-bold hover:bg-[#008a68]"
+                >
+                  <MessageSquare className="w-4 h-4" /> AI Interview
+                </button>
+                <button
+                  type="button"
                   onClick={() => setShowPlanner(true)}
                   className="flex items-center gap-2 bg-white border border-[#E7E7E8] px-4 py-2 rounded-xl text-sm font-bold text-[#011813] hover:bg-[#F8F9FA]"
                 >
@@ -178,6 +196,18 @@ export default function SkillLearning() {
       </AnimatePresence>
 
       {/* Modals */}
+      {showModal && (
+        <ApiKeyModal
+          required={true}
+          onSuccess={() => {
+            setShowModal(false);
+            if (openInterviewAfterKey.current) {
+              openInterviewAfterKey.current = false;
+              setShowInterview(true);
+            }
+          }}
+        />
+      )}
       {showInterview && (
         <MockInterviewChat
           skill={selectedSkill?.id || "Technical"}

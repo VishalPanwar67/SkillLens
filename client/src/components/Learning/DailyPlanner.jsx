@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { apiUrl } from "../../config/api";
+import { apiFetch } from "../../utils/apiFetch";
+import { useRequireApiKey } from "../../hooks/useRequireApiKey";
+import ApiKeyModal from "../ApiKeyModal";
 import { 
   X, 
   Calendar, 
@@ -16,16 +18,17 @@ export default function DailyPlanner({ skill, onClose }) {
   const [days, setDays] = useState(7);
   const [plan, setPlan] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { showModal, setShowModal, checkKey } = useRequireApiKey();
 
   const generatePlan = async () => {
+    if (!checkKey()) return;
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
-      const res = await fetch(apiUrl("/api/skill-roadmap/daily-plan"), {
+      const res = await apiFetch("/api/skill-roadmap/daily-plan", {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ skill, days })
       });
@@ -43,6 +46,12 @@ export default function DailyPlanner({ skill, onClose }) {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+      {showModal && (
+        <ApiKeyModal
+          required={true}
+          onSuccess={() => setShowModal(false)}
+        />
+      )}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

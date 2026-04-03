@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import { apiUrl } from "../../config/api";
+import { apiFetch } from "../../utils/apiFetch";
+import { useRequireApiKey } from "../../hooks/useRequireApiKey";
+import ApiKeyModal from "../ApiKeyModal";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   X, 
@@ -21,6 +23,7 @@ export default function MockInterviewChat({ skill, onClose }) {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const scrollRef = useRef(null);
+  const { showModal, setShowModal, checkKey } = useRequireApiKey();
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -30,6 +33,7 @@ export default function MockInterviewChat({ skill, onClose }) {
 
   const handleSend = async () => {
     if (!input.trim()) return;
+    if (!checkKey()) return;
 
     const userMessage = { role: "user", content: input };
     setMessages(prev => [...prev, userMessage]);
@@ -39,11 +43,10 @@ export default function MockInterviewChat({ skill, onClose }) {
     try {
       const token = localStorage.getItem("token");
       const headers = { 
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${token}`,
       };
 
-      const res = await fetch(apiUrl("/api/skill-roadmap/mock-interview"), {
+      const res = await apiFetch("/api/skill-roadmap/mock-interview", {
         method: "POST",
         headers,
         body: JSON.stringify({ 
@@ -68,6 +71,12 @@ export default function MockInterviewChat({ skill, onClose }) {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+      {showModal && (
+        <ApiKeyModal
+          required={true}
+          onSuccess={() => setShowModal(false)}
+        />
+      )}
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
