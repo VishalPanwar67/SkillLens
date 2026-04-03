@@ -65,31 +65,31 @@ export default function Resume() {
   };
 
   return (
-    <div className="h-screen bg-[#fcfdfd] overflow-hidden flex flex-col pt-18 pb-4 px-4 lg:px-6 font-sans relative">
+    <div className="min-h-screen bg-[#fcfdfd] flex flex-col pb-12 px-4 lg:px-6 font-sans relative">
       {/* Background Decor */}
       <div className="absolute inset-0 pointer-events-none opacity-30 select-none">
         <div className="absolute top-0 right-0 w-[30%] h-[30%] bg-[#009D77]/5 rounded-full blur-[80px]" />
         <div className="absolute bottom-0 left-0 w-[30%] h-[30%] bg-[#EC4899]/5 rounded-full blur-[80px]" />
       </div>
 
-      <main className="flex-1 w-full max-w-6xl mx-auto flex flex-col relative z-10 gap-3">
-        {/* Header - Compact */}
-        <div className="flex items-center justify-between">
+      <main className="flex-1 w-full max-w-6xl mx-auto flex flex-col relative z-10 gap-6">
+        {/* Header - Responsive */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#009D77] rounded-xl flex items-center justify-center shadow-lg shadow-[#009D77]/20">
-              <FileText className="w-5 h-5 text-white" />
+            <div className="w-12 h-12 bg-[#009D77] rounded-[1.25rem] flex items-center justify-center shadow-xl shadow-[#009D77]/20">
+              <FileText className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-black text-[#011813] leading-tight">Resume Analyzer</h1>
-              <p className="text-[10px] font-bold text-[#475467] uppercase tracking-wider">Senior ATS Matching Engine</p>
+              <h1 className="text-2xl font-black text-[#011813] leading-none mb-1">Resume Analyzer</h1>
+              <p className="text-[10px] font-bold text-[#475467] uppercase tracking-[0.2em]">Engineering ATS Match Engine</p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] font-bold text-[#475467] uppercase pr-1">Target Role:</span>
+          <div className="flex items-center gap-2 bg-white border border-[#E7E7E8] p-1.5 rounded-xl">
+            <span className="text-[10px] font-black text-[#98A2B3] uppercase tracking-widest pl-2">Targeting:</span>
             <select 
               value={targetRole} 
               onChange={(e) => setTargetRole(e.target.value)}
-              className="bg-white border border-[#E7E7E8] text-xs font-bold text-[#011813] rounded-lg px-3 py-1.5 outline-none focus:ring-1 focus:ring-[#009D77] cursor-pointer shadow-sm"
+              className="bg-transparent text-[11px] font-black text-[#011813] rounded-lg px-3 py-1.5 outline-none cursor-pointer uppercase tracking-tight"
             >
               <option value="frontend">Frontend Developer</option>
               <option value="backend">Backend Developer</option>
@@ -100,7 +100,7 @@ export default function Resume() {
           </div>
         </div>
 
-        <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 min-h-0 overflow-hidden">
+        <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Left Column: Upload - Now wider */}
           <div className="lg:col-span-5 flex flex-col gap-3">
             <motion.div 

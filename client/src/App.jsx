@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 
 import Sidebar from "./components/Sidebar";
+import MobileNav from "./components/MobileNav";
 import Profile from "./pages/Profile.jsx";
 import Login from "./pages/Login.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
@@ -21,12 +22,23 @@ import Cancel from "./pages/Cancel.jsx";
 
 function AppContent() {
   const location = useLocation();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const isPublicPage = location.pathname === "/" || location.pathname === "/login";
 
   return (
-    <div className="flex min-h-screen">
-      {!isPublicPage && <Sidebar />}
-      <main className={`flex-1 min-h-screen w-full min-w-0 ${!isPublicPage ? 'p-6 lg:p-8 lg:ml-[240px]' : ''}`}>
+    <div className="flex min-h-screen bg-white">
+      {!isPublicPage && (
+        <>
+          <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+          <MobileNav onMenuClick={() => setIsSidebarOpen(true)} />
+        </>
+      )}
+      
+      <main className={`flex-1 min-h-screen w-full min-w-0 transition-all duration-300 ${
+        !isPublicPage 
+          ? 'pt-[64px] lg:pt-0 p-4 sm:p-6 lg:p-8 lg:ml-[260px]' 
+          : ''
+      }`}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />

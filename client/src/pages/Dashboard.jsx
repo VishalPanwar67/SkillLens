@@ -198,62 +198,62 @@ export default function Dashboard() {
 
             {/* Sub Metrics */}
             <div className="flex-1 flex flex-col justify-center min-w-0">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 h-full">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 h-full">
 
-                <div className="bg-[#F8F9FA] border border-[#E7E7E8] rounded-2xl p-5 flex flex-col relative overflow-hidden group hover:border-[#D0D5DD] transition-colors">
+                <div className="bg-[#F8F9FA] border border-[#E7E7E8] rounded-2xl p-4 md:p-5 flex flex-col relative overflow-hidden group hover:border-[#D0D5DD] transition-colors">
                   <div className="absolute top-3 right-3 text-[#E7E7E8] group-hover:text-[#009D77]/20 transition-colors">
-                    <BookOpen className="w-12 h-12" />
+                    <BookOpen className="w-10 md:w-12 h-10 md:h-12" />
                   </div>
                   <div className="flex items-center gap-2 mb-auto z-10">
                     <div className="w-6 h-6 rounded-md bg-white border border-[#E7E7E8] flex items-center justify-center">
                       <BookOpen className="w-3.5 h-3.5 text-[#011813]" />
                     </div>
-                    <span className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#475467]">Skills</span>
+                    <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.1em] text-[#475467]">Skills</span>
                   </div>
-                  <div className="mt-6 z-10">
+                  <div className="mt-4 md:mt-6 z-10">
                     <div className="flex items-baseline gap-1">
-                      <span className="text-3xl font-extrabold text-[#011813]">{stats.skillsScore}</span>
-                      <span className="text-sm font-semibold text-[#475467]">/ 100</span>
+                      <span className="text-2xl md:text-3xl font-extrabold text-[#011813]">{stats.skillsScore}</span>
+                      <span className="text-xs md:text-sm font-semibold text-[#475467]">/ 100</span>
                     </div>
-                    <p className="text-xs text-[#475467] font-medium mt-1">Depth analysis</p>
+                    <p className="text-[10px] md:text-xs text-[#475467] font-medium mt-1">Depth analysis</p>
                   </div>
                 </div>
 
-                <div className="bg-[#F8F9FA] border border-[#E7E7E8] rounded-2xl p-5 flex flex-col relative overflow-hidden group hover:border-[#D0D5DD] transition-colors">
+                <div className="bg-[#F8F9FA] border border-[#E7E7E8] rounded-2xl p-4 md:p-5 flex flex-col relative overflow-hidden group hover:border-[#D0D5DD] transition-colors">
                   <div className="absolute top-3 right-3 text-[#E7E7E8] group-hover:text-[#009D77]/20 transition-colors">
-                    <Briefcase className="w-12 h-12" />
+                    <Briefcase className="w-10 md:w-12 h-10 md:h-12" />
                   </div>
                   <div className="flex items-center gap-2 mb-auto z-10">
                     <div className="w-6 h-6 rounded-md bg-white border border-[#E7E7E8] flex items-center justify-center">
                       <Briefcase className="w-3.5 h-3.5 text-[#011813]" />
                     </div>
-                    <span className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#475467]">Interview</span>
+                    <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.1em] text-[#475467]">Interview</span>
                   </div>
-                  <div className="mt-6 z-10">
+                  <div className="mt-4 md:mt-6 z-10">
                     <div className="flex items-baseline gap-1">
-                      <span className="text-3xl font-extrabold text-[#011813]">{stats.interviewScore}</span>
-                      <span className="text-sm font-semibold text-[#475467]">/ 100</span>
+                      <span className="text-2xl md:text-3xl font-extrabold text-[#011813]">{stats.interviewScore}</span>
+                      <span className="text-xs md:text-sm font-semibold text-[#475467]">/ 100</span>
                     </div>
-                    <p className="text-xs text-[#475467] font-medium mt-1">Mock average</p>
+                    <p className="text-[10px] md:text-xs text-[#475467] font-medium mt-1">Mock average</p>
                   </div>
                 </div>
 
-                <div className="bg-[#F8F9FA] border border-[#E7E7E8] rounded-2xl p-5 flex flex-col relative overflow-hidden group hover:border-[#D0D5DD] transition-colors">
+                <div className="bg-[#F8F9FA] border border-[#E7E7E8] rounded-2xl p-4 md:p-5 flex flex-col relative overflow-hidden group hover:border-[#D0D5DD] transition-colors">
                   <div className="absolute top-3 right-3 text-[#E7E7E8] group-hover:text-[#009D77]/20 transition-colors">
-                    <Target className="w-12 h-12" />
+                    <Target className="w-10 md:w-12 h-10 md:h-12" />
                   </div>
                   <div className="flex items-center gap-2 mb-auto z-10">
                     <div className="w-6 h-6 rounded-md bg-white border border-[#E7E7E8] flex items-center justify-center">
                       <Target className="w-3.5 h-3.5 text-[#011813]" />
                     </div>
-                    <span className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#475467]">Roadmap</span>
+                    <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.1em] text-[#475467]">Roadmap</span>
                   </div>
-                  <div className="mt-6 z-10">
+                  <div className="mt-4 md:mt-6 z-10">
                     <div className="flex items-baseline gap-1">
-                      <span className="text-3xl font-extrabold text-[#011813]">{stats.roadmapScore}</span>
-                      <span className="text-sm font-semibold text-[#475467]">/ 100</span>
+                      <span className="text-2xl md:text-3xl font-extrabold text-[#011813]">{stats.roadmapScore}</span>
+                      <span className="text-xs md:text-sm font-semibold text-[#475467]">/ 100</span>
                     </div>
-                    <p className="text-xs text-[#475467] font-medium mt-1">Completion progress</p>
+                    <p className="text-[10px] md:text-xs text-[#475467] font-medium mt-1">Completion progress</p>
                   </div>
                 </div>
 
@@ -306,57 +306,55 @@ export default function Dashboard() {
 
 
         {/* Next Recommendation & Progression */}
-        <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
           {/* Next Step Banner */}
-          <div className="bg-[#011813] border border-[#011813] rounded-2xl p-6 shadow-sm flex flex-col overflow-hidden relative">
-            <div className="absolute top-0 right-[-10%] p-8 opacity-10 pointer-events-none">
+          <div className="bg-[#011813] border border-[#011813] rounded-2xl p-6 shadow-sm flex flex-col md:flex-row md:items-center overflow-hidden relative gap-6">
+            <div className="absolute top-0 right-[-10%] p-8 opacity-10 pointer-events-none hidden md:block">
               <Brain className="w-40 h-40 text-white" />
             </div>
-            <div className="relative z-10 flex flex-col h-full">
-              <h3 className="text-xs font-bold uppercase tracking-[0.1em] text-[#009D77] mb-auto">
+            <div className="relative z-10 flex flex-col flex-1">
+              <h3 className="text-xs font-bold uppercase tracking-[0.1em] text-[#009D77] mb-2">
                 Next Recommendation
               </h3>
-              <div className="mt-8 mb-6">
-                <h4 className="text-2xl font-extrabold text-white mb-2 leading-tight">
+              <div className="mb-4">
+                <h4 className="text-xl md:text-2xl font-extrabold text-white mb-2 leading-tight">
                   {stats.nextStep.title}
                 </h4>
-                <p className="text-sm text-[rgba(255,255,255,0.7)] leading-relaxed max-w-xs">
+                <p className="text-sm text-[rgba(255,255,255,0.7)] leading-relaxed max-w-lg">
                   {stats.nextStep.desc}
                 </p>
               </div>
-        </div>
-              <Link
-                to={stats.nextStep.link}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#009D77] text-white text-sm font-bold px-6 py-2.5 rounded-xl hover:bg-[#008a68] transition-colors focus:ring-4 focus:ring-[#009D77]/20"
-              >
-                Proceed exactly
-                <ChevronRight className="w-4 h-4" />
-              </Link>
             </div>
+            <Link
+              to={stats.nextStep.link}
+              className="relative z-10 w-full md:w-auto inline-flex items-center justify-center gap-2 bg-[#009D77] text-white text-sm font-bold px-8 py-3.5 rounded-xl hover:bg-[#008a68] transition-all active:scale-[0.98] shadow-lg shadow-[#009D77]/20"
+            >
+              Proceed Now
+              <ChevronRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
 
         {/* Bottom insights row */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Score History */}
-          <div className="bg-white border border-[#E7E7E8] rounded-2xl p-6 shadow-sm lg:col-span-2">
+          <div className="bg-white border border-[#E7E7E8] rounded-2xl p-6 shadow-sm lg:col-span-2 overflow-hidden">
             <div className="flex items-center justify-between mb-8">
               <h3 className="text-base font-bold text-[#011813]">Score Progression</h3>
-              <span className="text-xs font-semibold text-[#475467] bg-[#F8F9FA] py-1 px-3 rounded-md">Last 7 updates</span>
+              <span className="text-[10px] font-semibold text-[#475467] bg-[#F8F9FA] py-1 px-2.5 rounded-md uppercase tracking-wider">Historical Trend</span>
             </div>
-            <div className="h-40 flex items-end justify-between gap-3">
+            <div className="h-40 flex items-end justify-between gap-2 sm:gap-3 overflow-x-auto pb-2 custom-scrollbar no-scrollbar-md">
               {(stats.historyBars || []).map((bar, idx) => (
-                <div key={idx} className="flex flex-col items-center flex-1 h-full justify-end group">
+                <div key={idx} className="flex flex-col items-center flex-1 min-w-[36px] h-full justify-end group">
                   <motion.div
                     initial={{ height: 0 }}
                     animate={{ height: bar.height }}
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className={`w-full max-w-[2.5rem] rounded-t-lg transition-colors duration-200 ${bar.active
-                        ? "bg-gradient-to-t from-[#E8FAF5] to-[#009D77] group-hover:to-[#008A68]"
+                        ? "bg-[#009D77] opacity-80 group-hover:opacity-100"
                         : "bg-[#F0F2F5]"
                       }`}
                   />
-                  <div className={`mt-3 text-[10px] sm:text-[11px] font-bold whitespace-nowrap ${bar.active ? "text-[#475467]" : "text-[#98A2B3]"}`}>
+                  <div className={`mt-3 text-[9px] font-bold whitespace-nowrap uppercase tracking-tighter ${bar.active ? "text-[#475467]" : "text-[#98A2B3]"}`}>
                     {bar.date}
                   </div>
                 </div>

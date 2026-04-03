@@ -94,17 +94,17 @@ const Pricing = () => {
 
   return (
     <div className="max-w-5xl mx-auto space-y-4 pb-8">
-      {/* Header - Very Compact */}
-      <div className="flex items-center justify-between bg-white border border-[#E7E7E8] rounded-2xl p-5 shadow-sm">
+      {/* Header - Responsive */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between bg-white border border-[#E7E7E8] rounded-2xl p-5 md:p-6 shadow-sm gap-6 sm:gap-4">
         <div>
-          <h1 className="text-xl font-black text-[#011813] tracking-tight">Upgrade Preparation</h1>
-          <p className="text-[12px] text-[#475467] font-medium">Choose a plan to boost your frequency.</p>
+          <h1 className="text-xl md:text-2xl font-black text-[#011813] tracking-tight">Upgrade Preparation</h1>
+          <p className="text-[12px] md:text-sm text-[#475467] font-medium mt-1">Choose a plan to boost your preparation frequency.</p>
         </div>
         
-        <div className="flex items-center gap-4 pl-6 border-l border-[#F0F2F5]">
-          <div className="text-right">
-            <p className="text-[9px] font-bold text-[#98A2B3] uppercase tracking-widest leading-none mb-1">Balance</p>
-            <p className="text-xl font-black text-[#011813]">{currentCredits} Credits</p>
+        <div className="flex items-center gap-4 sm:pl-6 sm:border-l border-[#F0F2F5]">
+          <div className="text-left sm:text-right">
+            <p className="text-[9px] font-bold text-[#98A2B3] uppercase tracking-widest leading-none mb-1">Current Balance</p>
+            <p className="text-xl font-black text-[#11b589]">{currentCredits} Credits</p>
           </div>
           <div className="w-10 h-10 rounded-xl bg-[#E8FAF5] flex items-center justify-center">
             <Zap className="w-5 h-5 text-[#009D77]" />

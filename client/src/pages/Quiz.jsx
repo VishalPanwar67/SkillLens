@@ -172,11 +172,11 @@ export default function Quiz() {
   if (activeQuiz) {
     const q = activeQuiz[currentQuestionIdx];
     return (
-      <div className="h-screen bg-[#F8F9FA] flex flex-col items-center justify-center px-4 sm:px-6 relative overflow-hidden">
+      <div className="min-h-screen bg-[#F8F9FA] flex flex-col items-center justify-center py-12 px-4 sm:px-6 relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="w-full max-w-3xl bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-[#E7E7E8] relative flex flex-col"
+          className="w-full max-w-3xl bg-white rounded-[2rem] p-6 md:p-8 shadow-xl border border-[#E7E7E8] relative flex flex-col"
         >
           {/* Progress Bar Top */}
           <div className="absolute top-0 left-0 h-1.5 bg-[#F8F9FA] w-full rounded-t-2xl overflow-hidden">
@@ -259,8 +259,8 @@ export default function Quiz() {
   }
 
   return (
-    <div className="h-screen bg-[#F8F9FA] relative flex flex-col justify-center px-4 sm:px-6 overflow-hidden">
-      <main className="w-full max-w-6xl mx-auto flex flex-col h-[88vh] max-h-[800px] gap-4 relative z-10">
+    <div className="min-h-screen bg-[#F8F9FA] relative flex flex-col pb-12 px-4 sm:px-6">
+      <main className="w-full max-w-6xl mx-auto flex flex-col gap-6 relative z-10 pt-4">
         {/* Header Compact */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -297,7 +297,7 @@ export default function Quiz() {
         </motion.div>
 
         {/* Quizzes Container */}
-        <div className="flex-1 bg-white border border-[#E7E7E8] rounded-2xl shadow-sm p-4 overflow-hidden flex flex-col min-h-0">
+        <div className="bg-white border border-[#E7E7E8] rounded-[2.5rem] shadow-sm p-4 md:p-6 flex flex-col min-h-[60vh]">
           {loading ? (
             <div className="flex flex-col items-center justify-center flex-1">
               <Loader2 className="w-8 h-8 animate-spin text-[#009D77] mb-3" />

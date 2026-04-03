@@ -373,7 +373,7 @@ export default function Interview() {
   );
 
   return (
-    <div className="h-screen bg-[#F8F9FA] relative flex flex-col justify-center px-4 sm:px-6 overflow-hidden">
+    <div className="min-h-screen bg-[#F8F9FA] relative flex flex-col pb-12 px-4 sm:px-6">
       {showModal && (
         <ApiKeyModal
           required={true}
@@ -388,7 +388,7 @@ export default function Interview() {
           </div>
         </div>
       )}
-      <main className="w-full max-w-6xl mx-auto flex flex-col h-[88vh] max-h-[800px] gap-4 relative z-10">
+      <main className="w-full max-w-6xl mx-auto flex flex-col gap-4 relative z-10 pt-4">
         
         {/* Header Compact */}
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex justify-between items-center bg-white border border-[#E7E7E8] rounded-2xl p-4 shadow-sm shrink-0">
@@ -430,7 +430,7 @@ export default function Interview() {
         </motion.div>
 
         {/* Main Content Split */}
-        <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
+        <div className="flex flex-col lg:flex-row gap-4">
           
           {/* Left: Robot & Question View */}
           <motion.div 
@@ -499,7 +499,7 @@ export default function Interview() {
           <motion.div 
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            className="lg:w-[55%] flex flex-col gap-4"
+            className="lg:w-[55%] flex flex-col gap-4 min-h-[400px]"
           >
             {mode === 'audio' && hasStarted && (
               <div className="space-y-2 shrink-0">

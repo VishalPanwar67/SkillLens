@@ -173,31 +173,23 @@ export default function Company() {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8"
+            className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 border-b border-gray-100/50 pb-10"
           >
             <div>
-              <h1 className="text-4xl font-black text-[#0b261d] tracking-tight mb-2 flex items-center gap-3 lowercase">
-                <Building2 className="w-8 h-8 text-[#009D77]" />{" "}
-                <span className="uppercase tracking-tighter">
+              <h1 className="text-3xl md:text-4xl font-black text-[#0b261d] tracking-tight mb-2 flex items-center gap-3 lowercase">
+                <Building2 className="w-8 h-8 text-[#009D77] shrink-0" />{" "}
+                <span className="uppercase tracking-tighter leading-none">
                   Company Radar
                 </span>
               </h1>
-              <p className="text-[#3b4b45]/70 font-medium text-sm">
+              <p className="text-[#3b4b45]/60 font-medium text-sm md:text-base max-w-lg">
                 Skill alignment analysis for{" "}
-                <span className="text-[#011813] font-black uppercase tracking-widest">
+                <span className="text-[#011813] font-black uppercase tracking-widest text-xs px-2 py-0.5 bg-white border border-gray-100 rounded-md shadow-sm">
                   {targetRole || "fullstack"}
                 </span>{" "}
                 pipelines.
               </p>
             </div>
-            {/* <div>
-               <button 
-                  onClick={() => setShowAddModal(true)}
-                  className="px-6 py-3.5 bg-[#011813] text-white rounded-xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-[#009D77] transition-all flex items-center gap-3 shadow-2xl border border-white/10"
-               >
-                  Add Custom Benchmark <Target className="w-4 h-4" />
-               </button>
-            </div> */}
           </motion.div>
 
           {loading ? (

@@ -759,6 +759,7 @@ export default function Home() {
         <footer className="footer">
           <div className="footer-logo">
             <div className="fmark">
+
               <svg viewBox="0 0 13 13" fill="none">
                 <rect x="1" y="1" width="4" height="4" rx="1" fill="#08100d" />
                 <rect x="8" y="1" width="4" height="4" rx="1" fill="#08100d" />

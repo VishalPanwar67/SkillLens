@@ -53,8 +53,8 @@ export default function Summary() {
   ];
 
   return (
-    <div className="h-screen bg-[#F8F9FA] relative flex flex-col justify-center px-4 sm:px-6 overflow-hidden">
-        <main className="w-full max-w-6xl mx-auto flex flex-col h-[88vh] max-h-[800px] gap-4 relative z-10">
+    <div className="min-h-screen bg-[#F8F9FA] relative flex flex-col pb-12 px-4 sm:px-6">
+        <main className="w-full max-w-6xl mx-auto flex flex-col gap-4 relative z-10 pt-4">
           
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex justify-between items-center bg-white border border-[#E7E7E8] rounded-2xl p-5 shadow-sm shrink-0">
              <div>
@@ -70,12 +70,12 @@ export default function Summary() {
              </div>
           </motion.div>
 
-          <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
+          <div className="flex flex-col lg:flex-row gap-4">
             {/* Left Sidebar: Core Stats & Overview */}
             <motion.div 
                initial={{ opacity: 0, x: -20 }}
                animate={{ opacity: 1, x: 0 }}
-               className="lg:w-[35%] flex flex-col gap-4 min-h-0"
+               className="lg:w-[35%] flex flex-col gap-4"
             >
               {/* Overall AI Score Card */}
               <div className="bg-[#011813] border border-[#011813] rounded-2xl p-6 shadow-sm relative overflow-hidden shrink-0">
@@ -131,7 +131,7 @@ export default function Summary() {
             <motion.div 
                initial={{ opacity: 0, x: 20 }}
                animate={{ opacity: 1, x: 0 }}
-               className="lg:w-[65%] bg-white border border-[#E7E7E8] rounded-2xl shadow-sm flex flex-col overflow-hidden min-h-0"
+               className="lg:w-[65%] bg-white border border-[#E7E7E8] rounded-2xl shadow-sm flex flex-col overflow-hidden"
             >
                 <div className="p-5 border-b border-[#E7E7E8] bg-[#F8F9FA] shrink-0">
                    <h3 className="text-sm font-extrabold text-[#011813] flex items-center gap-2">

@@ -173,19 +173,19 @@ export default function Roadmap() {
               {error}
             </div>
           )}
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex justify-between items-end mb-8 border-b border-gray-100 pb-10">
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col md:flex-row md:items-end justify-between mb-8 border-b border-gray-100 pb-10 gap-6">
              <div>
-                <div className="flex items-center gap-3 mb-3">
-                  <h1 className="text-5xl font-black text-[#0b261d] tracking-tight">Growth Path</h1>
-                  <span className="px-3 py-1 bg-[#11b589] text-white rounded-xl text-xs font-black tracking-widest uppercase shadow-lg shadow-[#11b589]/20">{track}</span>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-3">
+                  <h1 className="text-4xl md:text-5xl font-black text-[#0b261d] tracking-tight">Growth Path</h1>
+                  <span className="w-fit px-3 py-1 bg-[#11b589] text-white rounded-xl text-xs font-black tracking-widest uppercase shadow-lg shadow-[#11b589]/20">{track}</span>
                 </div>
-                <p className="text-[#3b4b45]/60 font-medium text-lg max-w-xl">
+                <p className="text-[#3b4b45]/60 font-medium text-base md:text-lg max-w-xl leading-relaxed">
                   Your personalized 8-week journey to developer fluency, optimized for your target companies.
                 </p>
              </div>
-             <div className="hidden md:flex flex-col items-end gap-1">
+             <div className="flex flex-col items-start md:items-end gap-1">
                 <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Est. Completion</span>
-                <span className="text-2xl font-black text-[#0b261d]">Aug 15</span>
+                <span className="text-xl md:text-2xl font-black text-[#0b261d]">Aug 15</span>
              </div>
           </motion.div>
 
