@@ -159,6 +159,7 @@ export default function Roadmap() {
         <ApiKeyModal
           required={true}
           onSuccess={handleApiKeyModalSuccess}
+          onSkip={() => setShowModal(false)}
         />
       )}
       <div className="min-h-screen bg-[#fbfbfa] relative overflow-hidden flex flex-col pt-4 pb-12 px-6">

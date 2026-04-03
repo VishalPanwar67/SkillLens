@@ -307,6 +307,7 @@ export default function Interview() {
         <ApiKeyModal
           required={true}
           onSuccess={() => setShowModal(false)}
+          onSkip={() => setShowModal(false)}
         />
       )}
       <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center p-2">
@@ -378,6 +379,7 @@ export default function Interview() {
         <ApiKeyModal
           required={true}
           onSuccess={() => setShowModal(false)}
+          onSkip={() => setShowModal(false)}
         />
       )}
       {submitting && (

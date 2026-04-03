@@ -206,6 +206,7 @@ export default function SkillLearning() {
               setShowInterview(true);
             }
           }}
+          onSkip={() => setShowModal(false)}
         />
       )}
       {showInterview && (

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2, X } from "lucide-react";
 import { saveUserApiKey } from "../utils/apiKey";
 
 export default function ApiKeyModal({
@@ -32,11 +32,20 @@ export default function ApiKeyModal({
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center bg-[#011813]/70 backdrop-blur-sm p-4">
       <div
-        className="w-full max-w-lg max-h-[min(90vh,720px)] overflow-y-auto rounded-2xl border border-[rgba(0,157,119,0.2)] bg-white shadow-2xl shadow-black/20"
+        className="w-full max-w-lg max-h-[min(90vh,720px)] overflow-y-auto rounded-2xl border border-[rgba(0,157,119,0.2)] bg-white shadow-2xl shadow-black/20 relative"
         role="dialog"
         aria-modal="true"
         aria-labelledby="api-key-modal-title"
       >
+        {/* Close Button */}
+        <button
+          onClick={() => onSkip?.()}
+          className="absolute top-4 right-4 p-2 text-[#98A2B3] hover:text-[#011813] hover:bg-[#F8F9FA] rounded-xl transition-all z-10"
+          aria-label="Close modal"
+        >
+          <X className="w-5 h-5" />
+        </button>
+
         <div className="p-6 sm:p-8 space-y-6">
           <div>
             <h2
